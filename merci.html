@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenue — Vases d'Honneur</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="page-wrap">
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="index.html">
+          <span class="brand-mark">V</span>
+          <span class="brand-name">Vases d'Honneur<small data-i18n="brand.sub">Vases d'Honneur</small></span>
+        </a>
+        <div class="nav-actions">
+          <div class="lang-switch" role="group" aria-label="Langue">
+            <button data-lang="fr">FR</button>
+            <button data-lang="en">EN</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-main">
+      <div class="container">
+        <div class="card narrow center">
+          <h1 data-i18n="merci.title">Bienvenue dans la famille 🤍</h1>
+          <p class="lead" id="merci-greeting" data-i18n="merci.lead">C'est reçu…</p>
+
+          <div class="prayer-box" style="text-align:left">
+            <h3 style="margin-top:0" data-i18n="merci.step.title">Ton tout premier pas, maintenant</h3>
+            <p style="font-family:var(--font-sans);font-size:1rem;margin:0" data-i18n="merci.step.text">Tu n'as pas besoin d'attendre…</p>
+          </div>
+
+          <a class="btn btn-primary btn-lg btn-block" href="prier.html" data-i18n="merci.cta">Oui, je veux prier maintenant</a>
+          <p class="mt-2"><a href="#" style="color:var(--muted);font-size:0.92rem" data-i18n="merci.join">Rejoindre notre groupe WhatsApp</a></p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Personnalisation par prénom si disponible
+    (function () {
+      try {
+        var lead = JSON.parse(localStorage.getItem("c2c_lead") || "{}");
+        if (lead.firstname) {
+          var el = document.getElementById("merci-greeting");
+          var sep = (window.C2C_I18N && window.C2C_I18N.lang) === "en" ? "" : "";
+          el.textContent = lead.firstname + ", " + el.textContent.charAt(0).toLowerCase() + el.textContent.slice(1);
+        }
+      } catch (_) {}
+    })();
+  </script>
+</body>
+</html>
