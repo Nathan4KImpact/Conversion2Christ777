@@ -35,7 +35,7 @@
                 "conditions": [ [ { "a": "{{1.type}}", "b": "lead", "o": "text:equal" } ] ]
               },
               "mapper": {
-                "url": "v0/appRLYZbJgmORxkxz/Ames",
+                "url": "v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL",
                 "method": "POST",
                 "headers": [ { "key": "Content-Type", "value": "application/json" } ],
                 "qs": [],
@@ -69,7 +69,7 @@
                 "conditions": [ [ { "a": "{{1.type}}", "b": "booking", "o": "text:equal" } ] ]
               },
               "mapper": {
-                "url": "v0/appRLYZbJgmORxkxz/Ames",
+                "url": "v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL",
                 "method": "PATCH",
                 "headers": [ { "key": "Content-Type", "value": "application/json" } ],
                 "qs": [],
