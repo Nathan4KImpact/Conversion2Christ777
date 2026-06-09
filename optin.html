@@ -74,6 +74,7 @@
       var persona = localStorage.getItem("c2c_persona") || "";
       var personaLabels = { p1: "Ouvert", p2: "Blessé", p3: "Chercheur" };
       var lead = {
+        type: "lead",
         firstname: document.getElementById("firstname").value.trim(),
         email: document.getElementById("email").value.trim(),
         whatsapp: document.getElementById("whatsapp").value.trim(),

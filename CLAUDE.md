@@ -181,12 +181,25 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     (Name→Prénom, Assignee→Référent, Status→Statut) ; restes (Attachments, Attachment Summary,
     + choix par défaut de Statut) à nettoyer à la main dans l'UI si souhaité.
 
+- 2026-06-09 : **v6 — webhook branché + RDV Agenda + nurturing automatisé** :
+  - **`config.js`** : `WEBHOOK_URL` = `https://hook.eu1.make.com/ja5b3w4yt1i98yockyaqz7vlb8ogu55y`.
+  - **Scénario 1 (capture & RDV)** `integrations/make-blueprint.json` mis à jour avec un **Router** :
+    branche `type=lead` (Airtable create + Gmail J0) / branche `type=booking` (Airtable upsert
+    par Email → `RDV pris` + **Google Agenda createAnEvent** sur `nathanaelfongang@gmail.com`,
+    invité = l'âme). Validé schéma Make.
+  - **Réservation in-site** : `merci.html` a désormais un **formulaire de créneaux** (génère les
+    prochains Mar–Sam 19h–20h) qui POST `type:"booking"` + `rdvStartISO/rdvEndISO` au webhook.
+    `optin.html` envoie `type:"lead"`.
+  - **Scénario 2 (nurturing planifié)** `integrations/make-blueprint-nurturing.json` : Airtable
+    *Search* (formule sur champ formule **`Jours depuis entrée`** = 1/3/5/7 & `Étape tunnel=Lead`)
+    → Router → Gmail J1/J3/J5/J7. À planifier 1×/jour. Validé schéma Make.
+  - **Airtable** : champ formule **`Jours depuis entrée`** ajouté (`DATETIME_DIFF(TODAY();{Date d'entrée};'days')`).
+
 ### Reste à faire / décisions en attente
-- **Créer/activer le scénario Make** (import `integrations/make-blueprint.json`) → coller le
-  webhook dans `config.js → WEBHOOK_URL`. Idem `BOOKING_URL` (Agenda/Calendly).
+- **Importer + activer les 2 scénarios Make** (capture & nurturing) ; planifier le nurturing 1×/jour ;
+  remplacer `[LIEN_SITE]` dans les emails J1/J5 par l'URL publique.
 - Déposer le **logo officiel** (PNG/SVG) dans `assets/img/` → remplacer le SVG recréé.
 - **Confirmer le texte exact de la prière du salut** (vidéo `-Fn0ScYZ7PY`).
 - Nettoyer à la main les champs Airtable par défaut résiduels (limite API).
-- Séquence nurturing J1→J7 (Automation Airtable ou 2ᵉ scénario Make planifié).
 - Décider de l'**hébergement** (GitHub Pages / Netlify / Vercel) et du **nom de domaine**.
 - Construire les **étapes 5-8** (onboarding nouveau converti, intégration/rétention).

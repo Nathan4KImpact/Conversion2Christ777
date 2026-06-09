@@ -47,8 +47,28 @@
           <span class="result-badge" data-i18n="book.eyebrow">Un temps rien que pour toi</span>
           <h2 style="color:var(--navy)" data-i18n="book.title">Réserve ton entretien de prière</h2>
           <p class="lead" data-i18n="book.text">Du mardi au samedi, de 19h à 20h…</p>
-          <div class="slot-chip" data-i18n="book.slots">Mar · Mer · Jeu · Ven · Sam — 19h–20h</div>
-          <a class="btn btn-primary btn-lg btn-block mt-2" id="book-cta" href="#" data-i18n="book.cta">Choisir mon créneau</a>
+
+          <form id="book-form" style="text-align:left">
+            <div class="field">
+              <label for="b-firstname" data-i18n="optin.firstname">Ton prénom</label>
+              <input id="b-firstname" type="text" autocomplete="given-name" required />
+            </div>
+            <div class="field">
+              <label for="b-email" data-i18n="optin.email">Ton email</label>
+              <input id="b-email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="b-slot" data-i18n="book.choose">Choisis ton créneau</label>
+              <select id="b-slot" required></select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="book-submit" data-i18n="book.cta">Réserver mon créneau</button>
+          </form>
+
+          <div id="book-done" class="prayer-box" hidden style="margin-top:16px;text-align:center">
+            <p style="margin:0;font-family:var(--font-sans)" data-i18n="book.done">🙏 C'est noté ! Tu recevras une confirmation par email. À très vite.</p>
+          </div>
+
+          <p class="mt-2"><a id="book-wa" href="#" target="_blank" rel="noopener" style="color:var(--muted);font-size:0.9rem" data-i18n="book.whatsapp">Je préfère réserver via WhatsApp →</a></p>
         </div>
       </div>
     </main>
@@ -60,27 +80,93 @@
   <script>
     // Personnalisation par prénom si disponible
     (function () {
-      try {
-        var lead = JSON.parse(localStorage.getItem("c2c_lead") || "{}");
-        if (lead.firstname) {
+      var cfg = window.C2C_CONFIG || {};
+      var lead = {};
+      try { lead = JSON.parse(localStorage.getItem("c2c_lead") || "{}"); } catch (_) {}
+
+      if (lead.firstname) {
+        try {
           var el = document.getElementById("merci-greeting");
           el.textContent = lead.firstname + ", " + el.textContent.charAt(0).toLowerCase() + el.textContent.slice(1);
-        }
-      } catch (_) {}
-
-      // Bouton de réservation : page de booking si configurée, sinon repli WhatsApp pré-rempli
-      var cfg = window.C2C_CONFIG || {};
-      var btn = document.getElementById("book-cta");
-      if (btn) {
-        if (cfg.BOOKING_URL) {
-          btn.href = cfg.BOOKING_URL;
-          btn.target = "_blank"; btn.rel = "noopener";
-        } else if (cfg.WHATSAPP) {
-          var msg = encodeURIComponent("Bonjour, j'aimerais réserver un entretien de prière (créneaux mardi à samedi, 19h-20h).");
-          btn.href = "https://wa.me/" + cfg.WHATSAPP + "?text=" + msg;
-          btn.target = "_blank"; btn.rel = "noopener";
-        }
+        } catch (_) {}
       }
+
+      // Pré-remplissage du formulaire de réservation
+      if (lead.firstname) document.getElementById("b-firstname").value = lead.firstname;
+      if (lead.email) document.getElementById("b-email").value = lead.email;
+
+      // Génère les prochains créneaux Mardi→Samedi (19h–20h), heure de Paris
+      function pad(n) { return (n < 10 ? "0" : "") + n; }
+      var lang = (window.C2C_I18N && window.C2C_I18N.lang) || "fr";
+      var sel = document.getElementById("b-slot");
+      var d = new Date();
+      d.setDate(d.getDate() + 1); // à partir de demain
+      var added = 0;
+      while (added < 12) {
+        var wd = d.getDay(); // 0=dim … 2=mar … 6=sam
+        if (wd >= 2 && wd <= 6) {
+          var y = d.getFullYear(), m = d.getMonth() + 1, day = d.getDate();
+          var startISO = y + "-" + pad(m) + "-" + pad(day) + "T19:00:00";
+          var endISO = y + "-" + pad(m) + "-" + pad(day) + "T20:00:00";
+          var label = new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "fr-FR", {
+            weekday: "long", day: "numeric", month: "long",
+          }).format(d);
+          label = label.charAt(0).toUpperCase() + label.slice(1) + (lang === "en" ? " · 7–8pm" : " · 19h–20h");
+          var opt = document.createElement("option");
+          opt.value = startISO + "|" + endISO + "|" + label;
+          opt.textContent = label;
+          sel.appendChild(opt);
+          added++;
+        }
+        d.setDate(d.getDate() + 1);
+      }
+
+      // Lien WhatsApp de secours
+      var wa = document.getElementById("book-wa");
+      if (wa && cfg.WHATSAPP) {
+        var msg = encodeURIComponent("Bonjour, j'aimerais réserver un entretien de prière (Mardi à Samedi, 19h-20h).");
+        wa.href = "https://wa.me/" + cfg.WHATSAPP + "?text=" + msg;
+      }
+
+      // Soumission de la réservation → webhook Make (branche "booking")
+      document.getElementById("book-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!this.checkValidity()) { this.reportValidity(); return; }
+        var parts = sel.value.split("|");
+        var payload = {
+          type: "booking",
+          firstname: document.getElementById("b-firstname").value.trim(),
+          email: document.getElementById("b-email").value.trim(),
+          whatsapp: lead.whatsapp || "",
+          rdvStartISO: parts[0],
+          rdvEndISO: parts[1],
+          rdvLabel: parts[2] || "",
+          lang: lang,
+          source: "landing-vasesdhonneur",
+          ts: new Date().toISOString(),
+        };
+        var btn = document.getElementById("book-submit");
+        btn.disabled = true;
+        btn.textContent = (window.C2C_I18N && window.C2C_I18N.t("book.sending")) || "Envoi…";
+
+        function done() {
+          document.getElementById("book-form").hidden = true;
+          document.getElementById("book-done").hidden = false;
+        }
+        if (cfg.WEBHOOK_URL) {
+          fetch(cfg.WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+            keepalive: true,
+          }).then(done).catch(done);
+          setTimeout(done, 1500);
+        } else {
+          // Pas de webhook : repli WhatsApp
+          if (wa) window.open(wa.href, "_blank");
+          done();
+        }
+      });
     })();
   </script>
 </body>

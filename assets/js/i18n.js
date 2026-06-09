@@ -174,7 +174,11 @@ const I18N = {
     "book.title": "Réserve ton entretien de prière",
     "book.text": "Du mardi au samedi, de 19h à 20h (heure de Paris). Un échange simple, confidentiel, sans jugement.",
     "book.slots": "Mar · Mer · Jeu · Ven · Sam — 19h–20h",
-    "book.cta": "Choisir mon créneau",
+    "book.choose": "Choisis ton créneau",
+    "book.cta": "Réserver mon créneau",
+    "book.sending": "Envoi…",
+    "book.done": "🙏 C'est noté ! Tu recevras une confirmation par email. À très vite.",
+    "book.whatsapp": "Je préfère réserver via WhatsApp →",
 
     /* --- Prière / décision --- */
     "pray.eyebrow": "Le moment de la décision",
@@ -342,7 +346,11 @@ const I18N = {
     "book.title": "Book your prayer appointment",
     "book.text": "Tuesday to Saturday, 7–8pm (Paris time). A simple, confidential talk, with no judgment.",
     "book.slots": "Tue · Wed · Thu · Fri · Sat — 7–8pm",
-    "book.cta": "Pick my time slot",
+    "book.choose": "Choose your time slot",
+    "book.cta": "Book my slot",
+    "book.sending": "Sending…",
+    "book.done": "🙏 All set! You'll get an email confirmation. See you soon.",
+    "book.whatsapp": "I'd rather book via WhatsApp →",
 
     "pray.eyebrow": "The moment of decision",
     "pray.title": "The prayer that changes everything",

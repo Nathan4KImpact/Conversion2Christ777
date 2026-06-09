@@ -1,0 +1,125 @@
+{
+  "name": "PDVIE — Nurturing J1→J7 (Airtable → Gmail)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "airtable:ActionSearchRecords",
+      "version": 3,
+      "parameters": { "__IMTCONN__": 6112403 },
+      "mapper": {
+        "base": "appRLYZbJgmORxkxz",
+        "table": "tblqFCCV7BAO8IJNL",
+        "formula": "AND({Étape tunnel}='Lead', OR({Jours depuis entrée}=1,{Jours depuis entrée}=3,{Jours depuis entrée}=5,{Jours depuis entrée}=7))",
+        "maxRecords": 100,
+        "useColumnId": false
+      },
+      "metadata": { "designer": { "x": 0, "y": 0 } }
+    },
+    {
+      "id": 2,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "mapper": null,
+      "metadata": { "designer": { "x": 300, "y": 0 } },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 3,
+              "module": "google-email:ActionSendEmail",
+              "version": 1,
+              "parameters": { "account": 6300394 },
+              "filter": {
+                "name": "Jour 1",
+                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "1", "o": "text:equal" } ] ]
+              },
+              "mapper": {
+                "to": [ "{{1.Email}}" ],
+                "subject": "L'histoire de quelqu'un qui te ressemble",
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Aujourd'hui, je veux juste te partager une histoire. Pauline avait de grosses crises d'angoisse. Alexia se disait athée. D'autres cherchaient la paix dans les énergies… avant de la trouver, enfin, en une Personne.</p><p>Regarde leurs témoignages (2 minutes, ça peut tout changer) : <a href=\"[LIEN_SITE]/index.html#testimonials\">les histoires de vie</a></p><p>Nathanaël — Vases d'Honneur · « Porteurs de vie »</p>"
+              },
+              "metadata": { "designer": { "x": 600, "y": -300 } }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 4,
+              "module": "google-email:ActionSendEmail",
+              "version": 1,
+              "parameters": { "account": 6300394 },
+              "filter": {
+                "name": "Jour 3",
+                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "3", "o": "text:equal" } ] ]
+              },
+              "mapper": {
+                "to": [ "{{1.Email}}" ],
+                "subject": "« Et si je n'étais pas à la hauteur ? »",
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Une pensée arrête beaucoup de gens : « Je ne suis pas assez bien pour Dieu. » Voici la vérité qui libère : tu n'as pas à devenir parfait(e) pour venir à Lui. C'est en venant à Lui qu'Il te transforme.</p><p>« C'est par la grâce que vous êtes sauvés… c'est le don de Dieu. » (Éphésiens 2:8)</p><p>Tu portes quelque chose de lourd ? Parlons-en : <a href=\"https://wa.me/33758372268\">WhatsApp</a></p><p>Nathanaël — Vases d'Honneur</p>"
+              },
+              "metadata": { "designer": { "x": 600, "y": -100 } }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 5,
+              "module": "google-email:ActionSendEmail",
+              "version": 1,
+              "parameters": { "account": 6300394 },
+              "filter": {
+                "name": "Jour 5",
+                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "5", "o": "text:equal" } ] ]
+              },
+              "mapper": {
+                "to": [ "{{1.Email}}" ],
+                "subject": "La plus belle nouvelle que tu puisses entendre aujourd'hui",
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si, là où tu es, tu pouvais commencer une vie nouvelle ? Pas une technique. Une rencontre, avec Jésus, qui t'offre le Salut, la Guérison et la Paix par son Esprit.</p><p>Quand tu seras prêt(e), une prière toute simple suffit — je l'ai préparée pour toi, avec une vidéo : <a href=\"[LIEN_SITE]/prier.html\">prier maintenant</a></p><p>Nathanaël — Vases d'Honneur</p>"
+              },
+              "metadata": { "designer": { "x": 600, "y": 100 } }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 6,
+              "module": "google-email:ActionSendEmail",
+              "version": 1,
+              "parameters": { "account": 6300394 },
+              "filter": {
+                "name": "Jour 7",
+                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "7", "o": "text:equal" } ] ]
+              },
+              "mapper": {
+                "to": [ "{{1.Email}}" ],
+                "subject": "On prie ensemble ? (Mar–Sam, 19h–20h)",
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si on prenait un vrai moment pour prier ensemble ? Je réserve des créneaux chaque semaine, du mardi au samedi, de 19h à 20h. Confidentiel, sans jugement.</p><p>Réponds à cet email, ou écris-moi : <a href=\"https://wa.me/33758372268\">WhatsApp</a></p><p>Tu comptes, {{1.Prénom}}. Vraiment.<br>Nathanaël — Vases d'Honneur</p>"
+              },
+              "metadata": { "designer": { "x": 600, "y": 300 } }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": { "orphans": [] },
+    "zone": "eu1.make.com"
+  }
+}
