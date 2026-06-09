@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Vases d'Honneur">
+  <defs>
+    <radialGradient id="vhGold" cx="38%" cy="32%" r="75%">
+      <stop offset="0%" stop-color="#e3c573"/>
+      <stop offset="60%" stop-color="#c9a23a"/>
+      <stop offset="100%" stop-color="#a07c2e"/>
+    </radialGradient>
+  </defs>
+  <!-- Disque sarcelle -->
+  <circle cx="60" cy="60" r="60" fill="#1a6e60"/>
+  <circle cx="60" cy="60" r="57" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.5"/>
+  <!-- Flamme / goutte de vie au-dessus du monogramme -->
+  <path d="M60 24 C66 33 66 40 60 44 C54 40 54 33 60 24 Z" fill="url(#vhGold)"/>
+  <ellipse cx="60" cy="38" rx="2.4" ry="3.6" fill="#fff" fill-opacity="0.85"/>
+  <!-- Monogramme VH -->
+  <text x="60" y="86" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+        font-style="italic" font-weight="600" font-size="58" fill="url(#vhGold)">VH</text>
+  <!-- Barre rouge de la charte -->
+  <rect x="44" y="98" width="32" height="5" rx="2.5" fill="#b51b2d"/>
+</svg>

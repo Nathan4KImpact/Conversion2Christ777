@@ -85,6 +85,7 @@ const I18N = {
     "vid.reiki.line": "« Ces pratiques promettaient la paix ; seul Jésus l'a donnée. »",
     "testi.more": "Plus de témoignages",
     "testi.melanie": "Lire le témoignage de Mélanie (rencontre & restauration) →",
+    "video.fallback": "Regarder sur YouTube ↗",
 
     /* --- CTA final --- */
     "ctaFinal.eyebrow": "Prêt(e) pour la suite ?",
@@ -166,6 +167,13 @@ const I18N = {
     "merci.step.text": "Tu n'as pas besoin d'attendre. Le moment le plus important de ta vie peut avoir lieu là, où tu es. Es-tu prêt(e) à rencontrer Jésus personnellement&nbsp;?",
     "merci.cta": "Oui, je veux prier maintenant",
     "merci.join": "Rejoindre notre groupe WhatsApp",
+
+    /* --- Réservation RDV de prière --- */
+    "book.eyebrow": "Un temps rien que pour toi",
+    "book.title": "Réserve ton entretien de prière",
+    "book.text": "Du mardi au samedi, de 19h à 20h (heure de Paris). Un échange simple, confidentiel, sans jugement.",
+    "book.slots": "Mar · Mer · Jeu · Ven · Sam — 19h–20h",
+    "book.cta": "Choisir mon créneau",
 
     /* --- Prière / décision --- */
     "pray.eyebrow": "Le moment de la décision",
@@ -251,6 +259,7 @@ const I18N = {
     "vid.reiki.line": "“Those practices promised peace; only Jesus gave it.”",
     "testi.more": "More testimonies",
     "testi.melanie": "Read Mélanie's testimony (encounter & restoration) →",
+    "video.fallback": "Watch on YouTube ↗",
 
     "ctaFinal.eyebrow": "Ready for what's next?",
     "ctaFinal.title": "The first step takes 2 minutes",
@@ -326,6 +335,12 @@ const I18N = {
     "merci.step.text": "You don't need to wait. The most important moment of your life can happen right where you are. Are you ready to meet Jesus personally?",
     "merci.cta": "Yes, I want to pray now",
     "merci.join": "Join our WhatsApp group",
+
+    "book.eyebrow": "A moment just for you",
+    "book.title": "Book your prayer appointment",
+    "book.text": "Tuesday to Saturday, 7–8pm (Paris time). A simple, confidential talk, with no judgment.",
+    "book.slots": "Tue · Wed · Thu · Fri · Sat — 7–8pm",
+    "book.cta": "Pick my time slot",
 
     "pray.eyebrow": "The moment of decision",
     "pray.title": "The prayer that changes everything",

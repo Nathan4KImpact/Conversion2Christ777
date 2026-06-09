@@ -133,8 +133,35 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     groupe WhatsApp « Les Amis de Jésus » (`chat.whatsapp.com/0vazCnCIMag0OAsYUtuO1z`),
     WhatsApp perso `+33 7 58 37 22 68` (`wa.me/33758372268`), chaîne YouTube Vases d'Honneur.
 
+- 2026-06-09 : **v3 — logo, fix vidéos, intégrations** :
+  - **Logo** : image non persistée sur le serveur → recréé fidèlement en **SVG**
+    (`assets/img/logo-emblem.svg` : disque sarcelle + monogramme VH or + flamme + barre rouge),
+    câblé dans tous les en-têtes + footer. À remplacer par le fichier officiel quand fourni.
+  - **Fix vidéos (Erreur 153)** : cause = ouverture en `file://` (origine invalide) et/ou
+    intégration désactivée par certains propriétaires. Solutions appliquées dans `video.js` :
+    paramètre `origin`, `playsinline`, **+ lien de secours « Regarder sur YouTube »** sous chaque
+    vidéo. ➜ Tester via le site déployé ou `python3 -m http.server`, pas en double-clic.
+  - **Google Agenda** : créneau récurrent **« 🙏 Créneau de prière — Vases d'Honneur (PDVIE) »**
+    créé sur `nathanaelfongang@gmail.com`, **Mar→Sam 19h–20h** (RRULE BYDAY=TU,WE,TH,FR,SA).
+  - **Gmail** : label **« PDVIE — Suivi des Âmes »** + **5 brouillons de nurturing** (J0/J1/J3/J5/J7)
+    prêts à personnaliser (placeholders `[Prénom]`, `[LIEN_SITE]`, `[LIEN_RDV]`).
+  - **Site « branchement-ready »** : `assets/js/config.js` (WEBHOOK_URL, BOOKING_URL, contacts) ;
+    formulaire `optin.html` qui **POST le lead vers le webhook Make** (repli local si vide) ;
+    **section de réservation RDV de prière** ajoutée sur `merci.html` (moment idéal), repli WhatsApp.
+  - **Airtable** : ❌ **token expiré** → base **« Suivi des Ames PDVIE » non créée**. À refaire
+    après ré-autorisation. **Schéma prévu** (table `Âmes`) : `Prénom` (texte, primaire), `Email`,
+    `WhatsApp`, `Persona` (select : Ouvert/Blessé/Chercheur), `Langue` (FR/EN), `Source`,
+    `Étape tunnel` (select : Lead/Prière faite/RDV pris/Affermi), `Statut`, `Date d'entrée` (date),
+    `RDV prière` (dateTime), `Notes` (texte long).
+  - **Make** : pas de création de scénario via le MCP actuel (lecture/validation seulement).
+    **Recette à monter** : Webhook (reçoit le JSON du formulaire) ▸ Airtable *Create record*
+    (base « Suivi des Ames PDVIE ») ▸ Gmail *Send email* (séquence) ▸ (option) Google Agenda.
+    Coller l'URL du webhook dans `config.js → WEBHOOK_URL`.
+
 ### Reste à faire / décisions en attente
-- Déposer le **logo officiel** (PNG/SVG) dans `assets/img/` → remplacer le monogramme CSS.
+- **Ré-autoriser Airtable** (token expiré) → je crée la base « Suivi des Ames PDVIE ».
+- **Créer le scénario Make**, coller son webhook dans `config.js`. Idem `BOOKING_URL` (Agenda/Calendly).
+- Déposer le **logo officiel** (PNG/SVG) dans `assets/img/` → remplacer le SVG recréé.
 - **Confirmer le texte exact de la prière du salut** (depuis la vidéo `-Fn0ScYZ7PY`).
 - Valider les **vignettes/titres** des témoignages (et l'ordre persona ↔ vidéo).
 - Brancher la **capture** au CRM (Airtable) + automatisation (Make) + nurturing (Gmail).

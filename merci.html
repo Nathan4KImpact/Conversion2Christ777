@@ -15,7 +15,7 @@
     <header class="site-header">
       <nav class="nav">
         <a class="brand" href="index.html">
-          <span class="brand-mark">VH</span>
+          <img class="brand-logo" src="assets/img/logo-emblem.svg" alt="Vases d'Honneur" width="46" height="46" />
           <span class="brand-name">Vases d'Honneur<small data-i18n="brand.sub">Porteurs de vie</small><span class="brand-bar"></span></span>
         </a>
         <div class="nav-actions">
@@ -41,10 +41,20 @@
           <a class="btn btn-primary btn-lg btn-block" href="prier.html" data-i18n="merci.cta">Oui, je veux prier maintenant</a>
           <a class="btn btn-whatsapp btn-block mt-2" href="https://chat.whatsapp.com/0vazCnCIMag0OAsYUtuO1z" target="_blank" rel="noopener" data-i18n="merci.join">Rejoindre notre groupe WhatsApp</a>
         </div>
+
+        <!-- Réservation d'un RDV de prière (créneaux Mar–Sam 19h–20h) -->
+        <div class="card narrow center booking-card" style="margin-top:24px">
+          <span class="result-badge" data-i18n="book.eyebrow">Un temps rien que pour toi</span>
+          <h2 style="color:var(--navy)" data-i18n="book.title">Réserve ton entretien de prière</h2>
+          <p class="lead" data-i18n="book.text">Du mardi au samedi, de 19h à 20h…</p>
+          <div class="slot-chip" data-i18n="book.slots">Mar · Mer · Jeu · Ven · Sam — 19h–20h</div>
+          <a class="btn btn-primary btn-lg btn-block mt-2" id="book-cta" href="#" data-i18n="book.cta">Choisir mon créneau</a>
+        </div>
       </div>
     </main>
   </div>
 
+  <script src="assets/js/config.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
@@ -54,10 +64,23 @@
         var lead = JSON.parse(localStorage.getItem("c2c_lead") || "{}");
         if (lead.firstname) {
           var el = document.getElementById("merci-greeting");
-          var sep = (window.C2C_I18N && window.C2C_I18N.lang) === "en" ? "" : "";
           el.textContent = lead.firstname + ", " + el.textContent.charAt(0).toLowerCase() + el.textContent.slice(1);
         }
       } catch (_) {}
+
+      // Bouton de réservation : page de booking si configurée, sinon repli WhatsApp pré-rempli
+      var cfg = window.C2C_CONFIG || {};
+      var btn = document.getElementById("book-cta");
+      if (btn) {
+        if (cfg.BOOKING_URL) {
+          btn.href = cfg.BOOKING_URL;
+          btn.target = "_blank"; btn.rel = "noopener";
+        } else if (cfg.WHATSAPP) {
+          var msg = encodeURIComponent("Bonjour, j'aimerais réserver un entretien de prière (créneaux mardi à samedi, 19h-20h).");
+          btn.href = "https://wa.me/" + cfg.WHATSAPP + "?text=" + msg;
+          btn.target = "_blank"; btn.rel = "noopener";
+        }
+      }
     })();
   </script>
 </body>
