@@ -164,17 +164,15 @@ img { max-width: 100%; display: block; }
   color: var(--cream);
 }
 .brand-logo {
-  height: 34px;
-  width: auto;
+  width: 46px;
+  height: 46px;
   display: block;
   flex: none;
+  border-radius: 50%;
+  object-fit: cover;
   background: #fff;
-  padding: 5px 10px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
 }
-/* Le logo officiel contient déjà le nom « VASES D'HONNEUR » → on masque le texte redondant */
-.brand .brand-name { display: none; }
 .brand-mark {
   width: 40px; height: 40px;
   border-radius: 50%;
