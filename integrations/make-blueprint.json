@@ -1,0 +1,76 @@
+{
+  "name": "PDVIE — Capture des âmes (Landing → Airtable + Gmail)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": { "hook": 0, "maxResults": 1 },
+      "mapper": {},
+      "metadata": {
+        "designer": { "x": 0, "y": 0 },
+        "restore": { "parameters": { "hook": { "label": "PDVIE Landing Webhook" } } },
+        "parameters": [
+          { "name": "hook", "type": "hook:gateway-webhook", "label": "Webhook", "required": true },
+          { "name": "maxResults", "type": "number", "label": "Maximum number of results" }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "module": "airtable:makeApiCall",
+      "version": 3,
+      "parameters": { "__IMTCONN__": 6112403 },
+      "mapper": {
+        "url": "v0/{{REMPLACER_BASE_ID}}/Ames",
+        "method": "POST",
+        "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+        "qs": [],
+        "body": {
+          "typecast": true,
+          "fields": {
+            "Prénom": "{{1.firstname}}",
+            "Email": "{{1.email}}",
+            "WhatsApp": "{{1.whatsapp}}",
+            "Persona": "{{1.personaLabel}}",
+            "Langue": "{{upper(1.lang)}}",
+            "Source": "{{1.source}}",
+            "Étape tunnel": "Lead",
+            "Statut": "Nouveau",
+            "Date d'entrée": "{{formatDate(now; \"YYYY-MM-DD\")}}"
+          }
+        }
+      },
+      "metadata": { "designer": { "x": 300, "y": 0 } }
+    },
+    {
+      "id": 3,
+      "module": "google-email:ActionSendEmail",
+      "version": 1,
+      "parameters": { "account": 6300394 },
+      "mapper": {
+        "to": [ "{{1.email}}" ],
+        "subject": "🤍 Bienvenue {{1.firstname}} — ton premier pas est fait",
+        "html": "<p>Bonjour {{1.firstname}},</p><p>Je voulais te dire une chose simple : bravo. Tu as fait un pas que beaucoup n'osent pas faire. Et tu n'es plus seul(e).</p><p>Ici, pas de jugement, pas de pression. Juste un chemin, à ton rythme, pour découvrir une paix, une guérison et un sens que le monde ne peut pas donner.</p><p>Si tu veux échanger dès maintenant, réponds à cet email ou écris sur WhatsApp : <a href=\"https://wa.me/33758372268\">+33 7 58 37 22 68</a></p><p>Avec toute mon affection en Christ,<br>Nathanaël — Vases d'Honneur · « Porteurs de vie »</p>"
+      },
+      "metadata": { "designer": { "x": 600, "y": 0 } }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": { "orphans": [] },
+    "zone": "eu1.make.com"
+  }
+}

@@ -71,11 +71,14 @@
       e.preventDefault();
       if (!this.checkValidity()) { this.reportValidity(); return; }
       var cfg = window.C2C_CONFIG || {};
+      var persona = localStorage.getItem("c2c_persona") || "";
+      var personaLabels = { p1: "Ouvert", p2: "Blessé", p3: "Chercheur" };
       var lead = {
         firstname: document.getElementById("firstname").value.trim(),
         email: document.getElementById("email").value.trim(),
         whatsapp: document.getElementById("whatsapp").value.trim(),
-        persona: localStorage.getItem("c2c_persona") || "",
+        persona: persona,
+        personaLabel: personaLabels[persona] || "",
         lang: (window.C2C_I18N && window.C2C_I18N.lang) || "fr",
         source: "landing-vasesdhonneur",
         ts: new Date().toISOString(),

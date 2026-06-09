@@ -157,6 +157,15 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     **Recette à monter** : Webhook (reçoit le JSON du formulaire) ▸ Airtable *Create record*
     (base « Suivi des Ames PDVIE ») ▸ Gmail *Send email* (séquence) ▸ (option) Google Agenda.
     Coller l'URL du webhook dans `config.js → WEBHOOK_URL`.
+- 2026-06-09 : **v4 — blueprint Make généré** :
+  - **Blueprint importable** : `integrations/make-blueprint.json` (validé contre le schéma Make).
+    Flow = Webhook ▸ Airtable *Make an API Call* (POST `/v0/{base}/Ames`, OAuth `airtable3`
+    conn. 6112403) ▸ Gmail *Send email* J0 (conn. `expertit.vasedhonneur` 6300394).
+    Org Make 5774861 / team 509614 / zone eu1. Module ids vérifiés via MCP Make.
+  - **Guide d'import** : `integrations/README.md` (étapes, schéma base, branchement `config.js`).
+  - `optin.html` envoie désormais aussi `personaLabel` (Ouvert/Blessé/Chercheur) pour Airtable.
+  - **Airtable toujours à ré-autoriser** (token expiré) pour que je crée la base et remplace
+    `{{REMPLACER_BASE_ID}}` dans le blueprint.
 
 ### Reste à faire / décisions en attente
 - **Ré-autoriser Airtable** (token expiré) → je crée la base « Suivi des Ames PDVIE ».
