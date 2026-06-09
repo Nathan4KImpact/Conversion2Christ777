@@ -8,7 +8,7 @@ window.C2C_CONFIG = {
   //    ▸ Gmail (séquence de nurturing) ▸ Google Agenda (RDV de prière).
   //    Colle ici l'URL du webhook quand le scénario Make est créé. Vide = la
   //    capture reste stockée en local + redirection (aucune perte de lead).
-  WEBHOOK_URL: "https://hook.eu1.make.com/ja5b3w4yt1i98yockyaqz7vlb8ogu55y",
+  WEBHOOK_URL: "https://hook.eu1.make.com/oitxtgf9y4kas0b4nqk762pimdpdbkln",
 
   // 2) Page de réservation des RDV de prière (Mar–Sam, 19h–20h) :
   //    lien Google Agenda « Prendre rendez-vous » ou Calendly.
