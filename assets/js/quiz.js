@@ -96,7 +96,7 @@
   }
 
   // Témoignage vidéo aligné sur le persona (cf. fichier de sélection des témoignages)
-  const RESULT_VIDEO = { p1: "1mu86jSJr9w", p2: "Ewm8bIZe8bs", p3: "2wzhSN0veAA" };
+  const RESULT_VIDEO = { p1: "8J31uVMV7C8", p2: "Ewm8bIZe8bs", p3: "uZfyE5ozyZA" };
 
   function renderResult(p) {
     const accent = { p1: "var(--p1)", p2: "var(--p2)", p3: "var(--p3)" }[p];

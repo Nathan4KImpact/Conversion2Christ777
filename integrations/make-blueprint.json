@@ -22,7 +22,7 @@
       "version": 3,
       "parameters": { "__IMTCONN__": 6112403 },
       "mapper": {
-        "url": "v0/{{REMPLACER_BASE_ID}}/Ames",
+        "url": "v0/appRLYZbJgmORxkxz/Ames",
         "method": "POST",
         "headers": [ { "key": "Content-Type", "value": "application/json" } ],
         "qs": [],

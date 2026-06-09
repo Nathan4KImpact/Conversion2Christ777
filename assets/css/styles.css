@@ -493,8 +493,8 @@ section { padding: clamp(56px, 9vw, 110px) 0; }
 /* ---------- Lite YouTube (façade : vignette cliquable → iframe à la demande) ---------- */
 .video-grid { display: grid; gap: 24px; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
-.video-grid.secondary { max-width: 760px; margin: 28px auto 0; }
-@media (min-width: 760px) { .video-grid.secondary { grid-template-columns: repeat(2, 1fr); } }
+.video-grid.secondary { margin: 28px auto 0; }
+@media (min-width: 760px) { .video-grid.secondary { grid-template-columns: repeat(3, 1fr); } }
 
 .video-card {
   background: var(--white);

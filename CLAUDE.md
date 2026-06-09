@@ -166,13 +166,27 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - `optin.html` envoie désormais aussi `personaLabel` (Ouvert/Blessé/Chercheur) pour Airtable.
   - **Airtable toujours à ré-autoriser** (token expiré) pour que je crée la base et remplace
     `{{REMPLACER_BASE_ID}}` dans le blueprint.
+- 2026-06-09 : **v5 — témoignages évangéliques + Airtable créé** :
+  - **Témoignages mis à jour** (sélection « évangélique » du porteur). Mapping persona → vidéo :
+    - P1 L'Ouvert → Alexia Vidot (`8J31uVMV7C8`)
+    - P2 Le Blessé → Pauline (`Ewm8bIZe8bs`)
+    - P3 Le Chercheur → Sauvés du New Age (`uZfyE5ozyZA`)
+    - Bonus (background musulman / quête) : Amir (`iQWHTzHjGyA`), Moussa Koné (`i36_CopqPO0`),
+      Naeem Fazal (`MOeqc5xKm6Y`). Le résultat du quiz suit le même mapping P1/P2/P3.
+  - **Airtable base créée** : « Suivi des Ames PDVIE » `appRLYZbJgmORxkxz`, table `Ames`
+    `tblqFCCV7BAO8IJNL`. Champs : Prénom (primaire), Email, WhatsApp, Persona (Ouvert/Blessé/
+    Chercheur), Langue (FR/EN), Source, Étape tunnel (Lead/Prière faite/RDV pris/Affermi),
+    Statut, Date d'entrée, RDV prière, Référent, Notes. Blueprint Make mis à jour avec le vrai
+    base id. ⚠️ L'API Airtable ne sait pas *supprimer* un champ → les défauts ont été renommés
+    (Name→Prénom, Assignee→Référent, Status→Statut) ; restes (Attachments, Attachment Summary,
+    + choix par défaut de Statut) à nettoyer à la main dans l'UI si souhaité.
 
 ### Reste à faire / décisions en attente
-- **Ré-autoriser Airtable** (token expiré) → je crée la base « Suivi des Ames PDVIE ».
-- **Créer le scénario Make**, coller son webhook dans `config.js`. Idem `BOOKING_URL` (Agenda/Calendly).
+- **Créer/activer le scénario Make** (import `integrations/make-blueprint.json`) → coller le
+  webhook dans `config.js → WEBHOOK_URL`. Idem `BOOKING_URL` (Agenda/Calendly).
 - Déposer le **logo officiel** (PNG/SVG) dans `assets/img/` → remplacer le SVG recréé.
-- **Confirmer le texte exact de la prière du salut** (depuis la vidéo `-Fn0ScYZ7PY`).
-- Valider les **vignettes/titres** des témoignages (et l'ordre persona ↔ vidéo).
-- Brancher la **capture** au CRM (Airtable) + automatisation (Make) + nurturing (Gmail).
+- **Confirmer le texte exact de la prière du salut** (vidéo `-Fn0ScYZ7PY`).
+- Nettoyer à la main les champs Airtable par défaut résiduels (limite API).
+- Séquence nurturing J1→J7 (Automation Airtable ou 2ᵉ scénario Make planifié).
 - Décider de l'**hébergement** (GitHub Pages / Netlify / Vercel) et du **nom de domaine**.
-- Construire les **étapes 5-8** (séquence nurturing, onboarding nouveau converti, intégration).
+- Construire les **étapes 5-8** (onboarding nouveau converti, intégration/rétention).

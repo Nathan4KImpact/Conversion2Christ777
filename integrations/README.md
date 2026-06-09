@@ -17,9 +17,8 @@ optin.html ──POST JSON──► Webhook Make ──► Airtable « Suivi des
    - **Webhook** : il crée un webhook nommé *« PDVIE Landing Webhook »* → **copie son URL**.
    - **Airtable** : connexion OAuth existante (`airtable3`).
    - **Gmail** : connexion `expertit.vasedhonneur@gmail.com` (modifiable).
-4. Dans le module **Airtable – Make an API Call**, remplace `{{REMPLACER_BASE_ID}}`
-   par l'**ID de la base** « Suivi des Ames PDVIE » (commence par `app…`).
-   *(Je le ferai automatiquement quand tu auras ré-autorisé Airtable et que j'aurai créé la base.)*
+4. Dans le module **Airtable – Make an API Call**, l'URL pointe déjà sur la base
+   créée : `v0/appRLYZbJgmORxkxz/Ames` (base « Suivi des Ames PDVIE », table `Ames`).
 5. **Active** le scénario (toggle ON).
 
 ## 2) Brancher le site
@@ -44,7 +43,9 @@ Le formulaire `optin.html` envoie alors ce JSON à chaque nouveau contact :
 }
 ```
 
-## 3) Base Airtable attendue — « Suivi des Ames PDVIE », table `Ames`
+## 3) Base Airtable — « Suivi des Ames PDVIE » ✅ créée
+
+Base `appRLYZbJgmORxkxz` · table `Ames` `tblqFCCV7BAO8IJNL`. Champs en place :
 
 | Champ | Type | Notes |
 |-------|------|-------|
