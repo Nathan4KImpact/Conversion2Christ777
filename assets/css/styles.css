@@ -5,23 +5,30 @@
    ========================================================================= */
 
 :root {
-  /* Palette */
-  --gold: #c8a04a;
-  --gold-light: #e6c878;
+  /* Palette officielle Vases d'Honneur (déduite des logos fournis) */
+  --teal: #1a6e60;        /* vert sarcelle / canard — couleur de marque */
+  --teal-soft: #155a4f;
+  --teal-deep: #0f4d43;
+  --red: #b51b2d;         /* rouge de l'accent du logo */
+  --gold: #c9a23a;        /* or du monogramme */
+  --gold-light: #e3c573;
   --gold-deep: #a07c2e;
-  --navy: #0e1b33;
-  --navy-soft: #14213f;
-  --navy-700: #1c2c4d;
+
+  /* Alias historiques → pointent désormais vers le vert sarcelle (fond sombre de marque) */
+  --navy: #0f4d43;
+  --navy-soft: #155a4f;
+  --navy-700: #1a6e60;
+
   --cream: #faf6ef;
   --cream-2: #f3ece0;
   --ink: #1a1a1a;
   --muted: #5b6478;
   --white: #ffffff;
 
-  /* Accents par persona */
-  --p1: #4a7fc8; /* L'Ouvert — bleu ciel/paix */
+  /* Accents par persona (distincts de la marque) */
+  --p1: #2f7fb5; /* L'Ouvert — bleu ciel/paix */
   --p2: #c85a7f; /* Le Blessé — rose/guérison */
-  --p3: #6ab59a; /* Le Chercheur — vert/lumière */
+  --p3: #7a5cc0; /* Le Chercheur — violet/spiritualité */
 
   /* Typo */
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -164,7 +171,8 @@ img { max-width: 100%; display: block; }
   color: var(--navy);
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.02rem;
+  letter-spacing: 0.02em;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
 }
 .brand-name { font-family: var(--font-serif); font-size: 1.18rem; font-weight: 600; line-height: 1.05; }
@@ -472,3 +480,61 @@ section { padding: clamp(56px, 9vw, 110px) 0; }
 .hidden { display: none !important; }
 
 [hidden] { display: none !important; }
+
+/* ---------- Bouton WhatsApp ---------- */
+.btn-whatsapp { background: #25d366; color: #07331f; }
+.btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -16px rgba(37, 211, 102, 0.7); }
+
+/* Accent rouge sous le logo (rappel de la charte) */
+.brand-name { position: relative; }
+.brand-bar { display: inline-block; width: 30px; height: 4px; background: var(--red); border-radius: 2px; margin-top: 4px; }
+
+/* ---------- Lite YouTube (façade : vignette cliquable → iframe à la demande) ---------- */
+.video-grid { display: grid; gap: 24px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
+.video-grid.secondary { max-width: 760px; margin: 28px auto 0; }
+@media (min-width: 760px) { .video-grid.secondary { grid-template-columns: repeat(2, 1fr); } }
+
+.video-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  display: flex; flex-direction: column;
+  border-top: 4px solid var(--accent, var(--gold));
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.video-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+
+.lite-yt {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--teal), var(--teal-deep));
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  display: block;
+  overflow: hidden;
+}
+.lite-yt img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lite-yt-play {
+  position: absolute; inset: 0; margin: auto;
+  width: 70px; height: 50px;
+  border: 0; border-radius: 14px;
+  background: rgba(181, 27, 45, 0.92); color: #fff;
+  font-size: 1.3rem; cursor: pointer;
+  display: grid; place-items: center;
+  transition: transform 0.25s, background 0.25s;
+  box-shadow: 0 8px 22px -6px rgba(0, 0, 0, 0.5);
+}
+.lite-yt:hover .lite-yt-play, .lite-yt:focus-visible .lite-yt-play { transform: scale(1.1); background: var(--red); }
+.lite-yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.video-cap { padding: 18px 20px; }
+.video-cap .vtag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent, var(--gold-deep)); }
+.video-cap h4 { font-family: var(--font-serif); font-size: 1.3rem; margin: 0.12em 0 0.2em; color: var(--navy); }
+.video-cap p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+.video-single { max-width: 560px; margin: 0 auto 8px; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-soft); }
+.more-link { color: var(--gold-deep); font-weight: 700; }

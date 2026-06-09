@@ -9,7 +9,7 @@
 const I18N = {
   fr: {
     /* --- Nav / global --- */
-    "brand.sub": "Vases d'Honneur",
+    "brand.sub": "Porteurs de vie",
     "nav.cta": "Je commence",
     "lang.fr": "FR",
     "lang.en": "EN",
@@ -69,18 +69,22 @@ const I18N = {
     "offer.priceNote": "« C'est par la grâce que vous êtes sauvés, par le moyen de la foi. Cela ne vient pas de vous, c'est le don de Dieu. » — Éphésiens 2:8",
     "offer.cta": "Je veux recevoir ce don",
 
-    /* --- Témoignages --- */
+    /* --- Témoignages (vidéos YouTube réelles) --- */
     "testi.eyebrow": "Des vies réellement transformées",
     "testi.title": "Ils cherchaient. Ils ont trouvé.",
-    "testi1.quote": "J'avais tout essayé pour calmer mon angoisse. La première fois que j'ai vraiment prié, j'ai ressenti une paix que je ne savais même pas possible.",
-    "testi1.author": "Sarah",
-    "testi1.role": "Ancienne en quête spirituelle",
-    "testi2.quote": "Je traînais mes blessures d'enfance depuis 30 ans. Aujourd'hui je suis libre. Pas parce que j'ai oublié, mais parce que j'ai été guéri.",
-    "testi2.author": "David",
-    "testi2.role": "Restauré",
-    "testi3.quote": "Je croyais déjà connaître Dieu. Je le connaissais de loin. Maintenant je marche avec Lui chaque jour. Tout a changé.",
-    "testi3.author": "Esther",
-    "testi3.role": "Du savoir à la rencontre",
+    "testi.subtitle": "Des histoires vraies, en vidéo. Clique sur celle qui te ressemble.",
+    "vid.myriam.name": "Myriam — ex-musulmane",
+    "vid.myriam.line": "« J'ai rencontré Jésus, et toute mon identité a été bouleversée. »",
+    "vid.pauline.name": "Pauline",
+    "vid.pauline.line": "« J'avais de grosses crises d'angoisse… Christ m'a relevée. »",
+    "vid.newage.name": "Du New Age à Jésus",
+    "vid.newage.line": "« Je cherchais la lumière dans les énergies. Je l'ai trouvée en Personne. »",
+    "vid.samir.name": "Samir — miraculé par Christ",
+    "vid.samir.line": "« J'ai demandé un signe à Jésus. Il a répondu. »",
+    "vid.reiki.name": "Du Reiki à Christ",
+    "vid.reiki.line": "« Ces pratiques promettaient la paix ; seul Jésus l'a donnée. »",
+    "testi.more": "Plus de témoignages",
+    "testi.melanie": "Lire le témoignage de Mélanie (rencontre & restauration) →",
 
     /* --- CTA final --- */
     "ctaFinal.eyebrow": "Prêt(e) pour la suite ?",
@@ -166,6 +170,7 @@ const I18N = {
     /* --- Prière / décision --- */
     "pray.eyebrow": "Le moment de la décision",
     "pray.title": "La prière qui change tout",
+    "pray.videoNote": "Regarde et laisse-toi guider par cette prière, puis répète-la avec ton cœur.",
     "pray.lead": "Il n'y a pas de formule magique. Dieu regarde ton cœur, pas tes mots parfaits. Si tu le désires sincèrement, dis cette prière à voix haute — elle t'appartient&nbsp;:",
     "pray.prayer": "Seigneur Jésus,<br>je reconnais que j'ai besoin de Toi.<br>Merci d'avoir donné ta vie pour moi.<br>Aujourd'hui, je te donne la mienne.<br>Pardonne-moi, entre dans mon cœur,<br>et fais de moi un vase d'honneur.<br>Je veux te suivre, dès maintenant.<br>Amen.",
     "pray.after.title": "Tu viens de prier&nbsp;? Alors écoute bien…",
@@ -175,7 +180,7 @@ const I18N = {
   },
 
   en: {
-    "brand.sub": "Vessels of Honor",
+    "brand.sub": "Carriers of life",
     "nav.cta": "Get started",
     "lang.fr": "FR",
     "lang.en": "EN",
@@ -233,15 +238,19 @@ const I18N = {
 
     "testi.eyebrow": "Truly transformed lives",
     "testi.title": "They searched. They found.",
-    "testi1.quote": "I had tried everything to calm my anxiety. The first time I truly prayed, I felt a peace I didn't even know was possible.",
-    "testi1.author": "Sarah",
-    "testi1.role": "Former spiritual seeker",
-    "testi2.quote": "I dragged my childhood wounds around for 30 years. Today I'm free. Not because I forgot, but because I was healed.",
-    "testi2.author": "David",
-    "testi2.role": "Restored",
-    "testi3.quote": "I thought I already knew God. I knew Him from afar. Now I walk with Him every day. Everything changed.",
-    "testi3.author": "Esther",
-    "testi3.role": "From knowing to meeting",
+    "testi.subtitle": "Real stories, on video. Click the one that resembles you.",
+    "vid.myriam.name": "Myriam — former Muslim",
+    "vid.myriam.line": "“I met Jesus, and my whole identity was turned upside down.”",
+    "vid.pauline.name": "Pauline",
+    "vid.pauline.line": "“I had severe anxiety attacks… Christ lifted me up.”",
+    "vid.newage.name": "From New Age to Jesus",
+    "vid.newage.line": "“I sought light in energies. I found it in a Person.”",
+    "vid.samir.name": "Samir — healed by Christ",
+    "vid.samir.line": "“I asked Jesus for a sign. He answered.”",
+    "vid.reiki.name": "From Reiki to Christ",
+    "vid.reiki.line": "“Those practices promised peace; only Jesus gave it.”",
+    "testi.more": "More testimonies",
+    "testi.melanie": "Read Mélanie's testimony (encounter & restoration) →",
 
     "ctaFinal.eyebrow": "Ready for what's next?",
     "ctaFinal.title": "The first step takes 2 minutes",
@@ -320,6 +329,7 @@ const I18N = {
 
     "pray.eyebrow": "The moment of decision",
     "pray.title": "The prayer that changes everything",
+    "pray.videoNote": "Watch and let this prayer guide you, then repeat it with your heart.",
     "pray.lead": "There's no magic formula. God looks at your heart, not your perfect words. If you sincerely desire it, say this prayer out loud — it's yours:",
     "pray.prayer": "Lord Jesus,<br>I admit that I need You.<br>Thank You for giving Your life for me.<br>Today, I give You mine.<br>Forgive me, come into my heart,<br>and make me a vessel of honor.<br>I want to follow You, starting now.<br>Amen.",
     "pray.after.title": "Did you just pray? Then listen closely…",

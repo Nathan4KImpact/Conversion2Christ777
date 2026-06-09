@@ -113,13 +113,30 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - Langues : **bilingue FR / EN** (bascule mémorisée, `assets/js/i18n.js`).
 - 2026-06-08 : **Construction v1 du tunnel** livrée :
   - Pages : `index.html` (landing 8 sections), `quiz.html`, `optin.html`, `merci.html`, `prier.html`.
-  - Design system « Or & Nuit » re-brandable via variables `:root` (`assets/css/styles.css`).
+  - Design system re-brandable via variables `:root` (`assets/css/styles.css`).
   - Capture lead = stockage local + redirection (à brancher : Airtable/Make/Gmail/Agenda).
+- 2026-06-09 : **v2 — charte officielle + vidéos + contacts** :
+  - **Charte** déduite des 3 logos fournis → palette **vert sarcelle `#1a6e60` + or `#c9a23a` + rouge `#b51b2d`**
+    (variables `:root`). Tagline de marque : « Porteurs de vie ». Monogramme « VH ».
+    *NB : logo officiel en image non persisté ; à déposer dans `assets/img/` puis câbler.*
+  - **Témoignages vidéo** (façade « Lite YouTube » → lecture directe au clic, `assets/js/video.js`,
+    youtube-nocookie, RGPD-friendly). Mapping persona → vidéo :
+    - P1 L'Ouvert → Myriam (`1mu86jSJr9w`)
+    - P2 Le Blessé → Pauline (`Ewm8bIZe8bs`)
+    - P3 Le Chercheur → New Age→Jésus (`2wzhSN0veAA`)
+    - Bonus : Samir (`oGdh6Pierzk`), Reiki→Christ (`yDTti0rblCk`), Mélanie (article familychretienne).
+    - Quiz : le résultat affiche **la vidéo correspondant au persona détecté**.
+  - **Prière du salut** : vidéo `-Fn0ScYZ7PY` intégrée sur `prier.html`.
+    ⚠️ Transcription auto impossible (YouTube bloque le fetch du sandbox, HTTP 403) → le texte
+    écrit affiché reste un **brouillon fidèle à confirmer** par le porteur (copier-coller des mots exacts).
+  - **Contacts réels câblés** : email `nathanaelfongang@gmail.com`, Facebook `facebook.com/r.n.t.137`,
+    groupe WhatsApp « Les Amis de Jésus » (`chat.whatsapp.com/0vazCnCIMag0OAsYUtuO1z`),
+    WhatsApp perso `+33 7 58 37 22 68` (`wa.me/33758372268`), chaîne YouTube Vases d'Honneur.
 
 ### Reste à faire / décisions en attente
-- Fournir la **charte officielle** (logo, couleurs exactes, polices) de l'antenne → re-brander `:root`.
-- Remplacer les **placeholders** : email de contact, liens réseaux sociaux, lien groupe WhatsApp.
-- Valider/ajuster les **témoignages** (réels vs illustratifs) et la **prière du salut**.
+- Déposer le **logo officiel** (PNG/SVG) dans `assets/img/` → remplacer le monogramme CSS.
+- **Confirmer le texte exact de la prière du salut** (depuis la vidéo `-Fn0ScYZ7PY`).
+- Valider les **vignettes/titres** des témoignages (et l'ordre persona ↔ vidéo).
 - Brancher la **capture** au CRM (Airtable) + automatisation (Make) + nurturing (Gmail).
 - Décider de l'**hébergement** (GitHub Pages / Netlify / Vercel) et du **nom de domaine**.
 - Construire les **étapes 5-8** (séquence nurturing, onboarding nouveau converti, intégration).

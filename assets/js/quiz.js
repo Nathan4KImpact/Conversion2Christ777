@@ -95,12 +95,25 @@
     renderResult(p);
   }
 
+  // Témoignage vidéo aligné sur le persona (cf. fichier de sélection des témoignages)
+  const RESULT_VIDEO = { p1: "1mu86jSJr9w", p2: "Ewm8bIZe8bs", p3: "2wzhSN0veAA" };
+
   function renderResult(p) {
     const accent = { p1: "var(--p1)", p2: "var(--p2)", p3: "var(--p3)" }[p];
     els.result.style.setProperty("--accent", accent);
     document.getElementById("result-badge").textContent = t("result." + p + ".badge");
     document.getElementById("result-title").textContent = t("result." + p + ".title");
     document.getElementById("result-text").textContent = t("result." + p + ".text");
+
+    // Charge la façade vidéo du témoignage correspondant
+    const rv = document.getElementById("result-video");
+    if (rv && !rv.dataset.loaded) {
+      const id = RESULT_VIDEO[p];
+      rv.dataset.id = id;
+      const img = rv.querySelector("img");
+      if (img) { img.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg"; img.alt = t("result." + p + ".title"); }
+      if (window.C2C_Video) window.C2C_Video.init(rv.parentNode);
+    }
   }
 
   // Re-render textes si la langue change pendant le quiz
