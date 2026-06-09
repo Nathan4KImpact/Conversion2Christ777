@@ -36,7 +36,7 @@
               "mapper": {
                 "to": [ "{{1.Email}}" ],
                 "subject": "L'histoire de quelqu'un qui te ressemble",
-                "html": "<p>Bonjour {{1.Prénom}},</p><p>Aujourd'hui, je veux juste te partager une histoire. Pauline avait de grosses crises d'angoisse. Alexia se disait athée. D'autres cherchaient la paix dans les énergies… avant de la trouver, enfin, en une Personne.</p><p>Regarde leurs témoignages (2 minutes, ça peut tout changer) : <a href=\"[LIEN_SITE]/index.html#testimonials\">les histoires de vie</a></p><p>Nathanaël — Vases d'Honneur · « Porteurs de vie »</p>"
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Aujourd'hui, je veux juste te partager une histoire. Pauline avait de grosses crises d'angoisse. Alexia se disait athée. D'autres cherchaient la paix dans les énergies… avant de la trouver, enfin, en une Personne.</p><p>Regarde leurs témoignages (2 minutes, ça peut tout changer) : <a href=\"{URL}/index.html#testimonials\">les histoires de vie</a></p><p>Nathanaël — Vases d'Honneur · « Porteurs de vie »</p>"
               },
               "metadata": { "designer": { "x": 600, "y": -300 } }
             }
@@ -76,7 +76,7 @@
               "mapper": {
                 "to": [ "{{1.Email}}" ],
                 "subject": "La plus belle nouvelle que tu puisses entendre aujourd'hui",
-                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si, là où tu es, tu pouvais commencer une vie nouvelle ? Pas une technique. Une rencontre, avec Jésus, qui t'offre le Salut, la Guérison et la Paix par son Esprit.</p><p>Quand tu seras prêt(e), une prière toute simple suffit — je l'ai préparée pour toi, avec une vidéo : <a href=\"[LIEN_SITE]/prier.html\">prier maintenant</a></p><p>Nathanaël — Vases d'Honneur</p>"
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si, là où tu es, tu pouvais commencer une vie nouvelle ? Pas une technique. Une rencontre, avec Jésus, qui t'offre le Salut, la Guérison et la Paix par son Esprit.</p><p>Quand tu seras prêt(e), une prière toute simple suffit — je l'ai préparée pour toi, avec une vidéo : <a href=\"{URL}/prier.html\">prier maintenant</a></p><p>Nathanaël — Vases d'Honneur</p>"
               },
               "metadata": { "designer": { "x": 600, "y": 100 } }
             }
