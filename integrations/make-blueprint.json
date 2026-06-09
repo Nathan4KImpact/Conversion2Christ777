@@ -39,20 +39,7 @@
                 "method": "POST",
                 "headers": [ { "key": "Content-Type", "value": "application/json" } ],
                 "qs": [],
-                "body": {
-                  "typecast": true,
-                  "fields": {
-                    "Prénom": "{{1.firstname}}",
-                    "Email": "{{1.email}}",
-                    "WhatsApp": "{{1.whatsapp}}",
-                    "Persona": "{{1.personaLabel}}",
-                    "Langue": "{{upper(1.lang)}}",
-                    "Source": "{{1.source}}",
-                    "Étape tunnel": "Lead",
-                    "Statut": "Nouveau",
-                    "Date d'entrée": "{{formatDate(now; \"YYYY-MM-DD\")}}"
-                  }
-                }
+                "body": "{\"typecast\":true,\"fields\":{\"Prénom\":\"{{1.firstname}}\",\"Email\":\"{{1.email}}\",\"WhatsApp\":\"{{1.whatsapp}}\",\"Persona\":\"{{1.personaLabel}}\",\"Langue\":\"{{upper(1.lang)}}\",\"Source\":\"{{1.source}}\",\"Étape tunnel\":\"Lead\",\"Statut\":\"Nouveau\",\"Date d'entrée\":\"{{formatDate(now; \"YYYY-MM-DD\")}}\"}}"
               },
               "metadata": { "designer": { "x": 600, "y": -150 } }
             },
@@ -86,23 +73,7 @@
                 "method": "PATCH",
                 "headers": [ { "key": "Content-Type", "value": "application/json" } ],
                 "qs": [],
-                "body": {
-                  "performUpsert": { "fieldsToMergeOn": [ "Email" ] },
-                  "typecast": true,
-                  "records": [
-                    {
-                      "fields": {
-                        "Prénom": "{{1.firstname}}",
-                        "Email": "{{1.email}}",
-                        "WhatsApp": "{{1.whatsapp}}",
-                        "Langue": "{{upper(1.lang)}}",
-                        "Source": "{{1.source}}",
-                        "Étape tunnel": "RDV pris",
-                        "RDV prière": "{{1.rdvStartISO}}"
-                      }
-                    }
-                  ]
-                }
+                "body": "{\"performUpsert\":{\"fieldsToMergeOn\":[\"Email\"]},\"typecast\":true,\"records\":[{\"fields\":{\"Prénom\":\"{{1.firstname}}\",\"Email\":\"{{1.email}}\",\"WhatsApp\":\"{{1.whatsapp}}\",\"Langue\":\"{{upper(1.lang)}}\",\"Source\":\"{{1.source}}\",\"Étape tunnel\":\"RDV pris\",\"RDV prière\":\"{{1.rdvStartISO}}\"}}]}"
               },
               "metadata": { "designer": { "x": 600, "y": 150 } }
             },
