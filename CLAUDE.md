@@ -195,11 +195,17 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     → Router → Gmail J1/J3/J5/J7. À planifier 1×/jour. Validé schéma Make.
   - **Airtable** : champ formule **`Jours depuis entrée`** ajouté (`DATETIME_DIFF(TODAY();{Date d'entrée};'days')`).
 
+- 2026-06-09 : **v7 — logo officiel + hébergement prêt** :
+  - **Logo officiel** déposé : `assets/img/logo.png` (téléchargé du Drive via MCP, « logo vdh.png »,
+    799×491 RGBA). Affiché sur **pastille blanche** au ratio naturel (lisible sur en-tête sombre) ;
+    wordmark texte masqué (le logo contient déjà « VASES D'HONNEUR »). Repli SVG conservé.
+  - **`config.js`** : nouveau `WEBHOOK_URL` = `https://hook.eu1.make.com/oitxtgf9y4kas0b4nqk762pimdpdbkln`.
+  - **Hébergement** : `.nojekyll` + chemins relatifs vérifiés ; guide Netlify/GitHub Pages dans le README.
+
 ### Reste à faire / décisions en attente
+- **Mettre le site en ligne** (Netlify ou GitHub Pages) → récupérer l'URL publique.
 - **Importer + activer les 2 scénarios Make** (capture & nurturing) ; planifier le nurturing 1×/jour ;
   remplacer `[LIEN_SITE]` dans les emails J1/J5 par l'URL publique.
-- Déposer le **logo officiel** (PNG/SVG) dans `assets/img/` → remplacer le SVG recréé.
 - **Confirmer le texte exact de la prière du salut** (vidéo `-Fn0ScYZ7PY`).
 - Nettoyer à la main les champs Airtable par défaut résiduels (limite API).
-- Décider de l'**hébergement** (GitHub Pages / Netlify / Vercel) et du **nom de domaine**.
 - Construire les **étapes 5-8** (onboarding nouveau converti, intégration/rétention).
