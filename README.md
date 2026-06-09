@@ -58,3 +58,27 @@ Prochaine étape : connecter à **Airtable** (CRM des âmes), **Make.com**
 python3 -m http.server 8000
 # puis ouvrir http://localhost:8000
 ```
+
+## 🌐 Mettre en ligne (gratuit)
+
+Le site est 100 % statique (aucun build) → hébergeable tel quel. Deux options gratuites.
+
+### Option A — Netlify (URL la plus propre, HTTPS auto, recommandé)
+1. Crée un compte gratuit sur [netlify.com](https://netlify.com) (« Sign up with GitHub »).
+2. **Add new site ▸ Import an existing project ▸ GitHub** → choisis ce dépôt.
+3. Réglages : **Branch** = `claude/church-landing-conversion-funnel-llg2qq` (ou `main`),
+   **Build command** = *(vide)*, **Publish directory** = `.` (racine) → **Deploy**.
+4. URL du type `https://vases-honneur.netlify.app` (renommable dans *Site settings ▸ Domain*).
+   Auto-redéploiement à chaque push.
+
+### Option B — GitHub Pages (zéro compte en plus)
+1. Dépôt GitHub → **Settings ▸ Pages**.
+2. **Source** = *Deploy from a branch* → **Branch** = `claude/church-landing-conversion-funnel-llg2qq`,
+   dossier **`/ (root)`** → **Save**.
+3. Au bout d'~1 min : `https://nathan4kimpact.github.io/Conversion2Christ777/`
+   (le `.nojekyll` à la racine garantit que `assets/` est servi tel quel).
+
+### Après la mise en ligne
+- Remplace `[LIEN_SITE]` par l'URL publique dans les emails Make (J1, J5) et les brouillons Gmail.
+- (Option) achète un nom de domaine et branche-le (Netlify : *Domain ▸ Add custom domain*).
+
