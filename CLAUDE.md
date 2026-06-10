@@ -253,6 +253,17 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     « offre irrésistible » de la landing (`offer.videoTitle/Sub`).
   - **Profils de sourcing élargis 3 → 6** (cf. §2 et §2bis) — feuille de route landing/témoignages.
 
+- 2026-06-10 : **v10 — étapes 7-8 du discipulat construites** :
+  - **`nouveau-ne.html`** (Étape 7 — « Kit du nouveau-né en Christ ») : assurance du salut,
+    **5 premiers pas**, **plan de lecture 7 jours** (Jean 3 → Matthieu 6), invitation au **baptême**
+    (WhatsApp pré-rempli), **accompagnement** (groupe + mentor WhatsApp), lien vers l'étape 8.
+  - **`grandir.html`** (Étape 8 — intégration) : rejoindre une **cellule/maison**, parcours
+    **« Fondations de la foi »** (6 modules), communauté, devenir « porteur de vie ».
+  - **Flux** : `prier.html` (a prié) → `nouveau-ne.html` → `grandir.html`. Liens ajoutés au footer.
+  - i18n FR/EN complet (clés `nn.*`, `gr.*`).
+  - *(À venir)* : capture CRM du converti (`type:"convert"` → Étape `Prière faite`) si souhaité ;
+    contenu détaillé des 6 modules ; planning baptêmes.
+
 ### Reste à faire / décisions en attente
 - *(Optionnel)* **Airtable Automation** « anti-rétrogradation cosmétique » : *Quand une fiche a
   `Étape tunnel`=Lead ET `RDV prière` non vide → repasser `Étape tunnel`=RDV pris*. (L'API ne permet
