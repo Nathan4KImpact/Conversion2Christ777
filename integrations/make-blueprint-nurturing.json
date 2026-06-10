@@ -9,7 +9,7 @@
       "mapper": {
         "base": "appRLYZbJgmORxkxz",
         "table": "tblqFCCV7BAO8IJNL",
-        "formula": "AND({Étape tunnel}='Lead', OR({Jours depuis entrée}=1,{Jours depuis entrée}=3,{Jours depuis entrée}=5,{Jours depuis entrée}=7))",
+        "formula": "AND({Étape tunnel}='Lead', {RDV prière}=BLANK(), OR({Jours depuis entrée}=1,{Jours depuis entrée}=3,{Jours depuis entrée}=5,{Jours depuis entrée}=7))",
         "maxRecords": 100,
         "useColumnId": false
       },

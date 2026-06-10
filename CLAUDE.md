@@ -27,27 +27,64 @@ pour l'église / le ministère **Vases d'Honneur**.
 
 ---
 
-## 2. Les 3 lignes éditoriales / personas (sourcing)
+## 2. Profils de sourcing / personas
 
-Le trafic vient de 3 segments d'audience distincts. La landing doit parler à chacun.
+> **MAJ 2026-06-10 (v8) :** les profils de sourcing sont **élargis de 3 à 6 segments**
+> (cf. fichier porteur « Sélection très ciblée de témoignages EVANGELIQUES, v3 »).
+> La landing garde aujourd'hui **3 portes** (P1/P2/P3) ; l'élargissement ci-dessous est la
+> **feuille de route** pour étendre les portes + les témoignages (voir §2bis).
 
 ### Persona 1 — « L'Ouvert » (background chrétien favorable)
 - Déjà ouvert au message religieux chrétien.
 - Réagit aux contenus d'évangélisation (flyers, statuts FB, WTA, réels).
 - **Soif :** approfondir, se (re)connecter, passer du « savoir » à une rencontre vivante.
 
-### Persona 2 — « Le Blessé / En quête de sens » (crises existentielles)
-- Crises existentielles, identitaires ; victimes de traumas ou d'abus dans l'enfance.
+### Persona 2 — « Le Blessé / En quête de sens » (crises, traumas, abus, identité, LGBTQI)
+- Crises existentielles, identitaires ; victimes de traumas ou d'abus (y compris abus sexuel) ;
+  questionnements LGBTQI ; blessures de l'âme.
 - Besoin de parler, portent des fardeaux.
-- **Soif :** retrouver l'espoir, la joie de vivre, un sens à la vie, la guérison intérieure.
+- **Soif :** retrouver l'espoir, la joie de vivre, un sens, la guérison intérieure, la liberté.
 
-### Persona 3 — « Le Chercheur spirituel » (spiritualités alternatives)
+### Persona 3 — « Le Chercheur spirituel » (New Age / spiritualités à la carte)
 - En quête de lumière/spiritualité, tombé dans le pseudo-développement personnel,
-  les pseudo-thérapies orientales, la « manipulation des énergies ».
+  les pseudo-thérapies orientales, la « manipulation des énergies », l'occultisme.
 - **Soif :** paix intérieure authentique, vraie puissance/identité spirituelle — sans illusion.
 
-> Convergence : chacun cherche **paix, sens, guérison, puissance/identité**. L'Évangile y répond
-> en Personne — **Jésus-Christ** — et non par une technique.
+### Persona 4 — « Le Musulman en quête » (background musulman) — *nouveau segment*
+- Arrière-plan musulman, curieux de Jésus / en questionnement sur l'identité et la foi.
+- **Soif :** vérité, rencontre personnelle, paix — sans rupture imposée mais assumée.
+
+### Persona 5 — « L'Athée / le Sceptique » (rationnel) — *nouveau segment*
+- Athée ou sceptique, raisonne, demande des preuves / une logique.
+- **Soif :** sens, cohérence intellectuelle, réponse au « pourquoi » — un Évangile clair et argumenté.
+
+> Convergence : chacun cherche **paix, sens, guérison, vérité, identité, liberté**. L'Évangile y
+> répond en Personne — **Jésus-Christ** — et non par une technique.
+
+---
+
+## 2bis. Bibliothèque de témoignages par profil (source porteur, à exploiter)
+
+> À utiliser pour étendre la section témoignages (mettre en **plus grand frame** les 1-2 meilleurs
+> par bloc) et alimenter réseaux sociaux / nurturing.
+
+- **P1 — Background chrétien** : TopChrétien « Une lettre d'amour » (connaitredieu.com/une-lettre-damour),
+  « Rencontre avec Jésus » (topmessages). Pauline (`Ewm8bIZe8bs`), Alexia Vidot (`8J31uVMV7C8`).
+- **P4 — Background musulman** : playlists « Ali, Khalil, Khosrow… » FR (`QeDikeC5HoQ`) / EN (`-ePianyqDxc`).
+  Amir (`iQWHTzHjGyA`), Moussa Koné (`i36_CopqPO0`), Naeem Fazal (`MOeqc5xKm6Y`).
+- **P2 — Blessés / LGBTQI / abus / identité** : « Cherche la révélation… » EMCI (`cmqgfaNQhFc`) ;
+  Janick Christen « Je croyais être un homme » (`XZlNGJhJgAA`, trans4freedom.org) ;
+  Pauline (`Ewm8bIZe8bs`) ; Sarah « revivre après le viol » INSIDE #3 (`n_gPWhglLZo`).
+  Pour aller plus loin : TopMessages « Guérison des blessures de l'âme ».
+- **P3 — New Age / spiritualités** : Marlène EMCI « Jésus-Christ m'a sortie du New Age » ;
+  « Jésus les a sauvés du NEW AGE ! » (`uZfyE5ozyZA`) ; délivrances New Age (`wIk15HWS_5s`,
+  `8QcTKIK5tJM`, `0whYtW3gdA0`) ; EMCI « La vérité sur le Nouvel Âge ». Paix/liberté : EMCI
+  « Comment trouver la vraie paix intérieure ? », David Pothier « Seul Jésus… la véritable liberté ».
+- **P5 — Athées / sceptiques** : « Quel est le plan de salut de Dieu ? » (`ByytAcqXuMM`) ;
+  « Comment recevoir le SALUT » (`n3KyPBFnIjU`) ; « Qu'est-ce que le SALUT ? » Joël Spinks
+  (`P0xEw4fRGJE`) ; fr.bibletraining.com/gospel-plan-of-salvation.
+- **Présentation claire de l'Évangile (transverse)** : `tYyux-wMzIw` — **intégrée** dans le bloc
+  « offre irrésistible » de la landing.
 
 ---
 
@@ -201,11 +238,28 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     wordmark texte masqué (le logo contient déjà « VASES D'HONNEUR »). Repli SVG conservé.
   - **`config.js`** : nouveau `WEBHOOK_URL` = `https://hook.eu1.make.com/oitxtgf9y4kas0b4nqk762pimdpdbkln`.
   - **Hébergement** : `.nojekyll` + chemins relatifs vérifiés ; guide Netlify/GitHub Pages dans le README.
+- 2026-06-10 : **v8 — site en ligne + tunnel Make opérationnel + évolutions** :
+  - **EN LIGNE** : https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app (Netlify, auto-deploy).
+  - **Scénario 1 (capture & RDV) opérationnel** après débogage : (a) body Airtable en **chaîne JSON**
+    (corrige 422 « Could not parse request body ») ; (b) URL par **ID de table** ;
+    (c) **les 2 branches en upsert** sur `Email` (POST→PATCH+performUpsert) → **1 ligne par email**.
+    Cause finale du 403 : la connexion utilisée par les modules n'avait pas **à la fois** le scope
+    `data.records:write` **et** l'accès à la base. ➜ garder **« My Airtable OAuth connection »**
+    (écriture) + lui accorder la base « Suivi des Ames PDVIE ».
+  - **Garde-fou anti-rétrogradation** : la **formule de nurturing** exclut désormais les fiches déjà
+    réservées : `AND({Étape tunnel}='Lead', {RDV prière}=BLANK(), OR(jours 1/3/5/7))`.
+    *(Option cosmétique pour préserver la valeur de l'étape : Airtable Automation — voir reste à faire.)*
+  - **Vidéo « Évangile clairement expliqué »** (`tYyux-wMzIw`) intégrée en façade Lite-YT dans le bloc
+    « offre irrésistible » de la landing (`offer.videoTitle/Sub`).
+  - **Profils de sourcing élargis 3 → 6** (cf. §2 et §2bis) — feuille de route landing/témoignages.
 
 ### Reste à faire / décisions en attente
-- **Mettre le site en ligne** (Netlify ou GitHub Pages) → récupérer l'URL publique.
-- **Importer + activer les 2 scénarios Make** (capture & nurturing) ; planifier le nurturing 1×/jour ;
-  remplacer `[LIEN_SITE]` dans les emails J1/J5 par l'URL publique.
+- *(Optionnel)* **Airtable Automation** « anti-rétrogradation cosmétique » : *Quand une fiche a
+  `Étape tunnel`=Lead ET `RDV prière` non vide → repasser `Étape tunnel`=RDV pris*. (L'API ne permet
+  pas de créer des automations → à faire à la main dans Airtable ▸ Automatisations.)
+- **Élargir la landing aux 6 profils** (portes P4 musulman / P5 athée-sceptique) + témoignages §2bis
+  (mettre en plus grand frame les 1-2 meilleurs par bloc).
+- **Activer/planifier le scénario de nurturing** (1×/jour) ; supprimer les connexions Airtable inutiles.
 - **Confirmer le texte exact de la prière du salut** (vidéo `-Fn0ScYZ7PY`).
 - Nettoyer à la main les champs Airtable par défaut résiduels (limite API).
 - Construire les **étapes 5-8** (onboarding nouveau converti, intégration/rétention).

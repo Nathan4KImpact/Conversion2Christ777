@@ -68,6 +68,8 @@ const I18N = {
     "offer.price": "<s>Impayable</s> Gratuit",
     "offer.priceNote": "« C'est par la grâce que vous êtes sauvés, par le moyen de la foi. Cela ne vient pas de vous, c'est le don de Dieu. » — Éphésiens 2:8",
     "offer.cta": "Je veux recevoir ce don",
+    "offer.videoTitle": "L'Évangile, clairement expliqué",
+    "offer.videoSub": "Quelques minutes pour comprendre la plus belle nouvelle du monde.",
 
     /* --- Témoignages (vidéos YouTube réelles) --- */
     "testi.eyebrow": "Des vies réellement transformées",
@@ -248,6 +250,8 @@ const I18N = {
     "offer.price": "<s>Priceless</s> Free",
     "offer.priceNote": "“For it is by grace you have been saved, through faith… it is the gift of God.” — Ephesians 2:8",
     "offer.cta": "I want to receive this gift",
+    "offer.videoTitle": "The Gospel, clearly explained",
+    "offer.videoSub": "A few minutes to grasp the best news in the world.",
 
     "testi.eyebrow": "Truly transformed lives",
     "testi.title": "They searched. They found.",
