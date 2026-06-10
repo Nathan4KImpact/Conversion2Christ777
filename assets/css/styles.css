@@ -558,6 +558,38 @@ section { padding: clamp(56px, 9vw, 110px) 0; }
 .video-card .yt-fallback { padding: 0 20px 14px; }
 .yt-fallback:hover { color: var(--red); }
 
+/* ---------- Témoignages groupés par profil ---------- */
+.testi-group { margin-top: 46px; }
+.testi-group-title {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  color: var(--accent, var(--gold-deep));
+  display: flex; align-items: center; gap: 12px;
+  margin: 0 0 20px;
+}
+.testi-group-title::before {
+  content: ""; width: 30px; height: 4px; border-radius: 2px;
+  background: currentColor; flex: none;
+}
+/* Le 1er témoignage d'un bloc = « plus grand frame » */
+@media (min-width: 960px) { .video-card.featured { grid-column: span 2; } }
+.video-card.featured .video-cap h4 { font-size: 1.5rem; }
+
+/* Carte « ressource à lire » (article, pas de vidéo) */
+.resource-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  border-top: 4px solid var(--accent, var(--gold));
+  padding: 26px 24px;
+  display: flex; flex-direction: column;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.resource-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.resource-card h4 { font-family: var(--font-serif); font-size: 1.3rem; color: var(--navy); margin: 0 0 6px; }
+.resource-card p { color: var(--muted); font-size: 0.92rem; flex: 1; margin: 0 0 14px; }
+.resource-card .more-link::after { content: ""; }
+
 /* ---------- Réservation RDV de prière ---------- */
 .booking-card { border-top: 4px solid var(--teal); }
 .slot-chip {
