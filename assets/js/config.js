@@ -18,5 +18,6 @@ window.C2C_CONFIG = {
   // 3) Contacts (déjà utilisés dans le tunnel)
   WHATSAPP: "33758372268",
   WHATSAPP_GROUP: "https://chat.whatsapp.com/0vazCnCIMag0OAsYUtuO1z",
+  WHATSAPP_CHANNEL: "https://whatsapp.com/channel/0029VbCXLHm72WToQsw68F0N",
   EMAIL: "nathanaelfongang@gmail.com",
 };

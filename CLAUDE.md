@@ -167,7 +167,8 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     ⚠️ Transcription auto impossible (YouTube bloque le fetch du sandbox, HTTP 403) → le texte
     écrit affiché reste un **brouillon fidèle à confirmer** par le porteur (copier-coller des mots exacts).
   - **Contacts réels câblés** : email `nathanaelfongang@gmail.com`, Facebook `facebook.com/r.n.t.137`,
-    groupe WhatsApp « Les Amis de Jésus » (`chat.whatsapp.com/0vazCnCIMag0OAsYUtuO1z`),
+    groupe WhatsApp « Nouvelles VIES en Jésus » (`chat.whatsapp.com/0vazCnCIMag0OAsYUtuO1z`)
+    + chaîne d'enseignements « Nouvelles VIES — Enseignements » (`whatsapp.com/channel/0029VbCXLHm72WToQsw68F0N`),
     WhatsApp perso `+33 7 58 37 22 68` (`wa.me/33758372268`), chaîne YouTube Vases d'Honneur.
 
 - 2026-06-09 : **v3 — logo, fix vidéos, intégrations** :

@@ -276,7 +276,7 @@ const I18N = {
     "nn.bapt.cta": "Je veux me faire baptiser",
     "nn.mentor.title": "Un frère, une sœur pour t'accompagner",
     "nn.mentor.text": "Tu n'es plus seul(e). Quelqu'un peut t'écouter, prier avec toi et répondre à tes questions, à ton rythme.",
-    "nn.mentor.group": "Rejoindre le groupe « Les Amis de Jésus »",
+    "nn.mentor.group": "Rejoindre « Nouvelles VIES en Jésus »",
     "nn.mentor.whatsapp": "Être accompagné(e) par WhatsApp",
     "nn.next": "Continuer : grandir dans la foi →",
 
@@ -303,6 +303,7 @@ const I18N = {
     "gr.cta": "Parler à un responsable",
     "footer.link.nn": "Nouveau-né en Christ",
     "footer.link.gr": "Grandir dans la foi",
+    "wta.channel": "Suivre la chaîne d'enseignements →",
   },
 
   en: {
@@ -559,7 +560,7 @@ const I18N = {
     "nn.bapt.cta": "I want to be baptized",
     "nn.mentor.title": "A brother or sister to walk with you",
     "nn.mentor.text": "You're no longer alone. Someone can listen, pray with you and answer your questions, at your own pace.",
-    "nn.mentor.group": "Join the “Friends of Jesus” group",
+    "nn.mentor.group": "Join “New LIVES in Jesus”",
     "nn.mentor.whatsapp": "Be supported via WhatsApp",
     "nn.next": "Keep going: grow in faith →",
 
@@ -585,6 +586,7 @@ const I18N = {
     "gr.cta": "Talk to a leader",
     "footer.link.nn": "Born again in Christ",
     "footer.link.gr": "Grow in faith",
+    "wta.channel": "Follow the teaching channel →",
   },
 };
 
