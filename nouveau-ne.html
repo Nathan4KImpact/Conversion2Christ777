@@ -130,6 +130,27 @@
         if (b) b.href = "https://wa.me/" + cfg.WHATSAPP + "?text=" + msgB;
         if (m) m.href = "https://wa.me/" + cfg.WHATSAPP + "?text=" + msgM;
       }
+
+      // Marque la conversion dans le CRM (Étape tunnel = « Prière faite »), une seule fois.
+      // Nécessite la 3e branche Make (type:"convert"). Ne s'exécute que si on a déjà l'email du lead.
+      try {
+        var lead = JSON.parse(localStorage.getItem("c2c_lead") || "{}");
+        if (cfg.WEBHOOK_URL && lead.email && !localStorage.getItem("c2c_convert_sent")) {
+          fetch(cfg.WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              type: "convert",
+              firstname: lead.firstname || "",
+              email: lead.email,
+              lang: (window.C2C_I18N && window.C2C_I18N.lang) || "fr",
+              source: "nouveau-ne",
+              ts: new Date().toISOString(),
+            }),
+            keepalive: true,
+          }).then(function () { localStorage.setItem("c2c_convert_sent", "1"); }).catch(function () {});
+        }
+      } catch (_) {}
     })();
   </script>
 </body>

@@ -289,6 +289,7 @@ const I18N = {
     "gr.family.text": "La foi se vit ensemble. Intègre un groupe de maison (cellule) près de chez toi : un petit groupe chaleureux pour prier, partager un repas et grandir.",
     "gr.path.title": "Le parcours « Fondations de la foi »",
     "gr.path.sub": "Quelques semaines pour poser des bases solides, pas à pas.",
+    "gr.path.cta": "Découvrir le parcours en détail →",
     "gr.mod1": "Qui est Dieu, et qui je suis pour Lui",
     "gr.mod2": "L'assurance du salut et le pardon",
     "gr.mod3": "Lire la Bible et prier au quotidien",
@@ -304,6 +305,48 @@ const I18N = {
     "footer.link.nn": "Nouveau-né en Christ",
     "footer.link.gr": "Grandir dans la foi",
     "wta.channel": "Suivre la chaîne d'enseignements →",
+
+    /* --- Parcours « Fondations de la foi » (fondations.html) --- */
+    "fond.title": "Fondations de la foi — Vases d'Honneur",
+    "fond.hero.eyebrow": "Parcours du nouveau disciple",
+    "fond.hero.title": "Fondations de la foi",
+    "fond.hero.sub": "6 modules pour poser des bases solides. Avance à ton rythme, seul(e) ou avec ton mentor.",
+    "fond.label.key": "Verset clé",
+    "fond.label.verses": "À lire",
+    "fond.label.do": "Cette semaine",
+    "fond.cta": "Rejoindre la communauté",
+    "fond.back": "← Revenir à « Grandir »",
+    "footer.link.fond": "Fondations de la foi",
+
+    "fond.mod1.obj": "Avant tout « faire », découvre qui tu ES. Dieu n'est pas un juge distant : c'est un Père bon. En Christ, tu es son enfant — choisi, aimé, pardonné, appelé « vase d'honneur ». Ton identité ne dépend plus de tes performances, mais de son amour.",
+    "fond.mod1.key": "« À tous ceux qui l'ont reçue… elle a donné le pouvoir de devenir enfants de Dieu. » — Jean 1:12",
+    "fond.mod1.verses": "Jean 1:12 · Romains 8:15-16 · Éphésiens 1:4-5 · Psaume 139:13-14",
+    "fond.mod1.do": "Chaque matin, dis à voix haute : « Je suis un enfant de Dieu, aimé et pardonné. »",
+
+    "fond.mod2.obj": "Le salut n'est pas une récompense à mériter, c'est un don à recevoir. Tu peux SAVOIR que tu es sauvé(e) — non par tes sentiments, mais par la promesse de Dieu. Et son pardon est total : il efface tout ton passé.",
+    "fond.mod2.key": "« C'est par la grâce que vous êtes sauvés, par le moyen de la foi… c'est le don de Dieu. » — Éphésiens 2:8",
+    "fond.mod2.verses": "Éphésiens 2:8-9 · 1 Jean 1:9 · 1 Jean 5:13 · Romains 10:9-10",
+    "fond.mod2.do": "Note une chose de ton passé que tu remets à Dieu — et remercie-le pour son pardon complet.",
+
+    "fond.mod3.obj": "La foi grandit par deux respirations : écouter Dieu (la Bible) et lui parler (la prière). Pas besoin d'être parfait(e) : la régularité compte plus que la quantité. Commence petit, chaque jour.",
+    "fond.mod3.key": "« Ta parole est une lampe à mes pieds, et une lumière sur mon sentier. » — Psaume 119:105",
+    "fond.mod3.verses": "Josué 1:8 · Psaume 119:105 · Matthieu 6:9-13 · Philippiens 4:6-7",
+    "fond.mod3.do": "Choisis un moment fixe (5 min/jour) : lis un passage, puis parle-en à Dieu avec tes mots.",
+
+    "fond.mod4.obj": "Tu n'as pas à vivre la foi avec tes seules forces. L'Esprit de Dieu habite en toi : il console, guide, fortifie, et produit en toi l'amour, la joie, la paix. Apprends à compter sur lui chaque jour.",
+    "fond.mod4.key": "« Vous recevrez une puissance, le Saint-Esprit survenant sur vous. » — Actes 1:8",
+    "fond.mod4.verses": "Jean 14:16-17,26 · Actes 1:8 · Galates 5:22-23 · Romains 8:26",
+    "fond.mod4.do": "Avant une difficulté, demande simplement : « Saint-Esprit, aide-moi. »",
+
+    "fond.mod5.obj": "On ne grandit pas seul(e). L'Église, c'est ta famille spirituelle : un lieu pour être aimé(e), encouragé(e), et servir. Rejoins un groupe de maison (cellule), et envisage le baptême comme premier pas public.",
+    "fond.mod5.key": "« N'abandonnons pas notre assemblée… mais encourageons-nous mutuellement. » — Hébreux 10:25",
+    "fond.mod5.verses": "Hébreux 10:24-25 · Actes 2:42-47 · 1 Corinthiens 12:12-27 · Matthieu 18:20",
+    "fond.mod5.do": "Participe à une rencontre/cellule — ou écris à ton mentor pour en trouver une.",
+
+    "fond.mod6.obj": "Ce que tu as reçu, d'autres en ont soif. Pas besoin d'être expert : ton histoire suffit. Aime, écoute, et quand c'est le moment, parle de Jésus avec douceur. C'est ainsi que tu deviens un « porteur de vie ».",
+    "fond.mod6.key": "« Allez, faites de toutes les nations des disciples. » — Matthieu 28:19",
+    "fond.mod6.verses": "Matthieu 28:19-20 · Actes 1:8 · 1 Pierre 3:15 · Romains 1:16",
+    "fond.mod6.do": "Écris en 3 phrases ce que Jésus a changé en toi — prêt(e) à le partager.",
   },
 
   en: {
@@ -572,6 +615,7 @@ const I18N = {
     "gr.family.text": "Faith is lived together. Join a house group (cell) near you: a warm small group to pray, share a meal, and grow.",
     "gr.path.title": "The “Foundations of Faith” path",
     "gr.path.sub": "A few weeks to lay solid foundations, step by step.",
+    "gr.path.cta": "Explore the path in detail →",
     "gr.mod1": "Who God is, and who I am to Him",
     "gr.mod2": "Assurance of salvation and forgiveness",
     "gr.mod3": "Reading the Bible and praying daily",
@@ -587,6 +631,47 @@ const I18N = {
     "footer.link.nn": "Born again in Christ",
     "footer.link.gr": "Grow in faith",
     "wta.channel": "Follow the teaching channel →",
+
+    "fond.title": "Foundations of Faith — Vessels of Honor",
+    "fond.hero.eyebrow": "New disciple path",
+    "fond.hero.title": "Foundations of Faith",
+    "fond.hero.sub": "6 modules to lay solid foundations. Go at your own pace, alone or with your mentor.",
+    "fond.label.key": "Key verse",
+    "fond.label.verses": "Read",
+    "fond.label.do": "This week",
+    "fond.cta": "Join the community",
+    "fond.back": "← Back to “Grow”",
+    "footer.link.fond": "Foundations of Faith",
+
+    "fond.mod1.obj": "Before any “doing,” discover who you ARE. God isn't a distant judge: He's a good Father. In Christ you are His child — chosen, loved, forgiven, called a “vessel of honor.” Your identity no longer depends on your performance, but on His love.",
+    "fond.mod1.key": "“To all who received Him… He gave the right to become children of God.” — John 1:12",
+    "fond.mod1.verses": "John 1:12 · Romans 8:15-16 · Ephesians 1:4-5 · Psalm 139:13-14",
+    "fond.mod1.do": "Each morning, say out loud: “I am a child of God, loved and forgiven.”",
+
+    "fond.mod2.obj": "Salvation isn't a reward to earn, it's a gift to receive. You can KNOW you are saved — not by your feelings, but by God's promise. And His forgiveness is total: it wipes out your whole past.",
+    "fond.mod2.key": "“For it is by grace you have been saved, through faith… it is the gift of God.” — Ephesians 2:8",
+    "fond.mod2.verses": "Ephesians 2:8-9 · 1 John 1:9 · 1 John 5:13 · Romans 10:9-10",
+    "fond.mod2.do": "Write down one thing from your past you hand over to God — and thank Him for His full forgiveness.",
+
+    "fond.mod3.obj": "Faith grows through two breaths: listening to God (the Bible) and talking to Him (prayer). No need to be perfect: consistency matters more than quantity. Start small, every day.",
+    "fond.mod3.key": "“Your word is a lamp for my feet, a light on my path.” — Psalm 119:105",
+    "fond.mod3.verses": "Joshua 1:8 · Psalm 119:105 · Matthew 6:9-13 · Philippians 4:6-7",
+    "fond.mod3.do": "Pick a fixed time (5 min/day): read a passage, then talk to God about it in your own words.",
+
+    "fond.mod4.obj": "You don't have to live the faith on your own strength. God's Spirit lives in you: He comforts, guides, strengthens, and produces love, joy, peace in you. Learn to rely on Him daily.",
+    "fond.mod4.key": "“You will receive power when the Holy Spirit comes on you.” — Acts 1:8",
+    "fond.mod4.verses": "John 14:16-17,26 · Acts 1:8 · Galatians 5:22-23 · Romans 8:26",
+    "fond.mod4.do": "Before a difficulty, simply ask: “Holy Spirit, help me.”",
+
+    "fond.mod5.obj": "We don't grow alone. The Church is your spiritual family: a place to be loved, encouraged, and to serve. Join a house group (cell), and consider baptism as a first public step.",
+    "fond.mod5.key": "“Let us not give up meeting together… but encourage one another.” — Hebrews 10:25",
+    "fond.mod5.verses": "Hebrews 10:24-25 · Acts 2:42-47 · 1 Corinthians 12:12-27 · Matthew 18:20",
+    "fond.mod5.do": "Join a gathering/cell — or message your mentor to find one.",
+
+    "fond.mod6.obj": "What you've received, others are thirsty for. No need to be an expert: your story is enough. Love, listen, and when the time is right, speak of Jesus gently. That's how you become a “carrier of life.”",
+    "fond.mod6.key": "“Go and make disciples of all nations.” — Matthew 28:19",
+    "fond.mod6.verses": "Matthew 28:19-20 · Acts 1:8 · 1 Peter 3:15 · Romans 1:16",
+    "fond.mod6.do": "Write in 3 sentences what Jesus changed in you — ready to share it.",
   },
 };
 

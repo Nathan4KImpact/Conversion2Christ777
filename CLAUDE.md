@@ -262,8 +262,13 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     **« Fondations de la foi »** (6 modules), communauté, devenir « porteur de vie ».
   - **Flux** : `prier.html` (a prié) → `nouveau-ne.html` → `grandir.html`. Liens ajoutés au footer.
   - i18n FR/EN complet (clés `nn.*`, `gr.*`).
-  - *(À venir)* : capture CRM du converti (`type:"convert"` → Étape `Prière faite`) si souhaité ;
-    contenu détaillé des 6 modules ; planning baptêmes.
+- 2026-06-10 : **v11 — parcours détaillé + capture du converti** :
+  - **`fondations.html`** : les **6 modules** « Fondations de la foi » détaillés (objectif + **verset clé**
+    + passages à lire + « cette semaine »). Lié depuis `grandir.html` et le footer.
+  - **3ᵉ branche Make `convert`** (`integrations/make-blueprint.json`) : `type:"convert"` → Airtable
+    *upsert* (Email) `Étape tunnel = Prière faite`. `nouveau-ne.html` POST l'événement **une seule fois**
+    (flag `c2c_convert_sent`) si l'email du lead est connu. Guide d'ajout manuel dans `integrations/README.md`.
+  - Correctif `&nbsp;` → espace insécable réel (U+00A0) dans i18n.
 
 ### Reste à faire / décisions en attente
 - *(Optionnel)* **Airtable Automation** « anti-rétrogradation cosmétique » : *Quand une fiche a

@@ -37,6 +37,12 @@ Le **Router** lit le champ `type` du JSON reçu :
 |--------|---------|---------|
 | `lead` | Nouveau lead (depuis `optin.html`) | Airtable *créer* la fiche + Gmail email J0 |
 | `booking` | Réservation RDV (depuis `merci.html`) | Airtable *upsert* (Email) → `Étape tunnel = RDV pris`, `RDV prière` + Google Agenda *crée l'événement* (invité = l'âme) |
+| `convert` | A prié (depuis `nouveau-ne.html`) | Airtable *upsert* (Email) → `Étape tunnel = Prière faite` |
+
+> **Ajouter la branche `convert` à un scénario déjà importé** (sans tout ré-importer) : sur le
+> **Router**, ajoute une route ; copie le module Airtable « Make an API Call » de la branche
+> *booking* ; mets son **filtre** sur `{{1.type}} = convert` ; et remplace son **Body** par :
+> `{"performUpsert":{"fieldsToMergeOn":["Email"]},"typecast":true,"records":[{"fields":{"Prénom":"{{1.firstname}}","Email":"{{1.email}}","Étape tunnel":"Prière faite"}}]}`
 
 Payload **lead** :
 ```json

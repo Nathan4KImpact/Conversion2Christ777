@@ -101,6 +101,28 @@
               "metadata": { "designer": { "x": 900, "y": 150 } }
             }
           ]
+        },
+        {
+          "flow": [
+            {
+              "id": 7,
+              "module": "airtable:makeApiCall",
+              "version": 3,
+              "parameters": { "__IMTCONN__": 6112403 },
+              "filter": {
+                "name": "Converti (a prié)",
+                "conditions": [ [ { "a": "{{1.type}}", "b": "convert", "o": "text:equal" } ] ]
+              },
+              "mapper": {
+                "url": "v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL",
+                "method": "PATCH",
+                "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+                "qs": [],
+                "body": "{\"performUpsert\":{\"fieldsToMergeOn\":[\"Email\"]},\"typecast\":true,\"records\":[{\"fields\":{\"Prénom\":\"{{1.firstname}}\",\"Email\":\"{{1.email}}\",\"Étape tunnel\":\"Prière faite\"}}]}"
+              },
+              "metadata": { "designer": { "x": 600, "y": 360 } }
+            }
+          ]
         }
       ]
     }
