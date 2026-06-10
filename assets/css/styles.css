@@ -29,6 +29,8 @@
   --p1: #2f7fb5; /* L'Ouvert — bleu ciel/paix */
   --p2: #c85a7f; /* Le Blessé — rose/guérison */
   --p3: #7a5cc0; /* Le Chercheur — violet/spiritualité */
+  --p4: #2f9e8a; /* Le Musulman en quête — émeraude/vérité */
+  --p5: #5b6b8c; /* L'Athée/Sceptique — ardoise/raison */
 
   /* Typo */
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -276,7 +278,8 @@ section { padding: clamp(56px, 9vw, 110px) 0; }
 
 /* ---------- 3 portes (personas) ---------- */
 .doors { display: grid; gap: 24px; grid-template-columns: 1fr; }
-@media (min-width: 820px) { .doors { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 600px) { .doors { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 920px) { .doors { grid-template-columns: repeat(3, 1fr); } }
 
 .door {
   position: relative;
@@ -306,6 +309,8 @@ section { padding: clamp(56px, 9vw, 110px) 0; }
 .door.p1 { --accent: var(--p1); }
 .door.p2 { --accent: var(--p2); }
 .door.p3 { --accent: var(--p3); }
+.door.p4 { --accent: var(--p4); }
+.door.p5 { --accent: var(--p5); }
 
 /* ---------- L'alternative (Salut / Guérison / Paix) ---------- */
 .pillars { display: grid; gap: 28px; grid-template-columns: 1fr; }
@@ -501,7 +506,8 @@ section { padding: clamp(56px, 9vw, 110px) 0; }
 
 /* ---------- Lite YouTube (façade : vignette cliquable → iframe à la demande) ---------- */
 .video-grid { display: grid; gap: 24px; grid-template-columns: 1fr; }
-@media (min-width: 760px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 620px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
 .video-grid.secondary { margin: 28px auto 0; }
 @media (min-width: 760px) { .video-grid.secondary { grid-template-columns: repeat(3, 1fr); } }
 

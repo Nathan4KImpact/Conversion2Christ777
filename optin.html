@@ -72,7 +72,7 @@
       if (!this.checkValidity()) { this.reportValidity(); return; }
       var cfg = window.C2C_CONFIG || {};
       var persona = localStorage.getItem("c2c_persona") || "";
-      var personaLabels = { p1: "Ouvert", p2: "Blessé", p3: "Chercheur" };
+      var personaLabels = { p1: "Ouvert", p2: "Blessé", p3: "Chercheur", p4: "Musulman", p5: "Sceptique" };
       var lead = {
         type: "lead",
         firstname: document.getElementById("firstname").value.trim(),

@@ -6,12 +6,12 @@
    ========================================================================= */
 (function () {
   const QUESTIONS = [
-    { key: "quiz.q1", opts: ["quiz.q1a", "quiz.q1b", "quiz.q1c"] },
-    { key: "quiz.q2", opts: ["quiz.q2a", "quiz.q2b", "quiz.q2c"] },
-    { key: "quiz.q3", opts: ["quiz.q3a", "quiz.q3b", "quiz.q3c"] },
-    { key: "quiz.q4", opts: ["quiz.q4a", "quiz.q4b", "quiz.q4c"] },
+    { key: "quiz.q1", opts: ["quiz.q1a", "quiz.q1b", "quiz.q1c", "quiz.q1d", "quiz.q1e"] },
+    { key: "quiz.q2", opts: ["quiz.q2a", "quiz.q2b", "quiz.q2c", "quiz.q2d", "quiz.q2e"] },
+    { key: "quiz.q3", opts: ["quiz.q3a", "quiz.q3b", "quiz.q3c", "quiz.q3d", "quiz.q3e"] },
+    { key: "quiz.q4", opts: ["quiz.q4a", "quiz.q4b", "quiz.q4c", "quiz.q4d", "quiz.q4e"] },
   ];
-  const PERSONAS = ["p1", "p2", "p3"]; // index 0,1,2 ↔ a,b,c
+  const PERSONAS = ["p1", "p2", "p3", "p4", "p5"]; // index 0..4 ↔ a,b,c,d,e
 
   let current = 0;
   const answers = new Array(QUESTIONS.length).fill(null); // stocke l'index choisi par question
@@ -75,14 +75,13 @@
   }
 
   function winner() {
-    const scores = { p1: 0, p2: 0, p3: 0 };
+    const scores = { p1: 0, p2: 0, p3: 0, p4: 0, p5: 0 };
     answers.forEach((i) => {
       if (i != null) scores[PERSONAS[i]] += 1;
     });
-    // p1 par défaut en cas d'égalité (le plus inclusif)
+    // p1 par défaut en cas d'égalité (le plus inclusif) ; sinon le score max
     let best = "p1";
-    if (scores.p2 > scores[best]) best = "p2";
-    if (scores.p3 > scores[best]) best = "p3";
+    PERSONAS.forEach((p) => { if (scores[p] > scores[best]) best = p; });
     return best;
   }
 
@@ -96,10 +95,16 @@
   }
 
   // Témoignage vidéo aligné sur le persona (cf. fichier de sélection des témoignages)
-  const RESULT_VIDEO = { p1: "8J31uVMV7C8", p2: "Ewm8bIZe8bs", p3: "uZfyE5ozyZA" };
+  const RESULT_VIDEO = {
+    p1: "Ewm8bIZe8bs", // Pauline
+    p2: "XZlNGJhJgAA", // Janick — identité
+    p3: "uZfyE5ozyZA", // New Age → Jésus
+    p4: "iQWHTzHjGyA", // Amir — background musulman
+    p5: "8J31uVMV7C8", // Alexia — ancienne athée
+  };
 
   function renderResult(p) {
-    const accent = { p1: "var(--p1)", p2: "var(--p2)", p3: "var(--p3)" }[p];
+    const accent = { p1: "var(--p1)", p2: "var(--p2)", p3: "var(--p3)", p4: "var(--p4)", p5: "var(--p5)" }[p];
     els.result.style.setProperty("--accent", accent);
     document.getElementById("result-badge").textContent = t("result." + p + ".badge");
     document.getElementById("result-title").textContent = t("result." + p + ".title");

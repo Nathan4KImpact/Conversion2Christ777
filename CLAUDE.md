@@ -29,10 +29,10 @@ pour l'église / le ministère **Vases d'Honneur**.
 
 ## 2. Profils de sourcing / personas
 
-> **MAJ 2026-06-10 (v8) :** les profils de sourcing sont **élargis de 3 à 6 segments**
-> (cf. fichier porteur « Sélection très ciblée de témoignages EVANGELIQUES, v3 »).
-> La landing garde aujourd'hui **3 portes** (P1/P2/P3) ; l'élargissement ci-dessous est la
-> **feuille de route** pour étendre les portes + les témoignages (voir §2bis).
+> **MAJ 2026-06-10 (v9) :** profils de sourcing **élargis à 5 personas** (P1→P5).
+> La landing présente désormais **5 portes** (P1 Ouvert · P2 Blessé · P3 Chercheur ·
+> P4 Musulman · P5 Athée/Sceptique), le **quiz a 5 issues** (A→E), et la section
+> témoignages propose **1 vidéo par profil** (+ 3 bonus). Cf. §2bis pour la bibliothèque.
 
 ### Persona 1 — « L'Ouvert » (background chrétien favorable)
 - Déjà ouvert au message religieux chrétien.
