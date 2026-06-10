@@ -1,4 +1,4 @@
-# Branchements — PDVIE (Vases d'Honneur)
+# Branchements — PDVIE (Nouvelles Vies en Christ)
 
 Architecture : **site → Webhook Make → Airtable (CRM) + Gmail + Google Agenda**.
 Le site reste 100 % statique et sûr : aucune clé secrète dedans, tout passe par Make.

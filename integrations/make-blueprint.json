@@ -51,7 +51,7 @@
               "mapper": {
                 "to": [ "{{1.email}}" ],
                 "subject": "🤍 Bienvenue {{1.firstname}} — ton premier pas est fait",
-                "html": "<p>Bonjour {{1.firstname}},</p><p>Je voulais te dire une chose simple : bravo. Tu as fait un pas que beaucoup n'osent pas faire. Et tu n'es plus seul(e).</p><p>Ici, pas de jugement, pas de pression. Juste un chemin, à ton rythme, pour découvrir une paix, une guérison et un sens que le monde ne peut pas donner.</p><p>Si tu veux échanger dès maintenant, réponds à cet email ou écris sur WhatsApp : <a href=\"https://wa.me/33758372268\">+33 7 58 37 22 68</a></p><p>Avec toute mon affection en Christ,<br>Nathanaël — Vases d'Honneur · « Porteurs de vie »</p>"
+                "html": "<p>Bonjour {{1.firstname}},</p><p>Je voulais te dire une chose simple : bravo. Tu as fait un pas que beaucoup n'osent pas faire. Et tu n'es plus seul(e).</p><p>Ici, pas de jugement, pas de pression. Juste un chemin, à ton rythme, pour découvrir une paix, une guérison et un sens que le monde ne peut pas donner.</p><p>Si tu veux échanger dès maintenant, réponds à cet email ou écris sur WhatsApp : <a href=\"https://wa.me/33758372268\">+33 7 58 37 22 68</a></p><p>Avec toute mon affection en Christ,<br>Nathanaël — Nouvelles Vies en Christ</p>"
               },
               "metadata": { "designer": { "x": 900, "y": -150 } }
             }
@@ -91,7 +91,7 @@
                 "start": "{{1.rdvStartISO}}",
                 "end": "{{1.rdvEndISO}}",
                 "attendees": [ { "email": "{{1.email}}", "displayName": "{{1.firstname}}" } ],
-                "description": "RDV de prière réservé depuis le site (Vases d'Honneur / PDVIE).\nWhatsApp : {{1.whatsapp}}",
+                "description": "RDV de prière réservé depuis le site (Nouvelles Vies en Christ / PDVIE).\nWhatsApp : {{1.whatsapp}}",
                 "colorId": "10",
                 "useDefault": true,
                 "transparency": "opaque",

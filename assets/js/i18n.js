@@ -9,7 +9,7 @@
 const I18N = {
   fr: {
     /* --- Nav / global --- */
-    "brand.sub": "Porteurs de vie",
+    "brand.sub": "",
     "nav.cta": "Je commence",
     "lang.fr": "FR",
     "lang.en": "EN",
@@ -23,7 +23,7 @@ const I18N = {
     "hero.trust1": "100% gratuit",
     "hero.trust2": "Sans jugement",
     "hero.trust3": "Confidentiel",
-    "hero.verse": "« Dans une grande maison… il y a des vases d'honneur. » — 2 Timothée 2:20-21",
+    "hero.verse": "« Si quelqu'un est en Christ, il est une nouvelle créature. » — 2 Corinthiens 5:17",
 
     /* --- Doors / personas --- */
     "doors.eyebrow": "Tu es ici pour une raison",
@@ -71,7 +71,7 @@ const I18N = {
     "offer.title": "Le don le plus précieux… est entièrement gratuit",
     "offer.intro": "Le monde te fait payer cher ce qu'il ne peut pas garantir. L'Évangile t'offre, sans condition :",
     "offer.li1": "Le pardon total de tout ton passé",
-    "offer.li2": "Une identité nouvelle : enfant de Dieu, vase d'honneur",
+    "offer.li2": "Une identité nouvelle : enfant de Dieu, une création nouvelle",
     "offer.li3": "La présence réelle de l'Esprit qui console et guérit",
     "offer.li4": "Une famille spirituelle qui t'accueille sans jugement",
     "offer.li5": "Une espérance solide pour aujourd'hui et pour l'éternité",
@@ -144,7 +144,7 @@ const I18N = {
     "reassure3.text": "Derrière l'écran, des personnes réelles, prêtes à t'écouter et à prier avec toi quand tu le souhaites.",
 
     /* --- Footer --- */
-    "footer.tagline": "Une antenne de la communauté Vases d'Honneur. Accueillir, accompagner et affermir chaque personne dans une rencontre vivante avec Jésus-Christ.",
+    "footer.tagline": "Nouvelles Vies en Christ — accueillir, accompagner et affermir chaque personne dans une rencontre vivante avec Jésus-Christ.",
     "footer.explore": "Explorer",
     "footer.link.home": "Accueil",
     "footer.link.quiz": "Le test de la soif",
@@ -152,7 +152,7 @@ const I18N = {
     "footer.link.pray": "Prier maintenant",
     "footer.contact": "Contact",
     "footer.contact.text": "Une question, un besoin de prière ? Écris-nous, nous répondons.",
-    "footer.rights": "Vases d'Honneur — Tous droits réservés.",
+    "footer.rights": "Nouvelles Vies en Christ — Tous droits réservés.",
     "footer.privacy": "Confidentialité",
     "footer.legal": "Mentions légales",
 
@@ -238,14 +238,14 @@ const I18N = {
     "pray.title": "La prière qui change tout",
     "pray.videoNote": "Regarde et laisse-toi guider par cette prière, puis répète-la avec ton cœur.",
     "pray.lead": "Il n'y a pas de formule magique. Dieu regarde ton cœur, pas tes mots parfaits. Si tu le désires sincèrement, dis cette prière à voix haute — elle t'appartient :",
-    "pray.prayer": "Seigneur Jésus,<br>je reconnais que j'ai besoin de Toi.<br>Merci d'avoir donné ta vie pour moi.<br>Aujourd'hui, je te donne la mienne.<br>Pardonne-moi, entre dans mon cœur,<br>et fais de moi un vase d'honneur.<br>Je veux te suivre, dès maintenant.<br>Amen.",
+    "pray.prayer": "Seigneur Jésus,<br>je reconnais que j'ai besoin de Toi.<br>Merci d'avoir donné ta vie pour moi.<br>Aujourd'hui, je te donne la mienne.<br>Pardonne-moi, entre dans mon cœur,<br>et fais de moi une crÃ©ation nouvelle.<br>Je veux te suivre, dès maintenant.<br>Amen.",
     "pray.after.title": "Tu viens de prier ? Alors écoute bien…",
     "pray.after.text": "Si tu as dit cette prière du fond du cœur, le ciel est en fête pour toi. Tu es né(e) de nouveau. Ce n'est pas une fin, c'est un commencement — et nous voulons marcher ce chemin avec toi.",
     "pray.cta": "J'ai prié — accompagnez-moi",
     "pray.cta2": "Parler à quelqu'un / être rappelé(e)",
 
     /* --- Étape 7 : Kit du nouveau-né en Christ (nouveau-ne.html) --- */
-    "nn.title": "Bienvenue dans ta nouvelle vie — Vases d'Honneur",
+    "nn.title": "Bienvenue dans ta nouvelle vie — Nouvelles Vies en Christ",
     "nn.hero.eyebrow": "Tu viens de naître de nouveau",
     "nn.hero.title": "Le ciel est en fête pour toi 🎉",
     "nn.hero.sub": "Ce n'est pas une fin, c'est le plus beau commencement. Voici tes tout premiers pas — et tu ne marcheras pas seul(e).",
@@ -281,7 +281,7 @@ const I18N = {
     "nn.next": "Continuer : grandir dans la foi →",
 
     /* --- Étape 8 : Grandir / intégration (grandir.html) --- */
-    "gr.title": "Grandir dans la foi — Vases d'Honneur",
+    "gr.title": "Grandir dans la foi — Nouvelles Vies en Christ",
     "gr.hero.eyebrow": "Étape suivante",
     "gr.hero.title": "Tu es né(e) — maintenant, grandis 🌱",
     "gr.hero.sub": "Une graine devient un arbre. Voici comment t'enraciner, t'affermir et devenir à ton tour un porteur de vie.",
@@ -307,7 +307,7 @@ const I18N = {
     "wta.channel": "Suivre la chaîne d'enseignements →",
 
     /* --- Parcours « Fondations de la foi » (fondations.html) --- */
-    "fond.title": "Fondations de la foi — Vases d'Honneur",
+    "fond.title": "Fondations de la foi — Nouvelles Vies en Christ",
     "fond.hero.eyebrow": "Parcours du nouveau disciple",
     "fond.hero.title": "Fondations de la foi",
     "fond.hero.sub": "6 modules pour poser des bases solides. Avance à ton rythme, seul(e) ou avec ton mentor.",
@@ -318,7 +318,7 @@ const I18N = {
     "fond.back": "← Revenir à « Grandir »",
     "footer.link.fond": "Fondations de la foi",
 
-    "fond.mod1.obj": "Avant tout « faire », découvre qui tu ES. Dieu n'est pas un juge distant : c'est un Père bon. En Christ, tu es son enfant — choisi, aimé, pardonné, appelé « vase d'honneur ». Ton identité ne dépend plus de tes performances, mais de son amour.",
+    "fond.mod1.obj": "Avant tout « faire », découvre qui tu ES. Dieu n'est pas un juge distant : c'est un Père bon. En Christ, tu es son enfant — choisi, aimé, pardonné, appelé Ã  une vie nouvelle. Ton identité ne dépend plus de tes performances, mais de son amour.",
     "fond.mod1.key": "« À tous ceux qui l'ont reçue… elle a donné le pouvoir de devenir enfants de Dieu. » — Jean 1:12",
     "fond.mod1.verses": "Jean 1:12 · Romains 8:15-16 · Éphésiens 1:4-5 · Psaume 139:13-14",
     "fond.mod1.do": "Chaque matin, dis à voix haute : « Je suis un enfant de Dieu, aimé et pardonné. »",
@@ -350,7 +350,7 @@ const I18N = {
   },
 
   en: {
-    "brand.sub": "Carriers of life",
+    "brand.sub": "",
     "nav.cta": "Get started",
     "lang.fr": "FR",
     "lang.en": "EN",
@@ -363,7 +363,7 @@ const I18N = {
     "hero.trust1": "100% free",
     "hero.trust2": "No judgment",
     "hero.trust3": "Confidential",
-    "hero.verse": "“In a great house… there are vessels of honor.” — 2 Timothy 2:20-21",
+    "hero.verse": "“If anyone is in Christ, he is a new creation.” — 2 Corinthians 5:17",
 
     "doors.eyebrow": "You're here for a reason",
     "doors.title": "Whichever door you come through…",
@@ -408,7 +408,7 @@ const I18N = {
     "offer.title": "The most precious gift… is entirely free",
     "offer.intro": "The world charges you dearly for what it cannot guarantee. The Gospel offers you, with no conditions:",
     "offer.li1": "Full forgiveness of your entire past",
-    "offer.li2": "A new identity: child of God, vessel of honor",
+    "offer.li2": "A new identity: child of God, a new creation",
     "offer.li3": "The real presence of the Spirit who comforts and heals",
     "offer.li4": "A spiritual family that welcomes you without judgment",
     "offer.li5": "A solid hope for today and for eternity",
@@ -477,7 +477,7 @@ const I18N = {
     "reassure3.title": "Real human presence",
     "reassure3.text": "Behind the screen, real people, ready to listen and pray with you whenever you wish.",
 
-    "footer.tagline": "A local branch of the Vessels of Honor community. To welcome, walk alongside, and strengthen every person in a living encounter with Jesus Christ.",
+    "footer.tagline": "New Lives in Christ — to welcome, walk alongside, and strengthen every person in a living encounter with Jesus Christ.",
     "footer.explore": "Explore",
     "footer.link.home": "Home",
     "footer.link.quiz": "The thirst test",
@@ -485,7 +485,7 @@ const I18N = {
     "footer.link.pray": "Pray now",
     "footer.contact": "Contact",
     "footer.contact.text": "A question, a prayer need? Write to us — we reply.",
-    "footer.rights": "Vessels of Honor — All rights reserved.",
+    "footer.rights": "New Lives in Christ — All rights reserved.",
     "footer.privacy": "Privacy",
     "footer.legal": "Legal notice",
 
@@ -566,13 +566,13 @@ const I18N = {
     "pray.title": "The prayer that changes everything",
     "pray.videoNote": "Watch and let this prayer guide you, then repeat it with your heart.",
     "pray.lead": "There's no magic formula. God looks at your heart, not your perfect words. If you sincerely desire it, say this prayer out loud — it's yours:",
-    "pray.prayer": "Lord Jesus,<br>I admit that I need You.<br>Thank You for giving Your life for me.<br>Today, I give You mine.<br>Forgive me, come into my heart,<br>and make me a vessel of honor.<br>I want to follow You, starting now.<br>Amen.",
+    "pray.prayer": "Lord Jesus,<br>I admit that I need You.<br>Thank You for giving Your life for me.<br>Today, I give You mine.<br>Forgive me, come into my heart,<br>and make me a new creation.<br>I want to follow You, starting now.<br>Amen.",
     "pray.after.title": "Did you just pray? Then listen closely…",
     "pray.after.text": "If you said this prayer from the bottom of your heart, heaven is celebrating for you. You are born again. This isn't an end, it's a beginning — and we want to walk this road with you.",
     "pray.cta": "I prayed — walk with me",
     "pray.cta2": "Talk to someone / be called back",
 
-    "nn.title": "Welcome to your new life — Vessels of Honor",
+    "nn.title": "Welcome to your new life — New Lives in Christ",
     "nn.hero.eyebrow": "You've just been born again",
     "nn.hero.title": "Heaven is celebrating for you 🎉",
     "nn.hero.sub": "This isn't an end, it's the most beautiful beginning. Here are your very first steps — and you won't walk alone.",
@@ -607,7 +607,7 @@ const I18N = {
     "nn.mentor.whatsapp": "Be supported via WhatsApp",
     "nn.next": "Keep going: grow in faith →",
 
-    "gr.title": "Grow in faith — Vessels of Honor",
+    "gr.title": "Grow in faith — New Lives in Christ",
     "gr.hero.eyebrow": "Next step",
     "gr.hero.title": "You're born — now, grow 🌱",
     "gr.hero.sub": "A seed becomes a tree. Here's how to take root, be strengthened, and in turn become a carrier of life.",
@@ -632,7 +632,7 @@ const I18N = {
     "footer.link.gr": "Grow in faith",
     "wta.channel": "Follow the teaching channel →",
 
-    "fond.title": "Foundations of Faith — Vessels of Honor",
+    "fond.title": "Foundations of Faith — New Lives in Christ",
     "fond.hero.eyebrow": "New disciple path",
     "fond.hero.title": "Foundations of Faith",
     "fond.hero.sub": "6 modules to lay solid foundations. Go at your own pace, alone or with your mentor.",
@@ -643,7 +643,7 @@ const I18N = {
     "fond.back": "← Back to “Grow”",
     "footer.link.fond": "Foundations of Faith",
 
-    "fond.mod1.obj": "Before any “doing,” discover who you ARE. God isn't a distant judge: He's a good Father. In Christ you are His child — chosen, loved, forgiven, called a “vessel of honor.” Your identity no longer depends on your performance, but on His love.",
+    "fond.mod1.obj": "Before any “doing,” discover who you ARE. God isn't a distant judge: He's a good Father. In Christ you are His child — chosen, loved, forgiven, called to a new life. Your identity no longer depends on your performance, but on His love.",
     "fond.mod1.key": "“To all who received Him… He gave the right to become children of God.” — John 1:12",
     "fond.mod1.verses": "John 1:12 · Romans 8:15-16 · Ephesians 1:4-5 · Psalm 139:13-14",
     "fond.mod1.do": "Each morning, say out loud: “I am a child of God, loved and forgiven.”",

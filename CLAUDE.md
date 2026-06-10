@@ -22,8 +22,14 @@ pour l'église / le ministère **Vases d'Honneur**.
   populaires (ClickFunnels, systeme.io, etc.).
 
 ### Thème de marque
-- **Vases d'Honneur** — inspiré de **2 Timothée 2:20-21** (vase d'honneur, sanctifié, utile au Maître).
-- Branding fin (logo, couleurs officielles, rattachement institutionnel) : **À CONFIRMER par le porteur.**
+- **MAJ 2026-06-10 (v12) :** marque affichée = **« Nouvelles Vies en Christ »** (fil conducteur
+  *2 Corinthiens 5:17* — la nouvelle création). ⚠️ **L'identité visuelle de « Vases d'Honneur »
+  (logo + tagline « Porteurs de vie ») a été RETIRÉE** du site faute d'autorisation. Tout est
+  renommé dans les fichiers livrés (pages, i18n, blueprints, emails).
+- **Logo** : emblème **provisoire** `assets/img/logo-nv.svg` (pousse + croix, thème « nouvelle vie »).
+  Le **vrai logo** fourni par le porteur (lien ChatGPT non récupérable depuis le sandbox) reste **à
+  déposer** dans `assets/img/` (Drive/upload) puis à câbler.
+- Palette conservée (vert sarcelle + or + rouge) — générique, non liée à un emblème ; modifiable si besoin.
 
 ---
 

@@ -1,7 +1,7 @@
-# Conversion2Christ777 — Vases d'Honneur
+# Conversion2Christ777 — Nouvelles Vies en Christ
 
 Landing page + **tunnel de conversion à Christ** pour une antenne locale de la
-communauté **Vases d'Honneur**. Site statique (HTML/CSS/JS), bilingue **FR / EN**,
+communauté **Nouvelles Vies en Christ**. Site statique (HTML/CSS/JS), bilingue **FR / EN**,
 sans étape de build — hébergeable n'importe où (GitHub Pages, Netlify, Vercel,
 serveur classique).
 

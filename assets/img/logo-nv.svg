@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Nouvelles Vies en Christ">
+  <defs>
+    <radialGradient id="nvGold" cx="38%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#e3c573"/>
+      <stop offset="60%" stop-color="#c9a23a"/>
+      <stop offset="100%" stop-color="#a07c2e"/>
+    </radialGradient>
+  </defs>
+  <!-- Pousse / nouvelle vie -->
+  <path d="M60 96 L60 54" fill="none" stroke="url(#nvGold)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M60 70 C46 70 38 58 38 44 C54 46 62 58 60 70 Z" fill="url(#nvGold)"/>
+  <path d="M60 80 C74 80 82 68 82 54 C66 56 58 68 60 80 Z" fill="url(#nvGold)"/>
+  <!-- petite croix au sommet -->
+  <rect x="57" y="20" width="6" height="22" rx="3" fill="url(#nvGold)"/>
+  <rect x="51" y="27" width="18" height="6" rx="3" fill="url(#nvGold)"/>
+</svg>
