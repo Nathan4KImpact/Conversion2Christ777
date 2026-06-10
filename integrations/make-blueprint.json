@@ -36,10 +36,10 @@
               },
               "mapper": {
                 "url": "v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL",
-                "method": "POST",
+                "method": "PATCH",
                 "headers": [ { "key": "Content-Type", "value": "application/json" } ],
                 "qs": [],
-                "body": "{\"typecast\":true,\"fields\":{\"Prénom\":\"{{1.firstname}}\",\"Email\":\"{{1.email}}\",\"WhatsApp\":\"{{1.whatsapp}}\",\"Persona\":\"{{1.personaLabel}}\",\"Langue\":\"{{upper(1.lang)}}\",\"Source\":\"{{1.source}}\",\"Étape tunnel\":\"Lead\",\"Statut\":\"Nouveau\",\"Date d'entrée\":\"{{formatDate(now; \"YYYY-MM-DD\")}}\"}}"
+                "body": "{\"performUpsert\":{\"fieldsToMergeOn\":[\"Email\"]},\"typecast\":true,\"records\":[{\"fields\":{\"Prénom\":\"{{1.firstname}}\",\"Email\":\"{{1.email}}\",\"WhatsApp\":\"{{1.whatsapp}}\",\"Persona\":\"{{1.personaLabel}}\",\"Langue\":\"{{upper(1.lang)}}\",\"Source\":\"{{1.source}}\",\"Étape tunnel\":\"Lead\",\"Statut\":\"Nouveau\",\"Date d'entrée\":\"{{formatDate(now; \"YYYY-MM-DD\")}}\"}}]}"
               },
               "metadata": { "designer": { "x": 600, "y": -150 } }
             },
