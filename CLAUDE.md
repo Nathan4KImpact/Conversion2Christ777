@@ -277,6 +277,22 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     (flag `c2c_convert_sent`) si l'email du lead est connu. Guide d'ajout manuel dans `integrations/README.md`.
   - Correctif `&nbsp;` → espace insécable réel (U+00A0) dans i18n.
 
+- 2026-06-11 : **v13 — anti-doublon nurturing (bug : emails renvoyés toutes les 15 min)** :
+  - **Cause** : scénario nurturing planifié toutes les 15 min + formule re-matchant les mêmes
+    fiches toute la journée (`{Jours depuis entrée}=1` reste vrai 24 h) → même email renvoyé
+    à chaque exécution.
+  - **Airtable** : 4 nouveaux champs case à cocher **`J1 envoyé` / `J3 envoyé` / `J5 envoyé` /
+    `J7 envoyé`** (créés via l'API).
+  - **Blueprint nurturing** : formule Search = `AND({Étape tunnel}='Lead', {RDV prière}=BLANK(),
+    OR(AND(jours=1, NOT({J1 envoyé})), … AND(jours=7, NOT({J7 envoyé}))))` ; après **chaque** Gmail,
+    un module Airtable `PATCH v0/base/table/{{1.id}}` coche `Jx envoyé` → scénario **idempotent**
+    (1 email max par campagne et par âme, quelle que soit la fréquence). Validé schéma Make.
+  - **Blueprint capture (J0)** : filtre ajouté entre l'upsert Airtable et le Gmail J0 →
+    n'envoie que si `{{length(3.body.createdRecords)}} > 0` (fiche réellement créée) ;
+    un re-passage du même email dans le formulaire ne redéclenche plus le J0.
+  - **README intégrations** : procédure de mise à jour **manuelle du scénario déjà en ligne**
+    (sans ré-import) documentée ; planification recommandée **1×/jour** (15 min = gaspillage d'ops).
+
 ### Reste à faire / décisions en attente
 - *(Optionnel)* **Airtable Automation** « anti-rétrogradation cosmétique » : *Quand une fiche a
   `Étape tunnel`=Lead ET `RDV prière` non vide → repasser `Étape tunnel`=RDV pris*. (L'API ne permet

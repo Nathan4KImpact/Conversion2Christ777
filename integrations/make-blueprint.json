@@ -48,6 +48,10 @@
               "module": "google-email:ActionSendEmail",
               "version": 1,
               "parameters": { "account": 6300394 },
+              "filter": {
+                "name": "J0 — nouveau lead uniquement",
+                "conditions": [ [ { "a": "{{length(3.body.createdRecords)}}", "b": "0", "o": "number:greater" } ] ]
+              },
               "mapper": {
                 "to": [ "{{1.email}}" ],
                 "subject": "🤍 Bienvenue {{1.firstname}} — ton premier pas est fait",

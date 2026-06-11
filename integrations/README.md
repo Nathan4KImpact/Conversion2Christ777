@@ -35,7 +35,7 @@ Le **Router** lit le champ `type` du JSON reçu :
 
 | `type` | Branche | Actions |
 |--------|---------|---------|
-| `lead` | Nouveau lead (depuis `optin.html`) | Airtable *créer* la fiche + Gmail email J0 |
+| `lead` | Nouveau lead (depuis `optin.html`) | Airtable *upsert* (Email) + Gmail email J0 — **filtré : envoyé uniquement si la fiche vient d'être créée** (`createdRecords` non vide), pour ne pas re-spammer un lead qui re-remplit le formulaire |
 | `booking` | Réservation RDV (depuis `merci.html`) | Airtable *upsert* (Email) → `Étape tunnel = RDV pris`, `RDV prière` + Google Agenda *crée l'événement* (invité = l'âme) |
 | `convert` | A prié (depuis `nouveau-ne.html`) | Airtable *upsert* (Email) → `Étape tunnel = Prière faite` |
 
@@ -63,14 +63,35 @@ créneaux récurrents Mar–Sam 19h–20h), avec l'âme en invité → elle reç
 
 1. Importe `make-blueprint-nurturing.json`.
 2. Dans le module **Airtable – Search Records**, confirme la base/table (déjà renseignées).
-3. **Planifie** le scénario : **toutes les 24 h** (ex. chaque jour à 10h00).
-4. Remplace `[LIEN_SITE]` par l'URL publique du site dans les 4 emails (J1, J3, J5).
-5. **Active**.
+3. **Planifie** le scénario : **1×/jour** (ex. chaque jour à 10h00) suffit — le mécanisme
+   anti-doublon le rend de toute façon **idempotent** (le relancer plus souvent n'envoie rien en plus).
+4. **Active**.
 
-Fonctionnement : chaque jour, le scénario cherche les fiches `Étape tunnel = Lead` dont
-le champ formule **`Jours depuis entrée`** vaut 1, 3, 5 ou 7, puis un Router envoie l'email
-correspondant. Comme chaque âge (1/3/5/7) n'arrive qu'une fois par fiche, **pas de doublon**
-sans avoir besoin de champ « déjà envoyé ».
+Fonctionnement (anti-doublon ✅) : le scénario cherche les fiches `Étape tunnel = Lead` dont
+**`Jours depuis entrée`** vaut 1, 3, 5 ou 7 **ET dont le champ « Jx envoyé » n'est pas encore
+coché**. Après chaque envoi Gmail réussi, un module Airtable **coche « Jx envoyé »** sur la
+fiche (`PATCH v0/base/table/{{1.id}}`). Au passage suivant, la formule l'exclut → **un seul
+email par campagne et par âme**, quelle que soit la fréquence d'exécution.
+
+Formule du module Search Records :
+```
+AND({Étape tunnel}='Lead', {RDV prière}=BLANK(),
+  OR(AND({Jours depuis entrée}=1, NOT({J1 envoyé})),
+     AND({Jours depuis entrée}=3, NOT({J3 envoyé})),
+     AND({Jours depuis entrée}=5, NOT({J5 envoyé})),
+     AND({Jours depuis entrée}=7, NOT({J7 envoyé}))))
+```
+
+> **Mettre à jour le scénario déjà en ligne sans ré-importer** :
+> 1. Module **Airtable – Search Records** → remplace la **formule** par celle ci-dessus.
+> 2. Après **chaque** module Gmail (J1, J3, J5, J7), ajoute un module **Airtable → Make an API Call**
+>    (connexion « My Airtable OAuth connection », celle qui écrit) :
+>    - URL : `v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL/{{1.id}}` · Méthode : `PATCH`
+>    - Header : `Content-Type: application/json`
+>    - Body : `{"fields":{"J1 envoyé":true}}` (adapter `J1`→`J3`/`J5`/`J7` selon la branche).
+> 3. De même, sur le **Scénario 1**, ajoute un **filtre** entre le module Airtable upsert et le
+>    Gmail J0 : condition `{{length(3.body.createdRecords)}}` **Greater than (number)** `0`
+>    (remplace `3` par le n° réel du module Airtable de la branche lead).
 
 > Les 5 textes (J0→J7) existent aussi en **brouillons Gmail** (label « PDVIE — Suivi des Âmes »)
 > si tu veux les peaufiner.
@@ -94,6 +115,7 @@ Base `appRLYZbJgmORxkxz` · table `Ames` `tblqFCCV7BAO8IJNL`.
 | Date d'entrée | Date |
 | RDV prière | Date/heure |
 | Jours depuis entrée | Formule `DATETIME_DIFF(TODAY();{Date d'entrée};'days')` |
+| J1 envoyé · J3 envoyé · J5 envoyé · J7 envoyé | Cases à cocher — cochées par Make après chaque envoi de nurturing (anti-doublon) |
 | Référent | Collaborateur |
 | Notes | Long text |
 
