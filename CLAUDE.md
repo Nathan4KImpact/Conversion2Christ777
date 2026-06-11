@@ -311,6 +311,9 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     Variables Netlify à renseigner : `AIRTABLE_TOKEN` (PAT base PDVIE), `JWT_SECRET`, `ADMIN_SIGNUP_CODE`.
     Guide complet : `integrations/ADMIN.md`. Page admin en `noindex`, non liée publiquement (URL `/admin.html`).
   - Vérifs locales : `node --check` sur les 6 fonctions + `admin.js` ; round-trip scrypt + JWT testés.
+  - **Lien discret** vers `/admin.html` ajouté dans le footer-bottom de `index.html` (clé i18n
+    `footer.admin`, `rel="nofollow"`, opacité réduite). Secrets générés et transmis au porteur
+    en chat (jamais commités) : à coller dans les variables Netlify.
 
 ### Reste à faire / décisions en attente
 - **Admin** : renseigner les 3 variables Netlify puis créer le 1er compte sur `/admin.html`
