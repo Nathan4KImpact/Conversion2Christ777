@@ -1,7 +1,7 @@
-# Conversion2Christ777 — Nouvelles Vies en Christ
+# Conversion2Christ777 — Nouvelles Vies en Jésus
 
 Landing page + **tunnel de conversion à Christ** pour une antenne locale de la
-communauté **Nouvelles Vies en Christ**. Site statique (HTML/CSS/JS), bilingue **FR / EN**,
+communauté **Nouvelles Vies en Jésus**. Site statique (HTML/CSS/JS), bilingue **FR / EN**,
 sans étape de build — hébergeable n'importe où (GitHub Pages, Netlify, Vercel,
 serveur classique).
 

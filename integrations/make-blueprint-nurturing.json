@@ -36,7 +36,7 @@
               "mapper": {
                 "to": [ "{{1.Email}}" ],
                 "subject": "L'histoire de quelqu'un qui te ressemble",
-                "html": "<p>Bonjour {{1.Prénom}},</p><p>Aujourd'hui, je veux juste te partager une histoire. Pauline avait de grosses crises d'angoisse. Alexia se disait athée. D'autres cherchaient la paix dans les énergies… avant de la trouver, enfin, en une Personne.</p><p>Regarde leurs témoignages (2 minutes, ça peut tout changer) : <a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/index.html#testimonials\">les histoires de vie</a></p><p>Nathanaël — Nouvelles Vies en Christ</p>"
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Aujourd'hui, je veux juste te partager une histoire. Pauline avait de grosses crises d'angoisse. Alexia se disait athée. D'autres cherchaient la paix dans les énergies… avant de la trouver, enfin, en une Personne.</p><p>Regarde leurs témoignages (2 minutes, ça peut tout changer) : <a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/index.html#testimonials\">les histoires de vie</a></p><p>Nathanaël — Nouvelles Vies en Jésus</p>"
               },
               "metadata": { "designer": { "x": 600, "y": -300 } }
             }
@@ -56,7 +56,7 @@
               "mapper": {
                 "to": [ "{{1.Email}}" ],
                 "subject": "« Et si je n'étais pas à la hauteur ? »",
-                "html": "<p>Bonjour {{1.Prénom}},</p><p>Une pensée arrête beaucoup de gens : « Je ne suis pas assez bien pour Dieu. » Voici la vérité qui libère : tu n'as pas à devenir parfait(e) pour venir à Lui. C'est en venant à Lui qu'Il te transforme.</p><p>« C'est par la grâce que vous êtes sauvés… c'est le don de Dieu. » (Éphésiens 2:8)</p><p>Tu portes quelque chose de lourd ? Parlons-en : <a href=\"https://wa.me/33758372268\">WhatsApp</a></p><p>Nathanaël — Nouvelles Vies en Christ</p>"
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Une pensée arrête beaucoup de gens : « Je ne suis pas assez bien pour Dieu. » Voici la vérité qui libère : tu n'as pas à devenir parfait(e) pour venir à Lui. C'est en venant à Lui qu'Il te transforme.</p><p>« C'est par la grâce que vous êtes sauvés… c'est le don de Dieu. » (Éphésiens 2:8)</p><p>Tu portes quelque chose de lourd ? Parlons-en : <a href=\"https://wa.me/33758372268\">WhatsApp</a></p><p>Nathanaël — Nouvelles Vies en Jésus</p>"
               },
               "metadata": { "designer": { "x": 600, "y": -100 } }
             }
@@ -76,7 +76,7 @@
               "mapper": {
                 "to": [ "{{1.Email}}" ],
                 "subject": "La plus belle nouvelle que tu puisses entendre aujourd'hui",
-                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si, là où tu es, tu pouvais commencer une vie nouvelle ? Pas une technique. Une rencontre, avec Jésus, qui t'offre le Salut, la Guérison et la Paix par son Esprit.</p><p>Quand tu seras prêt(e), une prière toute simple suffit — je l'ai préparée pour toi, avec une vidéo : <a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/prier.html\">prier maintenant</a></p><p>Nathanaël — Nouvelles Vies en Christ</p>"
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si, là où tu es, tu pouvais commencer une vie nouvelle ? Pas une technique. Une rencontre, avec Jésus, qui t'offre le Salut, la Guérison et la Paix par son Esprit.</p><p>Quand tu seras prêt(e), une prière toute simple suffit — je l'ai préparée pour toi, avec une vidéo : <a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/prier.html\">prier maintenant</a></p><p>Nathanaël — Nouvelles Vies en Jésus</p>"
               },
               "metadata": { "designer": { "x": 600, "y": 100 } }
             }
@@ -96,7 +96,7 @@
               "mapper": {
                 "to": [ "{{1.Email}}" ],
                 "subject": "On prie ensemble ? (Mar–Sam, 19h–20h)",
-                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si on prenait un vrai moment pour prier ensemble ? Je réserve des créneaux chaque semaine, du mardi au samedi, de 19h à 20h. Confidentiel, sans jugement.</p><p>Réponds à cet email, ou écris-moi : <a href=\"https://wa.me/33758372268\">WhatsApp</a></p><p>Tu comptes, {{1.Prénom}}. Vraiment.<br>Nathanaël — Nouvelles Vies en Christ</p>"
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si on prenait un vrai moment pour prier ensemble ? Je réserve des créneaux chaque semaine, du mardi au samedi, de 19h à 20h. Confidentiel, sans jugement.</p><p>Réponds à cet email, ou écris-moi : <a href=\"https://wa.me/33758372268\">WhatsApp</a></p><p>Tu comptes, {{1.Prénom}}. Vraiment.<br>Nathanaël — Nouvelles Vies en Jésus</p>"
               },
               "metadata": { "designer": { "x": 600, "y": 300 } }
             }

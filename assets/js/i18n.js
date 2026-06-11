@@ -144,7 +144,7 @@ const I18N = {
     "reassure3.text": "Derrière l'écran, des personnes réelles, prêtes à t'écouter et à prier avec toi quand tu le souhaites.",
 
     /* --- Footer --- */
-    "footer.tagline": "Nouvelles Vies en Christ — accueillir, accompagner et affermir chaque personne dans une rencontre vivante avec Jésus-Christ.",
+    "footer.tagline": "Nouvelles Vies en Jésus — accueillir, accompagner et affermir chaque personne dans une rencontre vivante avec Jésus-Christ.",
     "footer.explore": "Explorer",
     "footer.link.home": "Accueil",
     "footer.link.quiz": "Le test de la soif",
@@ -152,7 +152,7 @@ const I18N = {
     "footer.link.pray": "Prier maintenant",
     "footer.contact": "Contact",
     "footer.contact.text": "Une question, un besoin de prière ? Écris-nous, nous répondons.",
-    "footer.rights": "Nouvelles Vies en Christ — Tous droits réservés.",
+    "footer.rights": "Nouvelles Vies en Jésus — Tous droits réservés.",
     "footer.privacy": "Confidentialité",
     "footer.legal": "Mentions légales",
 
@@ -245,7 +245,7 @@ const I18N = {
     "pray.cta2": "Parler à quelqu'un / être rappelé(e)",
 
     /* --- Étape 7 : Kit du nouveau-né en Christ (nouveau-ne.html) --- */
-    "nn.title": "Bienvenue dans ta nouvelle vie — Nouvelles Vies en Christ",
+    "nn.title": "Bienvenue dans ta nouvelle vie — Nouvelles Vies en Jésus",
     "nn.hero.eyebrow": "Tu viens de naître de nouveau",
     "nn.hero.title": "Le ciel est en fête pour toi 🎉",
     "nn.hero.sub": "Ce n'est pas une fin, c'est le plus beau commencement. Voici tes tout premiers pas — et tu ne marcheras pas seul(e).",
@@ -281,7 +281,7 @@ const I18N = {
     "nn.next": "Continuer : grandir dans la foi →",
 
     /* --- Étape 8 : Grandir / intégration (grandir.html) --- */
-    "gr.title": "Grandir dans la foi — Nouvelles Vies en Christ",
+    "gr.title": "Grandir dans la foi — Nouvelles Vies en Jésus",
     "gr.hero.eyebrow": "Étape suivante",
     "gr.hero.title": "Tu es né(e) — maintenant, grandis 🌱",
     "gr.hero.sub": "Une graine devient un arbre. Voici comment t'enraciner, t'affermir et devenir à ton tour un porteur de vie.",
@@ -307,7 +307,7 @@ const I18N = {
     "wta.channel": "Suivre la chaîne d'enseignements →",
 
     /* --- Parcours « Fondations de la foi » (fondations.html) --- */
-    "fond.title": "Fondations de la foi — Nouvelles Vies en Christ",
+    "fond.title": "Fondations de la foi — Nouvelles Vies en Jésus",
     "fond.hero.eyebrow": "Parcours du nouveau disciple",
     "fond.hero.title": "Fondations de la foi",
     "fond.hero.sub": "6 modules pour poser des bases solides. Avance à ton rythme, seul(e) ou avec ton mentor.",
@@ -477,7 +477,7 @@ const I18N = {
     "reassure3.title": "Real human presence",
     "reassure3.text": "Behind the screen, real people, ready to listen and pray with you whenever you wish.",
 
-    "footer.tagline": "New Lives in Christ — to welcome, walk alongside, and strengthen every person in a living encounter with Jesus Christ.",
+    "footer.tagline": "New Lives in Jesus — to welcome, walk alongside, and strengthen every person in a living encounter with Jesus Christ.",
     "footer.explore": "Explore",
     "footer.link.home": "Home",
     "footer.link.quiz": "The thirst test",
@@ -485,7 +485,7 @@ const I18N = {
     "footer.link.pray": "Pray now",
     "footer.contact": "Contact",
     "footer.contact.text": "A question, a prayer need? Write to us — we reply.",
-    "footer.rights": "New Lives in Christ — All rights reserved.",
+    "footer.rights": "New Lives in Jesus — All rights reserved.",
     "footer.privacy": "Privacy",
     "footer.legal": "Legal notice",
 
@@ -572,7 +572,7 @@ const I18N = {
     "pray.cta": "I prayed — walk with me",
     "pray.cta2": "Talk to someone / be called back",
 
-    "nn.title": "Welcome to your new life — New Lives in Christ",
+    "nn.title": "Welcome to your new life — New Lives in Jesus",
     "nn.hero.eyebrow": "You've just been born again",
     "nn.hero.title": "Heaven is celebrating for you 🎉",
     "nn.hero.sub": "This isn't an end, it's the most beautiful beginning. Here are your very first steps — and you won't walk alone.",
@@ -607,7 +607,7 @@ const I18N = {
     "nn.mentor.whatsapp": "Be supported via WhatsApp",
     "nn.next": "Keep going: grow in faith →",
 
-    "gr.title": "Grow in faith — New Lives in Christ",
+    "gr.title": "Grow in faith — New Lives in Jesus",
     "gr.hero.eyebrow": "Next step",
     "gr.hero.title": "You're born — now, grow 🌱",
     "gr.hero.sub": "A seed becomes a tree. Here's how to take root, be strengthened, and in turn become a carrier of life.",
@@ -632,7 +632,7 @@ const I18N = {
     "footer.link.gr": "Grow in faith",
     "wta.channel": "Follow the teaching channel →",
 
-    "fond.title": "Foundations of Faith — New Lives in Christ",
+    "fond.title": "Foundations of Faith — New Lives in Jesus",
     "fond.hero.eyebrow": "New disciple path",
     "fond.hero.title": "Foundations of Faith",
     "fond.hero.sub": "6 modules to lay solid foundations. Go at your own pace, alone or with your mentor.",

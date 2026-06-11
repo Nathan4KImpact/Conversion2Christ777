@@ -22,13 +22,13 @@ pour l'église / le ministère **Vases d'Honneur**.
   populaires (ClickFunnels, systeme.io, etc.).
 
 ### Thème de marque
-- **MAJ 2026-06-10 (v12) :** marque affichée = **« Nouvelles Vies en Christ »** (fil conducteur
-  *2 Corinthiens 5:17* — la nouvelle création). ⚠️ **L'identité visuelle de « Vases d'Honneur »
+- **MAJ 2026-06-10 (v12) :** marque affichée = **« Nouvelles Vies en Jésus »** (fil conducteur *2 Corinthiens 5:17* — la nouvelle création). ⚠️ **L'identité visuelle de « Vases d'Honneur »
   (logo + tagline « Porteurs de vie ») a été RETIRÉE** du site faute d'autorisation. Tout est
   renommé dans les fichiers livrés (pages, i18n, blueprints, emails).
-- **Logo** : emblème **provisoire** `assets/img/logo-nv.svg` (pousse + croix, thème « nouvelle vie »).
-  Le **vrai logo** fourni par le porteur (lien ChatGPT non récupérable depuis le sandbox) reste **à
-  déposer** dans `assets/img/` (Drive/upload) puis à câbler.
+- **Logo** : wordmark `assets/img/logo-nvc.svg` (style du visuel officiel « Nouvelles Vies en Jésus »).
+  **Logo = wordmark SVG** `assets/img/logo-nvc.svg` (NOUVELLES VIES / en Jésus + feuille, style du
+  visuel officiel), sur pastille blanche. Le **visuel promotionnel** officiel = `assets/img/visuel-nvc.png`
+  (utilisé en `og:image`).
 - Palette conservée (vert sarcelle + or + rouge) — générique, non liée à un emblème ; modifiable si besoin.
 
 ---
