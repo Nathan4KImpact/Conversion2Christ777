@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le test de la soif — Nouvelles Vies en Jésus</title>
+  <meta name="description" content="4 questions, 2 minutes. Découvre la source de ta soif et ton premier pas." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="page-wrap">
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="index.html">
+          <img class="brand-logo-img" src="assets/img/logo-main.png" alt="Nouvelles Vies en Jésus" width="54" height="54" />
+          <span class="brand-name">
+            <span class="bn-top" data-i18n="brand.tag1">Une Nouvelle Vie est possible</span>
+            <span class="brand-bar"></span>
+            <span class="bn-bottom" data-i18n="brand.tag2">en Jésus</span>
+          </span>
+        </a>
+        <div class="nav-actions">
+          <div class="lang-switch" role="group" aria-label="Langue">
+            <button data-lang="fr">FR</button>
+            <button data-lang="en">EN</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-main">
+      <div class="container">
+
+        <!-- Intro -->
+        <div class="card narrow center" id="quiz-intro">
+          <span class="eyebrow" style="justify-content:center" data-i18n="quiz.title">La source de ta soif</span>
+          <h1 data-i18n="quiz.title">La source de ta soif</h1>
+          <p class="lead" data-i18n="quiz.intro">4 questions, 2 minutes…</p>
+          <button class="btn btn-primary btn-lg mt-2" id="quiz-start" data-i18n="quiz.start">Commencer</button>
+        </div>
+
+        <!-- Jeu -->
+        <div class="card" id="quiz-game" hidden>
+          <div class="progress"><div class="progress-bar" id="quiz-bar"></div></div>
+          <h2 class="quiz-q" id="quiz-question"></h2>
+          <div class="quiz-options" id="quiz-options"></div>
+          <button class="btn" id="quiz-back" style="background:transparent;color:var(--muted);padding-left:0;margin-top:18px" data-i18n="quiz.back">← Retour</button>
+        </div>
+
+        <!-- Résultat -->
+        <div class="card center" id="quiz-result" hidden>
+          <span class="result-badge" id="result-badge"></span>
+          <h1 id="result-title"></h1>
+          <p class="lead" id="result-text"></p>
+          <div class="video-single mt-2">
+            <div class="lite-yt" id="result-video" role="button" tabindex="0" data-id="" data-title="Témoignage">
+              <img alt="" /><span class="lite-yt-play" aria-hidden="true">▶</span>
+            </div>
+          </div>
+          <a class="btn btn-primary btn-lg mt-2" href="optin.html" data-i18n="quiz.result.cta">Recevoir mon premier pas</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/video.js"></script>
+  <script src="assets/js/quiz.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

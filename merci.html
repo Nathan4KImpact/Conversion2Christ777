@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenue — Nouvelles Vies en Jésus</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="page-wrap">
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="index.html">
+          <img class="brand-logo-img" src="assets/img/logo-main.png" alt="Nouvelles Vies en Jésus" width="54" height="54" />
+          <span class="brand-name">
+            <span class="bn-top" data-i18n="brand.tag1">Une Nouvelle Vie est possible</span>
+            <span class="brand-bar"></span>
+            <span class="bn-bottom" data-i18n="brand.tag2">en Jésus</span>
+          </span>
+        </a>
+        <div class="nav-actions">
+          <div class="lang-switch" role="group" aria-label="Langue">
+            <button data-lang="fr">FR</button>
+            <button data-lang="en">EN</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-main">
+      <div class="container">
+        <div class="card narrow center">
+          <h1 data-i18n="merci.title">Bienvenue dans la famille 🤍</h1>
+          <p class="lead" id="merci-greeting" data-i18n="merci.lead">C'est reçu…</p>
+
+          <div class="prayer-box" style="text-align:left">
+            <h3 style="margin-top:0" data-i18n="merci.step.title">Ton tout premier pas, maintenant</h3>
+            <p style="font-family:var(--font-sans);font-size:1rem;margin:0" data-i18n="merci.step.text">Tu n'as pas besoin d'attendre…</p>
+          </div>
+
+          <a class="btn btn-primary btn-lg btn-block" href="prier.html" data-i18n="merci.cta">Oui, je veux prier maintenant</a>
+          <a class="btn btn-whatsapp btn-block mt-2" href="https://chat.whatsapp.com/0vazCnCIMag0OAsYUtuO1z" target="_blank" rel="noopener" data-i18n="merci.join">Rejoindre notre groupe WhatsApp</a>
+        </div>
+
+        <!-- Réservation d'un RDV de prière (créneaux Mar–Sam 19h–20h) -->
+        <div class="card narrow center booking-card" style="margin-top:24px">
+          <span class="result-badge" data-i18n="book.eyebrow">Un temps rien que pour toi</span>
+          <h2 style="color:var(--navy)" data-i18n="book.title">Réserve ton entretien de prière</h2>
+          <p class="lead" data-i18n="book.text">Du mardi au samedi, de 19h à 20h…</p>
+
+          <form id="book-form" style="text-align:left">
+            <div class="field">
+              <label for="b-firstname" data-i18n="optin.firstname">Ton prénom</label>
+              <input id="b-firstname" type="text" autocomplete="given-name" required />
+            </div>
+            <div class="field">
+              <label for="b-email" data-i18n="optin.email">Ton email</label>
+              <input id="b-email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="b-slot" data-i18n="book.choose">Choisis ton créneau</label>
+              <select id="b-slot" required></select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="book-submit" data-i18n="book.cta">Réserver mon créneau</button>
+          </form>
+
+          <div id="book-done" class="prayer-box" hidden style="margin-top:16px;text-align:center">
+            <p style="margin:0;font-family:var(--font-sans)" data-i18n="book.done">🙏 C'est noté ! Tu recevras une confirmation par email. À très vite.</p>
+          </div>
+
+          <p class="mt-2"><a id="book-wa" href="#" target="_blank" rel="noopener" style="color:var(--muted);font-size:0.9rem" data-i18n="book.whatsapp">Je préfère réserver via WhatsApp →</a></p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Personnalisation par prénom si disponible
+    (function () {
+      var cfg = window.C2C_CONFIG || {};
+      var lead = {};
+      try { lead = JSON.parse(localStorage.getItem("c2c_lead") || "{}"); } catch (_) {}
+
+      if (lead.firstname) {
+        try {
+          var el = document.getElementById("merci-greeting");
+          el.textContent = lead.firstname + ", " + el.textContent.charAt(0).toLowerCase() + el.textContent.slice(1);
+        } catch (_) {}
+      }
+
+      // Pré-remplissage du formulaire de réservation
+      if (lead.firstname) document.getElementById("b-firstname").value = lead.firstname;
+      if (lead.email) document.getElementById("b-email").value = lead.email;
+
+      // Génère les prochains créneaux Mardi→Samedi (19h–20h), heure de Paris
+      function pad(n) { return (n < 10 ? "0" : "") + n; }
+      var lang = (window.C2C_I18N && window.C2C_I18N.lang) || "fr";
+      var sel = document.getElementById("b-slot");
+      var d = new Date();
+      d.setDate(d.getDate() + 1); // à partir de demain
+      var added = 0;
+      while (added < 12) {
+        var wd = d.getDay(); // 0=dim … 2=mar … 6=sam
+        if (wd >= 2 && wd <= 6) {
+          var y = d.getFullYear(), m = d.getMonth() + 1, day = d.getDate();
+          var startISO = y + "-" + pad(m) + "-" + pad(day) + "T19:00:00";
+          var endISO = y + "-" + pad(m) + "-" + pad(day) + "T20:00:00";
+          var label = new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "fr-FR", {
+            weekday: "long", day: "numeric", month: "long",
+          }).format(d);
+          label = label.charAt(0).toUpperCase() + label.slice(1) + (lang === "en" ? " · 7–8pm" : " · 19h–20h");
+          var opt = document.createElement("option");
+          opt.value = startISO + "|" + endISO + "|" + label;
+          opt.textContent = label;
+          sel.appendChild(opt);
+          added++;
+        }
+        d.setDate(d.getDate() + 1);
+      }
+
+      // Lien WhatsApp de secours
+      var wa = document.getElementById("book-wa");
+      if (wa && cfg.WHATSAPP) {
+        var msg = encodeURIComponent("Bonjour, j'aimerais réserver un entretien de prière (Mardi à Samedi, 19h-20h).");
+        wa.href = "https://wa.me/" + cfg.WHATSAPP + "?text=" + msg;
+      }
+
+      // Soumission de la réservation → webhook Make (branche "booking")
+      document.getElementById("book-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!this.checkValidity()) { this.reportValidity(); return; }
+        var parts = sel.value.split("|");
+        var payload = {
+          type: "booking",
+          firstname: document.getElementById("b-firstname").value.trim(),
+          email: document.getElementById("b-email").value.trim(),
+          whatsapp: lead.whatsapp || "",
+          rdvStartISO: parts[0],
+          rdvEndISO: parts[1],
+          rdvLabel: parts[2] || "",
+          lang: lang,
+          source: "landing-nvc",
+          ts: new Date().toISOString(),
+        };
+        var btn = document.getElementById("book-submit");
+        btn.disabled = true;
+        btn.textContent = (window.C2C_I18N && window.C2C_I18N.t("book.sending")) || "Envoi…";
+
+        function done() {
+          document.getElementById("book-form").hidden = true;
+          document.getElementById("book-done").hidden = false;
+        }
+        if (cfg.WEBHOOK_URL) {
+          fetch(cfg.WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+            keepalive: true,
+          }).then(done).catch(done);
+          setTimeout(done, 1500);
+        } else {
+          // Pas de webhook : repli WhatsApp
+          if (wa) window.open(wa.href, "_blank");
+          done();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

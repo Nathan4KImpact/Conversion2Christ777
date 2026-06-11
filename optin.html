@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ton premier pas — Nouvelles Vies en Jésus</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="page-wrap">
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="index.html">
+          <img class="brand-logo-img" src="assets/img/logo-main.png" alt="Nouvelles Vies en Jésus" width="54" height="54" />
+          <span class="brand-name">
+            <span class="bn-top" data-i18n="brand.tag1">Une Nouvelle Vie est possible</span>
+            <span class="brand-bar"></span>
+            <span class="bn-bottom" data-i18n="brand.tag2">en Jésus</span>
+          </span>
+        </a>
+        <div class="nav-actions">
+          <div class="lang-switch" role="group" aria-label="Langue">
+            <button data-lang="fr">FR</button>
+            <button data-lang="en">EN</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-main">
+      <div class="container">
+        <div class="card narrow">
+          <h1 data-i18n="optin.title">Ton premier pas t'attend</h1>
+          <p class="lead" data-i18n="optin.lead">Laisse-nous t'envoyer ton résultat complet…</p>
+
+          <form id="optin-form" novalidate>
+            <div class="field">
+              <label for="firstname" data-i18n="optin.firstname">Ton prénom</label>
+              <input id="firstname" name="firstname" type="text" autocomplete="given-name" required data-i18n-ph="optin.firstname" />
+            </div>
+            <div class="field">
+              <label for="email" data-i18n="optin.email">Ton email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required data-i18n-ph="optin.email" />
+            </div>
+            <div class="field">
+              <label for="whatsapp" data-i18n="optin.whatsapp">Ton WhatsApp (optionnel)</label>
+              <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" data-i18n-ph="optin.whatsapp" />
+            </div>
+            <div class="field consent">
+              <input id="consent" name="consent" type="checkbox" required />
+              <label for="consent" style="font-weight:400" data-i18n="optin.consent">J'accepte de recevoir des messages d'accompagnement…</label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" data-i18n="optin.submit">Recevoir mon accompagnement</button>
+          </form>
+
+          <p class="center mt-2">
+            <a href="prier.html" style="color:var(--muted);font-size:0.92rem" data-i18n="optin.skip">Je préfère prier directement maintenant →</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Capture du lead → envoi au webhook Make (si configuré) + sauvegarde locale de secours.
+    // Make distribue ensuite vers Airtable (CRM), Gmail (nurturing) et Agenda (RDV).
+    document.getElementById("optin-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!this.checkValidity()) { this.reportValidity(); return; }
+      var cfg = window.C2C_CONFIG || {};
+      var persona = localStorage.getItem("c2c_persona") || "";
+      var personaLabels = { p1: "Ouvert", p2: "Blessé", p3: "Chercheur", p4: "Musulman", p5: "Sceptique" };
+      var lead = {
+        type: "lead",
+        firstname: document.getElementById("firstname").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        whatsapp: document.getElementById("whatsapp").value.trim(),
+        persona: persona,
+        personaLabel: personaLabels[persona] || "",
+        lang: (window.C2C_I18N && window.C2C_I18N.lang) || "fr",
+        source: "landing-nvc",
+        ts: new Date().toISOString(),
+      };
+      try { localStorage.setItem("c2c_lead", JSON.stringify(lead)); } catch (_) {}
+
+      function go() { window.location.href = "merci.html"; }
+
+      if (cfg.WEBHOOK_URL) {
+        // Envoi non bloquant : on redirige quoi qu'il arrive (UX fluide).
+        fetch(cfg.WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(lead),
+          keepalive: true,
+        }).then(go).catch(go);
+        setTimeout(go, 1500); // garde-fou si le réseau traîne
+      } else {
+        go();
+      }
+    });
+  </script>
+</body>
+</html>
