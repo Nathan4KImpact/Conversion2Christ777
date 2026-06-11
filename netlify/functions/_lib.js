@@ -1,0 +1,287 @@
+/* =========================================================================
+   _lib.js — Boîte à outils partagée des fonctions serverless (Netlify)
+   Espace administrateur PDVIE — « Nouvelles Vies en Jésus ».
+
+   Pourquoi un back-end ? Les fiches des âmes (email, WhatsApp, persona —
+   dont des sujets sensibles : blessures, abus, identité…) ne doivent JAMAIS
+   transiter par du JavaScript public. Le token Airtable reste ici, côté
+   serveur, dans une variable d'environnement Netlify. Le navigateur ne reçoit
+   que ce qu'un admin authentifié demande.
+
+   Zéro dépendance npm : uniquement les modules natifs de Node (crypto, fetch).
+   ========================================================================= */
+"use strict";
+
+const crypto = require("crypto");
+
+/* ---- Configuration (variables d'environnement Netlify) ---- */
+const BASE = process.env.AIRTABLE_BASE || "appRLYZbJgmORxkxz";
+const AMES_TABLE = process.env.AMES_TABLE || "tblqFCCV7BAO8IJNL";
+const ADMINS_TABLE = process.env.ADMINS_TABLE || "tblYWX1NiR5dcVliI";
+const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN || "";
+const JWT_SECRET = process.env.JWT_SECRET || "";
+const SIGNUP_CODE = process.env.ADMIN_SIGNUP_CODE || "";
+const TOKEN_TTL = 60 * 60 * 12; // jeton valable 12 h
+
+/* ---- Réponses HTTP ---- */
+const SECURITY_HEADERS = {
+  "Content-Type": "application/json; charset=utf-8",
+  "Cache-Control": "no-store",
+  "X-Content-Type-Options": "nosniff",
+};
+
+function json(statusCode, body, extra) {
+  return {
+    statusCode,
+    headers: Object.assign({}, SECURITY_HEADERS, extra || {}),
+    body: JSON.stringify(body),
+  };
+}
+
+function readJson(event) {
+  try {
+    if (!event || !event.body) return {};
+    const raw = event.isBase64Encoded
+      ? Buffer.from(event.body, "base64").toString("utf8")
+      : event.body;
+    return JSON.parse(raw);
+  } catch (_) {
+    return {};
+  }
+}
+
+/** Renvoie une réponse 500 si la config serveur est incomplète, sinon null. */
+function configError() {
+  if (!AIRTABLE_TOKEN || !JWT_SECRET) {
+    return json(500, {
+      error: "server_not_configured",
+      detail:
+        "Variables d'environnement manquantes côté Netlify (AIRTABLE_TOKEN et/ou JWT_SECRET).",
+    });
+  }
+  return null;
+}
+
+/* ---- base64url ---- */
+function b64url(buf) {
+  return Buffer.from(buf)
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+function b64urlJson(obj) {
+  return b64url(Buffer.from(JSON.stringify(obj), "utf8"));
+}
+function fromB64url(str) {
+  let s = String(str).replace(/-/g, "+").replace(/_/g, "/");
+  while (s.length % 4) s += "=";
+  return Buffer.from(s, "base64");
+}
+
+/* ---- Mots de passe : scrypt (natif), jamais de clair en base ---- */
+const SCRYPT = { N: 16384, r: 8, p: 1, keylen: 64 };
+
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16);
+  const hash = crypto.scryptSync(password, salt, SCRYPT.keylen, {
+    N: SCRYPT.N,
+    r: SCRYPT.r,
+    p: SCRYPT.p,
+  });
+  return [
+    "scrypt",
+    SCRYPT.N,
+    SCRYPT.r,
+    SCRYPT.p,
+    salt.toString("base64"),
+    hash.toString("base64"),
+  ].join("$");
+}
+
+function verifyPassword(password, stored) {
+  try {
+    const parts = String(stored).split("$");
+    if (parts.length !== 6 || parts[0] !== "scrypt") return false;
+    const N = +parts[1],
+      r = +parts[2],
+      p = +parts[3];
+    const salt = Buffer.from(parts[4], "base64");
+    const expected = Buffer.from(parts[5], "base64");
+    const actual = crypto.scryptSync(password, salt, expected.length, { N, r, p });
+    return (
+      expected.length === actual.length && crypto.timingSafeEqual(expected, actual)
+    );
+  } catch (_) {
+    return false;
+  }
+}
+
+/* ---- JWT maison (HS256) ---- */
+function signToken(payload) {
+  const now = Math.floor(Date.now() / 1000);
+  const head = b64urlJson({ alg: "HS256", typ: "JWT" });
+  const body = b64urlJson(Object.assign({ iat: now, exp: now + TOKEN_TTL }, payload));
+  const sig = b64url(
+    crypto.createHmac("sha256", JWT_SECRET).update(head + "." + body).digest()
+  );
+  return head + "." + body + "." + sig;
+}
+
+function verifyToken(token) {
+  const parts = String(token).split(".");
+  if (parts.length !== 3) return null;
+  const [head, body, sig] = parts;
+  const expSig = b64url(
+    crypto.createHmac("sha256", JWT_SECRET).update(head + "." + body).digest()
+  );
+  const a = Buffer.from(sig);
+  const b = Buffer.from(expSig);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+  let payload;
+  try {
+    payload = JSON.parse(fromB64url(body).toString("utf8"));
+  } catch (_) {
+    return null;
+  }
+  if (!payload || !payload.exp || payload.exp < Math.floor(Date.now() / 1000)) return null;
+  return payload;
+}
+
+/** Lit l'en-tête Authorization: Bearer <jwt> et renvoie le payload, ou null. */
+function authUser(event) {
+  const headers = (event && event.headers) || {};
+  const h = headers.authorization || headers.Authorization || "";
+  const m = String(h).match(/^Bearer\s+(.+)$/i);
+  if (!m) return null;
+  return verifyToken(m[1].trim());
+}
+
+/* ---- Accès Airtable (token serveur uniquement) ---- */
+async function at(path, options) {
+  const res = await fetch("https://api.airtable.com/v0/" + path, {
+    method: (options && options.method) || "GET",
+    headers: Object.assign(
+      {
+        Authorization: "Bearer " + AIRTABLE_TOKEN,
+        "Content-Type": "application/json",
+      },
+      (options && options.headers) || {}
+    ),
+    body: options && options.body ? options.body : undefined,
+  });
+  const text = await res.text();
+  let data;
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch (_) {
+    data = { raw: text };
+  }
+  if (!res.ok) {
+    const e = new Error("Airtable " + res.status);
+    e.status = res.status;
+    e.data = data;
+    throw e;
+  }
+  return data;
+}
+
+/** Récupère TOUTES les fiches d'une table (pagination 100/page). */
+async function listAll(tableId, query) {
+  const out = [];
+  let offset;
+  do {
+    let url = BASE + "/" + tableId + "?pageSize=100";
+    if (query) url += "&" + query;
+    if (offset) url += "&offset=" + encodeURIComponent(offset);
+    const data = await at(url);
+    if (data.records) out.push.apply(out, data.records);
+    offset = data.offset;
+  } while (offset);
+  return out;
+}
+
+async function findAdmin(email) {
+  const e = String(email || "").toLowerCase().trim().replace(/"/g, '\\"');
+  if (!e) return null;
+  const formula = encodeURIComponent('LOWER({Email})="' + e + '"');
+  const data = await at(BASE + "/" + ADMINS_TABLE + "?maxRecords=1&filterByFormula=" + formula);
+  return (data.records && data.records[0]) || null;
+}
+
+async function createAdmin(fields) {
+  const data = await at(BASE + "/" + ADMINS_TABLE, {
+    method: "POST",
+    body: JSON.stringify({ typecast: true, fields }),
+  });
+  return data;
+}
+
+async function patchRecord(tableId, recordId, fields) {
+  const data = await at(BASE + "/" + tableId + "/" + recordId, {
+    method: "PATCH",
+    body: JSON.stringify({ typecast: true, fields }),
+  });
+  return data;
+}
+
+/* ---- Garde-fou anti-force-brute (best effort, par instance chaude) ---- */
+const _hits = new Map();
+function rateLimit(event, bucket, max, windowMs) {
+  try {
+    const headers = (event && event.headers) || {};
+    const ip =
+      headers["x-nf-client-connection-ip"] ||
+      (headers["x-forwarded-for"] || "").split(",")[0].trim() ||
+      "unknown";
+    const key = bucket + ":" + ip;
+    const now = Date.now();
+    const rec = _hits.get(key);
+    if (!rec || now - rec.ts > windowMs) {
+      _hits.set(key, { count: 1, ts: now });
+      return true;
+    }
+    rec.count += 1;
+    return rec.count <= max;
+  } catch (_) {
+    return true;
+  }
+}
+
+/* ---- Divers ---- */
+function sel(v) {
+  if (v && typeof v === "object") return v.name || "";
+  return v || "";
+}
+
+function daysSince(dateStr) {
+  if (!dateStr) return null;
+  const d = Date.parse(String(dateStr).slice(0, 10) + "T00:00:00Z");
+  if (isNaN(d)) return null;
+  const now = new Date();
+  const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  return Math.floor((todayUTC - d) / 86400000);
+}
+
+module.exports = {
+  BASE,
+  AMES_TABLE,
+  ADMINS_TABLE,
+  SIGNUP_CODE,
+  json,
+  readJson,
+  configError,
+  hashPassword,
+  verifyPassword,
+  signToken,
+  verifyToken,
+  authUser,
+  at,
+  listAll,
+  findAdmin,
+  createAdmin,
+  patchRecord,
+  rateLimit,
+  sel,
+  daysSince,
+};

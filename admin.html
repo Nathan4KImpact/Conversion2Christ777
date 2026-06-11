@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Espace responsable — Nouvelles Vies en Jésus</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+  <meta name="theme-color" content="#0f4d43" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <img class="brand-logo-img" src="assets/img/logo-main.png" alt="Nouvelles Vies en Jésus" width="54" height="54" />
+        <span class="brand-name">
+          <span class="bn-top" data-ai="brand.tag1">Une Nouvelle Vie est possible</span>
+          <span class="brand-bar"></span>
+          <span class="bn-bottom" data-ai="brand.tag2">en Jésus</span>
+        </span>
+      </a>
+      <div class="nav-actions">
+        <span class="admin-badge" data-ai="admin.area">Espace responsable</span>
+        <div class="lang-switch" role="group" aria-label="Langue">
+          <button data-lang="fr">FR</button>
+          <button data-lang="en">EN</button>
+        </div>
+        <button class="btn-logout" id="logout-btn" hidden data-ai="admin.logout">Déconnexion</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ============== VUE AUTH ============== -->
+  <main class="admin-main" id="view-auth">
+    <div class="auth-card">
+      <div class="auth-head">
+        <h1 data-ai="auth.title">Espace responsable</h1>
+        <p data-ai="auth.sub">Suivi des âmes & statistiques du tunnel. Accès réservé.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" data-ai="auth.tab.login">Connexion</button>
+        <button class="auth-tab" data-tab="signup" data-ai="auth.tab.signup">Créer un compte</button>
+      </div>
+
+      <!-- Connexion -->
+      <form class="auth-form" id="login-form">
+        <div class="field">
+          <label for="login-email" data-ai="auth.email">Email</label>
+          <input id="login-email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="login-password" data-ai="auth.password">Mot de passe</label>
+          <input id="login-password" type="password" autocomplete="current-password" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" data-ai="auth.login.cta">Se connecter</button>
+      </form>
+
+      <!-- Inscription -->
+      <form class="auth-form" id="signup-form" hidden>
+        <div class="field">
+          <label for="signup-name" data-ai="auth.name">Ton nom</label>
+          <input id="signup-name" type="text" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="signup-email" data-ai="auth.email">Email</label>
+          <input id="signup-email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="signup-password" data-ai="auth.password.new">Mot de passe (8 caractères min.)</label>
+          <input id="signup-password" type="password" autocomplete="new-password" minlength="8" required />
+        </div>
+        <div class="field">
+          <label for="signup-code" data-ai="auth.code">Code d'invitation</label>
+          <input id="signup-code" type="text" autocomplete="off" required />
+          <small class="hint" data-ai="auth.code.hint">Fourni par l'administrateur du site (variable ADMIN_SIGNUP_CODE).</small>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" data-ai="auth.signup.cta">Créer mon compte</button>
+      </form>
+
+      <p class="auth-msg" id="auth-msg" hidden></p>
+    </div>
+  </main>
+
+  <!-- ============== VUE DASHBOARD ============== -->
+  <main class="admin-main" id="view-dash" hidden>
+    <div class="dash-top">
+      <div>
+        <h1 id="dash-greeting">Bonjour</h1>
+        <p class="dash-meta" id="dash-meta"></p>
+      </div>
+      <div class="dash-actions">
+        <button class="btn-soft" id="refresh-btn" data-ai="dash.refresh">↻ Rafraîchir</button>
+      </div>
+    </div>
+
+    <p class="dash-error" id="dash-error" hidden></p>
+
+    <!-- KPI -->
+    <section class="kpi-grid" id="kpi-grid"></section>
+
+    <!-- Graphiques -->
+    <section class="charts">
+      <div class="chart-card">
+        <h3 data-ai="chart.funnel">Tunnel de conversion</h3>
+        <div id="chart-funnel" class="funnel"></div>
+      </div>
+      <div class="chart-card">
+        <h3 data-ai="chart.persona">Par profil (persona)</h3>
+        <div id="chart-persona" class="barlist"></div>
+      </div>
+      <div class="chart-card">
+        <h3 data-ai="chart.lang">Par langue</h3>
+        <div id="chart-lang" class="barlist"></div>
+      </div>
+      <div class="chart-card">
+        <h3 data-ai="chart.source">Sources principales</h3>
+        <div id="chart-source" class="barlist"></div>
+      </div>
+      <div class="chart-card wide">
+        <h3 data-ai="chart.timeseries">Nouvelles âmes — 30 derniers jours</h3>
+        <div id="chart-timeseries" class="spark-wrap"></div>
+      </div>
+      <div class="chart-card">
+        <h3 data-ai="chart.nurturing">Nurturing envoyé</h3>
+        <div id="chart-nurturing" class="barlist"></div>
+      </div>
+    </section>
+
+    <!-- À relancer -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2 data-ai="followup.title">À relancer en priorité</h2>
+        <span class="panel-hint" data-ai="followup.hint">Âmes au stade « Lead », sans RDV, depuis 7 jours ou plus.</span>
+      </div>
+      <div id="followup-list" class="followup-list"></div>
+    </section>
+
+    <!-- Table des âmes -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2 data-ai="leads.title">Toutes les âmes</h2>
+        <div class="panel-tools">
+          <input type="search" id="lead-search" data-ai-ph="leads.search" placeholder="Rechercher (nom, email)…" />
+          <select id="filter-persona"><option value="" data-ai="leads.allpersona">Tous profils</option></select>
+          <select id="filter-stage"><option value="" data-ai="leads.allstage">Toutes étapes</option></select>
+          <button class="btn-soft" id="export-btn" data-ai="leads.export">⤓ Export CSV</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="leads-table" id="leads-table">
+          <thead>
+            <tr>
+              <th data-ai="th.name">Nom</th>
+              <th data-ai="th.contact">Contact</th>
+              <th data-ai="th.persona">Profil</th>
+              <th data-ai="th.entered">Entrée</th>
+              <th data-ai="th.stage">Étape</th>
+              <th data-ai="th.actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="leads-tbody"></tbody>
+        </table>
+        <p class="table-empty" id="table-empty" hidden data-ai="leads.empty">Aucune âme pour ces filtres.</p>
+      </div>
+    </section>
+
+    <footer class="dash-foot">
+      <span>© <span id="dash-year">2026</span> Nouvelles Vies en Jésus</span>
+      <a href="index.html" data-ai="dash.backsite">← Retour au site</a>
+    </footer>
+  </main>
+
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

@@ -293,7 +293,29 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - **README intégrations** : procédure de mise à jour **manuelle du scénario déjà en ligne**
     (sans ré-import) documentée ; planification recommandée **1×/jour** (15 min = gaspillage d'ops).
 
+- 2026-06-11 : **v14 — espace responsable (admin) + tableau de bord des âmes** :
+  - **Pourquoi un back-end** : les fiches (PII sensibles) interdisent d'exposer le token Airtable
+    côté navigateur. ➜ ajout d'une couche **Netlify Functions** (Node, **zéro dépendance npm**,
+    modules natifs `crypto`/`fetch`). Le site reste statique ; seules `/api/*` touchent Airtable.
+  - **Auth** : inscription (`admin-signup`) **gardée par un code d'invitation** (`ADMIN_SIGNUP_CODE`),
+    connexion (`admin-login`). Mots de passe **hachés scrypt**, **JWT HS256** maison (12 h).
+    Comptes dans une **nouvelle table Airtable `Admins` `tblYWX1NiR5dcVliI`** (Email, Password Hash,
+    Nom, Rôle, Actif, Créé le, Dernière connexion).
+  - **Données** : `admin-stats` (agrégats only), `admin-leads` (liste nominative, authentifiée),
+    `admin-lead-update` (PATCH étape/statut/notes, liste blanche stricte).
+  - **Front** : `admin.html` + `assets/js/admin.js` + `assets/css/admin.css` — 5 KPIs, **funnel**
+    avec déperdition, répartitions persona/langue/sources/nurturing, **évolution 30 j** (SVG),
+    **à relancer** (leads ≥ 7 j sans RDV, WhatsApp/email pré-remplis), **table** (recherche, filtres,
+    changement d'étape inline, **export CSV**). Bilingue FR/EN, charts faits main (aucune lib).
+  - **Config** : `netlify.toml` (functions dir + route `/api/*` + en-têtes de sécurité + Node 20).
+    Variables Netlify à renseigner : `AIRTABLE_TOKEN` (PAT base PDVIE), `JWT_SECRET`, `ADMIN_SIGNUP_CODE`.
+    Guide complet : `integrations/ADMIN.md`. Page admin en `noindex`, non liée publiquement (URL `/admin.html`).
+  - Vérifs locales : `node --check` sur les 6 fonctions + `admin.js` ; round-trip scrypt + JWT testés.
+
 ### Reste à faire / décisions en attente
+- **Admin** : renseigner les 3 variables Netlify puis créer le 1er compte sur `/admin.html`
+  (cf. `integrations/ADMIN.md`). Optionnel : reset mot de passe self-service, attribution d'un référent
+  depuis le tableau, blocage anti-force-brute persistant.
 - *(Optionnel)* **Airtable Automation** « anti-rétrogradation cosmétique » : *Quand une fiche a
   `Étape tunnel`=Lead ET `RDV prière` non vide → repasser `Étape tunnel`=RDV pris*. (L'API ne permet
   pas de créer des automations → à faire à la main dans Airtable ▸ Automatisations.)
