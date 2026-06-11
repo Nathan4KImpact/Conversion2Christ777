@@ -190,6 +190,7 @@ const I18N = {
     "footer.rights": "Nouvelles Vies en Jésus — Tous droits réservés.",
     "footer.privacy": "Confidentialité",
     "footer.legal": "Mentions légales",
+    "footer.admin": "Espace responsable",
 
     /* --- Quiz --- */
     "quiz.title": "La source de ta soif",
@@ -558,6 +559,7 @@ const I18N = {
     "footer.rights": "New Lives in Jesus — All rights reserved.",
     "footer.privacy": "Privacy",
     "footer.legal": "Legal notice",
+    "footer.admin": "Admin area",
 
     "quiz.title": "The source of your thirst",
     "quiz.intro": "4 questions, 2 minutes. At the end, you'll get a personalized reading and a concrete first step.",

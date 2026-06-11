@@ -1,0 +1,32 @@
+# Configuration Netlify — site statique + fonctions serverless (espace admin)
+# Le site reste 100 % statique ; seules les fonctions /api/* touchent Airtable
+# côté serveur (le token n'est jamais exposé au navigateur).
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Pinne Node 20 pour les fonctions (le « fetch » global y est disponible).
+[build.environment]
+  NODE_VERSION = "20"
+
+# Jolies URLs : /api/admin-login  ->  /.netlify/functions/admin-login
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# En-têtes de sécurité de base sur tout le site
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+# L'espace admin ne doit pas être indexé
+[[headers]]
+  for = "/admin.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
