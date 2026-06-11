@@ -175,7 +175,11 @@ img { max-width: 100%; display: block; }
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
 }
-/* Wordmark « Nouvelles Vies en Jésus » sur pastille blanche (lisible sur en-tête/footer sombres) */
+/* Logo officiel (PNG transparent) dans l'en-tête / footer */
+.brand-logo-img { height: 54px; width: auto; display: block; flex: none; }
+@media (max-width: 480px) { .brand-logo-img { height: 46px; } }
+
+/* Wordmark (héritage, plus utilisé) sur pastille blanche */
 .brand-wordmark {
   height: 46px;
   width: auto;

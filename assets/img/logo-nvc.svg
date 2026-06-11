@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 76" role="img" aria-label="Nouvelles Vies en Jésus">
-  <text x="3" y="29" font-family="'Plus Jakarta Sans', system-ui, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.4" fill="#2e7d32">NOUVELLES VIES</text>
-  <text x="3" y="66" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-style="italic" font-weight="600" font-size="34" fill="#18324f">en Jésus</text>
-  <!-- petite feuille (nouvelle vie) -->
-  <g transform="translate(150,40)">
-    <path d="M0 18 C0 6 8 -2 22 -4 C22 8 14 18 0 18 Z" fill="#6fbf4a"/>
-    <path d="M0 18 C-2 9 2 1 12 -3" fill="none" stroke="#2e7d32" stroke-width="1.6" stroke-linecap="round"/>
-  </g>
-</svg>

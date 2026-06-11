@@ -97,10 +97,10 @@
   // Témoignage vidéo aligné sur le persona (cf. fichier de sélection des témoignages)
   const RESULT_VIDEO = {
     p1: "UjpCD926y20", // P1 Ouvert — Nick Vujicic (vidéo phare v5)
-    p2: "1oDuysf4elQ", // P2 Blessé — « J'ai chuté dans l'homosexualité… »
+    p2: "98I2FSwcAho", // P2 Blessé — « J'ai chuté dans l'homosexualité… »
     p3: "wIk15HWS_5s", // P3 Chercheur — Délivré(e) du New Age (1)
     p4: "HEOvRaTNZkU", // P4 Musulman — De l'islam à Jésus (Al-Azzaz)
-    p5: "98I2FSwcAho", // P5 Athée — Athée extrémiste → Dieu change tout
+    p5: "gjC5_R9KeDo", // P5 Athée — d'athée à la rencontre de Dieu
   };
 
   function renderResult(p) {

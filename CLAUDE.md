@@ -25,10 +25,11 @@ pour l'église / le ministère **Vases d'Honneur**.
 - **MAJ 2026-06-10 (v12) :** marque affichée = **« Nouvelles Vies en Jésus »** (fil conducteur *2 Corinthiens 5:17* — la nouvelle création). ⚠️ **L'identité visuelle de « Vases d'Honneur »
   (logo + tagline « Porteurs de vie ») a été RETIRÉE** du site faute d'autorisation. Tout est
   renommé dans les fichiers livrés (pages, i18n, blueprints, emails).
-- **Logo** : wordmark `assets/img/logo-nvc.svg` (style du visuel officiel « Nouvelles Vies en Jésus »).
-  **Logo = wordmark SVG** `assets/img/logo-nvc.svg` (NOUVELLES VIES / en Jésus + feuille, style du
-  visuel officiel), sur pastille blanche. Le **visuel promotionnel** officiel = `assets/img/visuel-nvc.png`
-  (utilisé en `og:image`).
+- **Logos officiels** (PNG transparents 1024×1024, fournis par le porteur) :
+  `assets/img/logo-main.png` (badge « Nouvelles Vies en Jésus » + croix + 4 piliers) sur le funnel
+  (index, quiz, optin, merci, prier) ; `assets/img/logo-grandir.png` (« ENSEMBLE POUR GRANDIR
+  DANS LA FOI ») sur les pages discipulat (nouveau-ne, grandir, fondations). Affichés tels quels
+  (transparents) en en-tête. Le poster `assets/img/visuel-nvc.png` reste en `og:image`.
 - Palette conservée (vert sarcelle + or + rouge) — générique, non liée à un emblème ; modifiable si besoin.
 
 ---
