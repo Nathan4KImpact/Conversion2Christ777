@@ -601,6 +601,52 @@ section { padding: clamp(56px, 9vw, 110px) 0; }
 .resource-card p { color: var(--muted); font-size: 0.92rem; flex: 1; margin: 0 0 14px; }
 .resource-card .more-link::after { content: ""; }
 
+/* ---------- Player de témoignages par profil (style YouTube) ---------- */
+.testi-player {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  border-top: 4px solid var(--accent, var(--gold));
+  padding: 22px;
+  display: grid; gap: 22px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 880px) { .testi-player { grid-template-columns: 1.6fr 1fr; padding: 26px; } }
+.player-stage .lite-yt { border-radius: var(--radius-sm); overflow: hidden; }
+.player-meta { margin-top: 14px; }
+.player-meta h4 { margin: 0 0 4px; font-family: var(--font-serif); font-size: 1.45rem; color: var(--navy); }
+.player-meta p { margin: 0; color: var(--muted); font-size: 0.96rem; }
+.player-more { margin-top: 16px; padding-top: 14px; border-top: 1px dashed color-mix(in srgb, var(--accent) 35%, transparent); }
+.player-more strong { display: block; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent, var(--gold-deep)); margin-bottom: 8px; }
+.player-more a { display: block; padding: 6px 0; font-weight: 600; color: var(--navy); }
+.player-more a:hover { color: var(--accent, var(--gold-deep)); }
+.player-more a::after { content: " ↗"; color: var(--muted); }
+.player-list { display: flex; flex-direction: column; gap: 10px; max-height: 480px; overflow-y: auto; padding-right: 4px; }
+.player-item {
+  display: grid; grid-template-columns: 120px 1fr; gap: 12px;
+  background: var(--cream-2); border: 2px solid transparent; border-radius: var(--radius-sm);
+  padding: 8px; cursor: pointer; text-align: left; font-family: var(--font-sans);
+  transition: border-color var(--transition), background var(--transition);
+}
+.player-item:hover { border-color: color-mix(in srgb, var(--accent) 40%, white); background: var(--white); }
+.player-item.active { border-color: var(--accent, var(--gold)); background: var(--white); }
+.player-item .thumb {
+  width: 120px; height: 70px; border-radius: 8px; overflow: hidden; flex: none;
+  background: linear-gradient(135deg, var(--teal), var(--teal-deep)); position: relative;
+}
+.player-item .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.player-item .thumb::after {
+  content: "▶"; position: absolute; inset: 0; margin: auto;
+  width: 28px; height: 28px; border-radius: 8px;
+  background: rgba(181, 27, 45, 0.92); color: #fff;
+  display: grid; place-items: center; font-size: 0.7rem;
+}
+.player-item .info { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+.player-item .info b { font-size: 0.92rem; color: var(--navy); line-height: 1.3; }
+.player-item .info span { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+.player-item.en-only { display: none; }
+html[lang="en"] .player-item.en-only { display: grid; }
+
 /* ---------- Modules « Fondations de la foi » ---------- */
 .modules { display: grid; gap: 24px; max-width: 860px; margin: 0 auto; }
 .module {
