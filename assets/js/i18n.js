@@ -10,6 +10,8 @@ const I18N = {
   fr: {
     /* --- Nav / global --- */
     "brand.sub": "",
+    "brand.tag1": "Une Nouvelle Vie est possible",
+    "brand.tag2": "en Jésus",
     "nav.cta": "Je commence",
     "lang.fr": "FR",
     "lang.en": "EN",
@@ -384,6 +386,8 @@ const I18N = {
 
   en: {
     "brand.sub": "",
+    "brand.tag1": "A New Life is possible",
+    "brand.tag2": "in Jesus",
     "nav.cta": "Get started",
     "lang.fr": "FR",
     "lang.en": "EN",
