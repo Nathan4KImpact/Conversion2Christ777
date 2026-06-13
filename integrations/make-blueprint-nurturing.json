@@ -9,7 +9,7 @@
       "mapper": {
         "base": "appRLYZbJgmORxkxz",
         "table": "tblqFCCV7BAO8IJNL",
-        "formula": "AND({Étape tunnel}='Lead', {RDV prière}=BLANK(), OR(AND({Jours depuis entrée}=1, NOT({J1 envoyé})), AND({Jours depuis entrée}=3, NOT({J3 envoyé})), AND({Jours depuis entrée}=5, NOT({J5 envoyé})), AND({Jours depuis entrée}=7, NOT({J7 envoyé}))))",
+        "formula": "AND({Étape tunnel}='Lead', {RDV prière}=BLANK(), OR(AND({Jours depuis entrée}>=1, {Jours depuis entrée}<3, NOT({J1 envoyé})), AND({Jours depuis entrée}>=3, {Jours depuis entrée}<5, NOT({J3 envoyé})), AND({Jours depuis entrée}>=5, {Jours depuis entrée}<7, NOT({J5 envoyé})), AND({Jours depuis entrée}>=7, NOT({J7 envoyé}))))",
         "maxRecords": 100,
         "useColumnId": false
       },
@@ -30,8 +30,8 @@
               "version": 1,
               "parameters": { "account": 6300394 },
               "filter": {
-                "name": "Jour 1",
-                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "1", "o": "text:equal" } ] ]
+                "name": "Jour 1 (1-2 j)",
+                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "1", "o": "number:greaterorequal" }, { "a": "{{1.`Jours depuis entrée`}}", "b": "3", "o": "number:less" } ] ]
               },
               "mapper": {
                 "to": [ "{{1.Email}}" ],
@@ -64,8 +64,8 @@
               "version": 1,
               "parameters": { "account": 6300394 },
               "filter": {
-                "name": "Jour 3",
-                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "3", "o": "text:equal" } ] ]
+                "name": "Jour 3 (3-4 j)",
+                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "3", "o": "number:greaterorequal" }, { "a": "{{1.`Jours depuis entrée`}}", "b": "5", "o": "number:less" } ] ]
               },
               "mapper": {
                 "to": [ "{{1.Email}}" ],
@@ -98,8 +98,8 @@
               "version": 1,
               "parameters": { "account": 6300394 },
               "filter": {
-                "name": "Jour 5",
-                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "5", "o": "text:equal" } ] ]
+                "name": "Jour 5 (5-6 j)",
+                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "5", "o": "number:greaterorequal" }, { "a": "{{1.`Jours depuis entrée`}}", "b": "7", "o": "number:less" } ] ]
               },
               "mapper": {
                 "to": [ "{{1.Email}}" ],
@@ -132,8 +132,8 @@
               "version": 1,
               "parameters": { "account": 6300394 },
               "filter": {
-                "name": "Jour 7",
-                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "7", "o": "text:equal" } ] ]
+                "name": "Jour 7 (7 j et +)",
+                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "7", "o": "number:greaterorequal" } ] ]
               },
               "mapper": {
                 "to": [ "{{1.Email}}" ],
