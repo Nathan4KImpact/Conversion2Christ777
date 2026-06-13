@@ -109,6 +109,27 @@ Filtres des 4 branches Gmail (routeur) — à mettre en cohérence avec les fen�
 >    Gmail J0 : condition `{{length(3.body.createdRecords)}}` **Greater than (number)** `0`
 >    (remplace `3` par le n° réel du module Airtable de la branche lead).
 
+### Vidéos personnalisées selon le persona 🎥
+
+Chaque email J1/J3/J5 propose **une vidéo choisie selon le `Persona` du lead**, via la fonction
+Make `switch(1.Persona; "Ouvert"; …; "Blessé"; …; …; <défaut>)` directement dans le HTML
+(URL + titre). J7 renvoie vers le **mur complet des témoignages** (`/index.html#testimonials`),
+où toute la bibliothèque est classée par profil. Un lien « Voir tous les témoignages » figure
+aussi dans chaque email → **toute la bibliothèque reste joignable**, quel que soit le profil.
+
+| Jour | Ouvert | Blessé | Chercheur | Musulman | Sceptique |
+|------|--------|--------|-----------|----------|-----------|
+| **J1** | Nick Vujicic | « …l'homosexualité… » | New Age (1) | Al-Azzaz | D'athée à Dieu |
+| **J3** | Pauline | Janick | Sauvés du New Age | Amir | Alexia Vidot |
+| **J5** | Évangile présenté | Sarah | Sortir des énergies | Moussa Koné | Plan de salut |
+| **J7** | → tous les témoignages (mur complet, tous profils) |
+
+> Si le champ `Persona` est vide/inconnu, le `switch` retombe sur le **mur de témoignages**
+> (défaut). Les vidéos non citées ci-dessus (Nathalie, Juliana, EMCI, Ali, Naeem, preuves
+> historiques, Joël Spinks…) restent accessibles via ce mur. Séquence en **français** ;
+> des variantes EN pourront être ajoutées avec un second `switch` sur `{{1.Langue}}`.
+
+
 > Les 5 textes (J0→J7) existent aussi en **brouillons Gmail** (label « PDVIE — Suivi des Âmes »)
 > si tu veux les peaufiner.
 
