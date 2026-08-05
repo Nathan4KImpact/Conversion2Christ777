@@ -5,22 +5,34 @@
       "id": 1,
       "module": "airtable:ActionSearchRecords",
       "version": 3,
-      "parameters": { "__IMTCONN__": 6112403 },
+      "parameters": {
+        "__IMTCONN__": 6112403
+      },
       "mapper": {
         "base": "appRLYZbJgmORxkxz",
         "table": "tblqFCCV7BAO8IJNL",
-        "formula": "AND({Étape tunnel}='Lead', {RDV prière}=BLANK(), OR(AND({Jours depuis entrée}=1, NOT({J1 envoyé})), AND({Jours depuis entrée}=3, NOT({J3 envoyé})), AND({Jours depuis entrée}=5, NOT({J5 envoyé})), AND({Jours depuis entrée}=7, NOT({J7 envoyé}))))",
+        "formula": "AND({Étape tunnel}='Lead', {RDV prière}=BLANK(), OR(AND({Jours depuis entrée}>=1, {Jours depuis entrée}<3, NOT({J1 envoyé})), AND({Jours depuis entrée}>=3, {Jours depuis entrée}<5, NOT({J3 envoyé})), AND({Jours depuis entrée}>=5, {Jours depuis entrée}<7, NOT({J5 envoyé})), AND({Jours depuis entrée}>=7, NOT({J7 envoyé}))))",
         "maxRecords": 100,
         "useColumnId": false
       },
-      "metadata": { "designer": { "x": 0, "y": 0 } }
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      }
     },
     {
       "id": 2,
       "module": "builtin:BasicRouter",
       "version": 1,
       "mapper": null,
-      "metadata": { "designer": { "x": 300, "y": 0 } },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      },
       "routes": [
         {
           "flow": [
@@ -28,31 +40,65 @@
               "id": 3,
               "module": "google-email:ActionSendEmail",
               "version": 1,
-              "parameters": { "account": 6300394 },
+              "parameters": {
+                "account": 6300394
+              },
               "filter": {
-                "name": "Jour 1",
-                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "1", "o": "text:equal" } ] ]
+                "name": "Jour 1 (1-2 j)",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.`Jours depuis entrée`}}",
+                      "b": "1",
+                      "o": "number:greaterorequal"
+                    },
+                    {
+                      "a": "{{1.`Jours depuis entrée`}}",
+                      "b": "3",
+                      "o": "number:less"
+                    }
+                  ]
+                ]
               },
               "mapper": {
-                "to": [ "{{1.Email}}" ],
+                "to": [
+                  "{{1.Email}}"
+                ],
                 "subject": "L'histoire de quelqu'un qui te ressemble",
-                "html": "<p>Bonjour {{1.Prénom}},</p><p>Aujourd'hui, je veux juste te partager une histoire. Pauline avait de grosses crises d'angoisse. Alexia se disait athée. D'autres cherchaient la paix dans les énergies… avant de la trouver, enfin, en une Personne.</p><p>Regarde leurs témoignages (2 minutes, ça peut tout changer) : <a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/index.html#testimonials\">les histoires de vie</a></p><p>Nathanaël — Nouvelles Vies en Jésus</p>"
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Aujourd'hui, pas de grand discours — juste une histoire vraie. Quelqu'un qui, comme toi peut-être, portait des questions, des blessures ou des doutes… et dont la vie a basculé le jour d'une rencontre.</p><div style=\"margin:22px 0;padding:16px 18px;border-left:3px solid #c9a23a;background:#faf6ef;border-radius:8px\"><div style=\"font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#a07c2e;font-weight:700\">🎥 Choisi pour toi</div><div style=\"font-weight:700;margin:5px 0 9px;color:#0f4d43\">{{switch(1.Persona; \"Ouvert\"; \"Nick Vujicic — une vie qui aurait pu désespérer\"; \"Blessé\"; \"« J'ai chuté dans l'homosexualité… » — l'identité retrouvée en Christ\"; \"Chercheur\"; \"Délivré(e) du New Age\"; \"Musulman\"; \"De l'islam à Jésus (Al-Azzaz)\"; \"Sceptique\"; \"D'athée à la rencontre de Dieu\"; \"Des histoires de vies transformées\")}}</div><a href=\"{{switch(1.Persona; \"Ouvert\"; \"https://youtu.be/UjpCD926y20\"; \"Blessé\"; \"https://youtu.be/98I2FSwcAho\"; \"Chercheur\"; \"https://youtu.be/wIk15HWS_5s\"; \"Musulman\"; \"https://youtu.be/HEOvRaTNZkU\"; \"Sceptique\"; \"https://youtu.be/gjC5_R9KeDo\"; \"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/index.html#testimonials\")}}\" style=\"color:#1a6e60;font-weight:700\">▶ Voir le témoignage</a></div><p>Prends 2 minutes. Parfois, une seule histoire ouvre une porte.</p><p style=\"font-size:13px;color:#5b6478\"><a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/index.html#testimonials\" style=\"color:#5b6478\">Voir tous les témoignages, par profil →</a></p><p>Nathanaël — Nouvelles Vies en Jésus</p>"
               },
-              "metadata": { "designer": { "x": 600, "y": -300 } }
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": -300
+                }
+              }
             },
             {
               "id": 7,
               "module": "airtable:makeApiCall",
               "version": 3,
-              "parameters": { "__IMTCONN__": 6112403 },
+              "parameters": {
+                "__IMTCONN__": 6112403
+              },
               "mapper": {
                 "url": "v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL/{{1.id}}",
                 "method": "PATCH",
-                "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "qs": [],
-                "body": "{\"fields\":{\"J1 envoyé\":true}}"
+                "body": "{\"fields\": {\"J1 envoyé\": true}}"
               },
-              "metadata": { "designer": { "x": 900, "y": -300 } }
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": -300
+                }
+              }
             }
           ]
         },
@@ -62,31 +108,65 @@
               "id": 4,
               "module": "google-email:ActionSendEmail",
               "version": 1,
-              "parameters": { "account": 6300394 },
+              "parameters": {
+                "account": 6300394
+              },
               "filter": {
-                "name": "Jour 3",
-                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "3", "o": "text:equal" } ] ]
+                "name": "Jour 3 (3-4 j)",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.`Jours depuis entrée`}}",
+                      "b": "3",
+                      "o": "number:greaterorequal"
+                    },
+                    {
+                      "a": "{{1.`Jours depuis entrée`}}",
+                      "b": "5",
+                      "o": "number:less"
+                    }
+                  ]
+                ]
               },
               "mapper": {
-                "to": [ "{{1.Email}}" ],
+                "to": [
+                  "{{1.Email}}"
+                ],
                 "subject": "« Et si je n'étais pas à la hauteur ? »",
-                "html": "<p>Bonjour {{1.Prénom}},</p><p>Une pensée arrête beaucoup de gens : « Je ne suis pas assez bien pour Dieu. » Voici la vérité qui libère : tu n'as pas à devenir parfait(e) pour venir à Lui. C'est en venant à Lui qu'Il te transforme.</p><p>« C'est par la grâce que vous êtes sauvés… c'est le don de Dieu. » (Éphésiens 2:8)</p><p>Tu portes quelque chose de lourd ? Parlons-en : <a href=\"https://wa.me/33758372268\">WhatsApp</a></p><p>Nathanaël — Nouvelles Vies en Jésus</p>"
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Une pensée arrête beaucoup de gens : « Je ne suis pas assez bien pour Dieu. » Voici la vérité qui libère : tu n'as pas à devenir parfait(e) pour venir à Lui. C'est en venant à Lui qu'Il te transforme.</p><p style=\"font-style:italic;color:#0f4d43\">« C'est par la grâce que vous êtes sauvés… c'est le don de Dieu. » (Éphésiens 2:8)</p><div style=\"margin:22px 0;padding:16px 18px;border-left:3px solid #c9a23a;background:#faf6ef;border-radius:8px\"><div style=\"font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#a07c2e;font-weight:700\">🎥 Choisi pour toi</div><div style=\"font-weight:700;margin:5px 0 9px;color:#0f4d43\">{{switch(1.Persona; \"Ouvert\"; \"Pauline — relevée de ses crises d'angoisse\"; \"Blessé\"; \"Janick — « Je croyais être un homme »\"; \"Chercheur\"; \"Jésus les a sauvés du New Age\"; \"Musulman\"; \"Amir — il rencontre Jésus à 12 ans\"; \"Sceptique\"; \"Alexia Vidot — athée, elle rencontre le Christ\"; \"Des histoires de vies transformées\")}}</div><a href=\"{{switch(1.Persona; \"Ouvert\"; \"https://youtu.be/Ewm8bIZe8bs\"; \"Blessé\"; \"https://youtu.be/XZlNGJhJgAA\"; \"Chercheur\"; \"https://youtu.be/uZfyE5ozyZA\"; \"Musulman\"; \"https://youtu.be/iQWHTzHjGyA\"; \"Sceptique\"; \"https://youtu.be/8J31uVMV7C8\"; \"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/index.html#testimonials\")}}\" style=\"color:#1a6e60;font-weight:700\">▶ Voir le témoignage</a></div><p>Tu portes quelque chose de lourd ? Parlons-en, en toute confidentialité : <a href=\"https://wa.me/33758372268\">WhatsApp</a></p><p style=\"font-size:13px;color:#5b6478\"><a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/index.html#testimonials\" style=\"color:#5b6478\">Voir tous les témoignages, par profil →</a></p><p>Nathanaël — Nouvelles Vies en Jésus</p>"
               },
-              "metadata": { "designer": { "x": 600, "y": -100 } }
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": -100
+                }
+              }
             },
             {
               "id": 8,
               "module": "airtable:makeApiCall",
               "version": 3,
-              "parameters": { "__IMTCONN__": 6112403 },
+              "parameters": {
+                "__IMTCONN__": 6112403
+              },
               "mapper": {
                 "url": "v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL/{{1.id}}",
                 "method": "PATCH",
-                "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "qs": [],
-                "body": "{\"fields\":{\"J3 envoyé\":true}}"
+                "body": "{\"fields\": {\"J3 envoyé\": true}}"
               },
-              "metadata": { "designer": { "x": 900, "y": -100 } }
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": -100
+                }
+              }
             }
           ]
         },
@@ -96,31 +176,65 @@
               "id": 5,
               "module": "google-email:ActionSendEmail",
               "version": 1,
-              "parameters": { "account": 6300394 },
+              "parameters": {
+                "account": 6300394
+              },
               "filter": {
-                "name": "Jour 5",
-                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "5", "o": "text:equal" } ] ]
+                "name": "Jour 5 (5-6 j)",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.`Jours depuis entrée`}}",
+                      "b": "5",
+                      "o": "number:greaterorequal"
+                    },
+                    {
+                      "a": "{{1.`Jours depuis entrée`}}",
+                      "b": "7",
+                      "o": "number:less"
+                    }
+                  ]
+                ]
               },
               "mapper": {
-                "to": [ "{{1.Email}}" ],
+                "to": [
+                  "{{1.Email}}"
+                ],
                 "subject": "La plus belle nouvelle que tu puisses entendre aujourd'hui",
-                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si, là où tu es, tu pouvais commencer une vie nouvelle ? Pas une technique. Une rencontre, avec Jésus, qui t'offre le Salut, la Guérison et la Paix par son Esprit.</p><p>Quand tu seras prêt(e), une prière toute simple suffit — je l'ai préparée pour toi, avec une vidéo : <a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/prier.html\">prier maintenant</a></p><p>Nathanaël — Nouvelles Vies en Jésus</p>"
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si, là où tu es, tu pouvais commencer une vie nouvelle ? Pas une technique. Une rencontre — avec Jésus — qui t'offre le Salut, la Guérison et la Paix par son Esprit.</p><div style=\"margin:22px 0;padding:16px 18px;border-left:3px solid #c9a23a;background:#faf6ef;border-radius:8px\"><div style=\"font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#a07c2e;font-weight:700\">🎥 Choisi pour toi</div><div style=\"font-weight:700;margin:5px 0 9px;color:#0f4d43\">{{switch(1.Persona; \"Ouvert\"; \"L'Évangile clairement présenté\"; \"Blessé\"; \"Sarah — revivre après l'épreuve\"; \"Chercheur\"; \"Sortir des énergies — la paix en Christ\"; \"Musulman\"; \"Moussa Koné — d'imam à disciple de Christ\"; \"Sceptique\"; \"Quel est le plan de salut de Dieu ?\"; \"Des histoires de vies transformées\")}}</div><a href=\"{{switch(1.Persona; \"Ouvert\"; \"https://youtu.be/tYyux-wMzIw\"; \"Blessé\"; \"https://youtu.be/n_gPWhglLZo\"; \"Chercheur\"; \"https://youtu.be/8QcTKIK5tJM\"; \"Musulman\"; \"https://youtu.be/i36_CopqPO0\"; \"Sceptique\"; \"https://youtu.be/ByytAcqXuMM\"; \"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/index.html#testimonials\")}}\" style=\"color:#1a6e60;font-weight:700\">▶ Voir le témoignage</a></div><p>Quand tu seras prêt(e), une prière toute simple suffit — je l'ai préparée pour toi, avec une vidéo : <a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/prier.html\">prier maintenant</a></p><p style=\"font-size:13px;color:#5b6478\"><a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/index.html#testimonials\" style=\"color:#5b6478\">Voir tous les témoignages, par profil →</a></p><p>Nathanaël — Nouvelles Vies en Jésus</p>"
               },
-              "metadata": { "designer": { "x": 600, "y": 100 } }
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": 100
+                }
+              }
             },
             {
               "id": 9,
               "module": "airtable:makeApiCall",
               "version": 3,
-              "parameters": { "__IMTCONN__": 6112403 },
+              "parameters": {
+                "__IMTCONN__": 6112403
+              },
               "mapper": {
                 "url": "v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL/{{1.id}}",
                 "method": "PATCH",
-                "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "qs": [],
-                "body": "{\"fields\":{\"J5 envoyé\":true}}"
+                "body": "{\"fields\": {\"J5 envoyé\": true}}"
               },
-              "metadata": { "designer": { "x": 900, "y": 100 } }
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": 100
+                }
+              }
             }
           ]
         },
@@ -130,31 +244,60 @@
               "id": 6,
               "module": "google-email:ActionSendEmail",
               "version": 1,
-              "parameters": { "account": 6300394 },
+              "parameters": {
+                "account": 6300394
+              },
               "filter": {
-                "name": "Jour 7",
-                "conditions": [ [ { "a": "{{1.`Jours depuis entrée`}}", "b": "7", "o": "text:equal" } ] ]
+                "name": "Jour 7 (7 j et +)",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.`Jours depuis entrée`}}",
+                      "b": "7",
+                      "o": "number:greaterorequal"
+                    }
+                  ]
+                ]
               },
               "mapper": {
-                "to": [ "{{1.Email}}" ],
+                "to": [
+                  "{{1.Email}}"
+                ],
                 "subject": "On prie ensemble ? (Mar–Sam, 19h–20h)",
-                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si on prenait un vrai moment pour prier ensemble ? Je réserve des créneaux chaque semaine, du mardi au samedi, de 19h à 20h. Confidentiel, sans jugement.</p><p>Réponds à cet email, ou écris-moi : <a href=\"https://wa.me/33758372268\">WhatsApp</a></p><p>Tu comptes, {{1.Prénom}}. Vraiment.<br>Nathanaël — Nouvelles Vies en Jésus</p>"
+                "html": "<p>Bonjour {{1.Prénom}},</p><p>Et si on prenait un vrai moment pour prier ensemble ? Je réserve des créneaux chaque semaine, du mardi au samedi, de 19h à 20h. Confidentiel, sans jugement.</p><p>Réponds simplement à cet email, ou écris-moi : <a href=\"https://wa.me/33758372268\">WhatsApp</a></p><p>Et si tu veux continuer à nourrir ta foi, d'autres histoires de vies transformées comme la tienne t'attendent : <a href=\"https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/index.html#testimonials\">tous les témoignages, classés par profil</a>.</p><p>Tu comptes, {{1.Prénom}}. Vraiment.<br>Nathanaël — Nouvelles Vies en Jésus</p>"
               },
-              "metadata": { "designer": { "x": 600, "y": 300 } }
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": 300
+                }
+              }
             },
             {
               "id": 10,
               "module": "airtable:makeApiCall",
               "version": 3,
-              "parameters": { "__IMTCONN__": 6112403 },
+              "parameters": {
+                "__IMTCONN__": 6112403
+              },
               "mapper": {
                 "url": "v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL/{{1.id}}",
                 "method": "PATCH",
-                "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "qs": [],
-                "body": "{\"fields\":{\"J7 envoyé\":true}}"
+                "body": "{\"fields\": {\"J7 envoyé\": true}}"
               },
-              "metadata": { "designer": { "x": 900, "y": 300 } }
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": 300
+                }
+              }
             }
           ]
         }
@@ -175,7 +318,9 @@
       "dlq": false,
       "freshVariables": false
     },
-    "designer": { "orphans": [] },
+    "designer": {
+      "orphans": []
+    },
     "zone": "eu1.make.com"
   }
 }

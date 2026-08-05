@@ -67,31 +67,68 @@ créneaux récurrents Mar–Sam 19h–20h), avec l'âme en invité → elle reç
    anti-doublon le rend de toute façon **idempotent** (le relancer plus souvent n'envoie rien en plus).
 4. **Active**.
 
-Fonctionnement (anti-doublon ✅) : le scénario cherche les fiches `Étape tunnel = Lead` dont
-**`Jours depuis entrée`** vaut 1, 3, 5 ou 7 **ET dont le champ « Jx envoyé » n'est pas encore
-coché**. Après chaque envoi Gmail réussi, un module Airtable **coche « Jx envoyé »** sur la
-fiche (`PATCH v0/base/table/{{1.id}}`). Au passage suivant, la formule l'exclut → **un seul
-email par campagne et par âme**, quelle que soit la fréquence d'exécution.
+Fonctionnement (anti-doublon ✅ + rattrapage des jours manqués) : le scénario cherche les
+fiches `Étape tunnel = Lead`, **sans RDV**, en **fenêtres de jours** (J1 = 1-2 j, J3 = 3-4 j,
+J5 = 5-6 j, J7 = 7 j et +) **ET dont le champ « Jx envoyé » n'est pas encore coché**. Après
+chaque envoi Gmail réussi, un module Airtable **coche « Jx envoyé »** sur la fiche
+(`PATCH v0/base/table/{{1.id}}`). Au passage suivant, la formule l'exclut → **un seul email
+par campagne et par âme**.
+
+> 💡 **Pourquoi des fenêtres et non des jours exacts ?** Avec un jour exact (`=1`, `=3`…), si
+> le scénario ne tourne pas pile ce jour-là — ou si l'âme « tombe » un jour pair — la campagne
+> est **sautée définitivement**. Les fenêtres (`>=1 et <3`, etc.) garantissent que **chaque
+> email part une fois**, même en cas d'exécution manquée ou de jour creux.
 
 Formule du module Search Records :
 ```
 AND({Étape tunnel}='Lead', {RDV prière}=BLANK(),
-  OR(AND({Jours depuis entrée}=1, NOT({J1 envoyé})),
-     AND({Jours depuis entrée}=3, NOT({J3 envoyé})),
-     AND({Jours depuis entrée}=5, NOT({J5 envoyé})),
-     AND({Jours depuis entrée}=7, NOT({J7 envoyé}))))
+  OR(AND({Jours depuis entrée}>=1, {Jours depuis entrée}<3, NOT({J1 envoyé})),
+     AND({Jours depuis entrée}>=3, {Jours depuis entrée}<5, NOT({J3 envoyé})),
+     AND({Jours depuis entrée}>=5, {Jours depuis entrée}<7, NOT({J5 envoyé})),
+     AND({Jours depuis entrée}>=7, NOT({J7 envoyé}))))
 ```
+
+Filtres des 4 branches Gmail (routeur) — à mettre en cohérence avec les fenêtres :
+| Branche | Condition sur `Jours depuis entrée` |
+|---------|-------------------------------------|
+| Jour 1  | `≥ 1` (number) **ET** `< 3` (number) |
+| Jour 3  | `≥ 3` **ET** `< 5` |
+| Jour 5  | `≥ 5` **ET** `< 7` |
+| Jour 7  | `≥ 7` |
 
 > **Mettre à jour le scénario déjà en ligne sans ré-importer** :
 > 1. Module **Airtable – Search Records** → remplace la **formule** par celle ci-dessus.
-> 2. Après **chaque** module Gmail (J1, J3, J5, J7), ajoute un module **Airtable → Make an API Call**
->    (connexion « My Airtable OAuth connection », celle qui écrit) :
+> 2. Sur **chaque** branche, ouvre le **filtre avant le Gmail** et passe-le en fenêtre numérique
+>    (tableau ci-dessus) — opérateurs *Greater than or equal to (number)* / *Less than (number)*.
+> 3. Après **chaque** module Gmail (J1, J3, J5, J7), un module **Airtable → Make an API Call**
+>    (connexion qui écrit) coche la case :
 >    - URL : `v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL/{{1.id}}` · Méthode : `PATCH`
 >    - Header : `Content-Type: application/json`
 >    - Body : `{"fields":{"J1 envoyé":true}}` (adapter `J1`→`J3`/`J5`/`J7` selon la branche).
-> 3. De même, sur le **Scénario 1**, ajoute un **filtre** entre le module Airtable upsert et le
+> 4. De même, sur le **Scénario 1**, ajoute un **filtre** entre le module Airtable upsert et le
 >    Gmail J0 : condition `{{length(3.body.createdRecords)}}` **Greater than (number)** `0`
 >    (remplace `3` par le n° réel du module Airtable de la branche lead).
+
+### Vidéos personnalisées selon le persona 🎥
+
+Chaque email J1/J3/J5 propose **une vidéo choisie selon le `Persona` du lead**, via la fonction
+Make `switch(1.Persona; "Ouvert"; …; "Blessé"; …; …; <défaut>)` directement dans le HTML
+(URL + titre). J7 renvoie vers le **mur complet des témoignages** (`/index.html#testimonials`),
+où toute la bibliothèque est classée par profil. Un lien « Voir tous les témoignages » figure
+aussi dans chaque email → **toute la bibliothèque reste joignable**, quel que soit le profil.
+
+| Jour | Ouvert | Blessé | Chercheur | Musulman | Sceptique |
+|------|--------|--------|-----------|----------|-----------|
+| **J1** | Nick Vujicic | « …l'homosexualité… » | New Age (1) | Al-Azzaz | D'athée à Dieu |
+| **J3** | Pauline | Janick | Sauvés du New Age | Amir | Alexia Vidot |
+| **J5** | Évangile présenté | Sarah | Sortir des énergies | Moussa Koné | Plan de salut |
+| **J7** | → tous les témoignages (mur complet, tous profils) |
+
+> Si le champ `Persona` est vide/inconnu, le `switch` retombe sur le **mur de témoignages**
+> (défaut). Les vidéos non citées ci-dessus (Nathalie, Juliana, EMCI, Ali, Naeem, preuves
+> historiques, Joël Spinks…) restent accessibles via ce mur. Séquence en **français** ;
+> des variantes EN pourront être ajoutées avec un second `switch` sur `{{1.Langue}}`.
+
 
 > Les 5 textes (J0→J7) existent aussi en **brouillons Gmail** (label « PDVIE — Suivi des Âmes »)
 > si tu veux les peaufiner.
