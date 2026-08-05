@@ -420,6 +420,42 @@ section { padding: clamp(56px, 9vw, 110px) 0; }
 .social-row { display: flex; gap: 12px; margin-top: 12px; }
 .social-row a { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(230,200,120,0.3); display: grid; place-items: center; }
 
+/* Liens de contact en « pastilles » bien visibles et cliquables */
+.contact-links { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; align-items: flex-start; }
+.contact-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 9px 16px; border-radius: 999px;
+  background: rgba(230,200,120,0.08);
+  border: 1px solid rgba(230,200,120,0.35);
+  color: var(--cream) !important;
+  font-weight: 600; font-size: 0.92rem; line-height: 1.2;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+.contact-link:hover { background: rgba(230,200,120,0.18); border-color: var(--gold-light); color: var(--gold-light) !important; transform: translateY(-2px); }
+.contact-link .cl-ic { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(230,200,120,0.2); font-size: 0.78rem; flex: none; }
+/* RDV = action mise en avant (pastille dorée pleine) */
+.contact-link-rdv { background: linear-gradient(135deg, var(--gold-light), var(--gold) 60%, var(--gold-deep)); border-color: transparent; color: var(--navy) !important; font-weight: 700; }
+.contact-link-rdv:hover { color: var(--navy) !important; filter: brightness(1.05); transform: translateY(-2px); }
+.contact-link-rdv .cl-ic { background: rgba(15,77,67,0.18); }
+
+/* ---------- Modal (prise de RDV) ---------- */
+.modal-overlay { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 20px; background: rgba(10,19,38,0.62); backdrop-filter: blur(4px); }
+.modal-overlay[hidden] { display: none; }
+.modal {
+  position: relative; width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto;
+  background: var(--white); color: var(--ink); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: clamp(26px, 4vw, 40px); text-align: center;
+  animation: modal-in 0.3s cubic-bezier(0.2,0.7,0.3,1);
+}
+@keyframes modal-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.modal .field { text-align: left; }
+.modal-close {
+  position: absolute; top: 12px; right: 14px; width: 36px; height: 36px; border: 0;
+  border-radius: 50%; background: var(--cream-2); color: var(--muted);
+  font-size: 1.4rem; line-height: 1; cursor: pointer; transition: background var(--transition), color var(--transition);
+}
+.modal-close:hover { background: var(--gold-light); color: var(--navy); }
+
 /* ---------- Reveal animation ---------- */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.in { opacity: 1; transform: none; }

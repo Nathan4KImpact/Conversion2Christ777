@@ -13,6 +13,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#0f4d43" />
 </head>
 <body>
 
@@ -469,23 +475,57 @@
         <div>
           <h4 data-i18n="footer.contact">Contact</h4>
           <p data-i18n="footer.contact.text">Une question, un besoin de prière&nbsp;?</p>
-          <p><a href="mailto:nathanaelfongang@gmail.com">nathanaelfongang@gmail.com</a></p>
-          <p><a href="https://wa.me/33758372268" target="_blank" rel="noopener">WhatsApp&nbsp;: +33 7 58 37 22 68</a></p>
-          <p><a href="https://chat.whatsapp.com/0vazCnCIMag0OAsYUtuO1z" target="_blank" rel="noopener">Groupe «&nbsp;Nouvelles VIES en Jésus&nbsp;»</a></p>
-          <p><a href="https://whatsapp.com/channel/0029VbCXLHm72WToQsw68F0N" target="_blank" rel="noopener">Chaîne «&nbsp;Nouvelles VIES — Enseignements&nbsp;»</a></p>
+          <div class="contact-links">
+            <a class="contact-link contact-link-rdv" id="open-booking" href="#" role="button"><span class="cl-ic" aria-hidden="true">📅</span><span data-i18n="footer.contact.rdv">Prendre un RDV de prière</span></a>
+            <a class="contact-link" id="contact-email" href="#" rel="nofollow" data-u="nathanaelfongang" data-d="gmail.com"><span class="cl-ic" aria-hidden="true">✉</span><span data-i18n="footer.contact.email">Écrivez-nous</span></a>
+            <a class="contact-link" id="contact-wa" href="#" rel="nofollow" data-w="33758372268"><span class="cl-ic" aria-hidden="true">✆</span>WhatsApp</a>
+            <a class="contact-link" href="https://chat.whatsapp.com/0vazCnCIMag0OAsYUtuO1z" target="_blank" rel="noopener"><span class="cl-ic" aria-hidden="true">👥</span><span data-i18n="footer.contact.group">Groupe «&nbsp;Nouvelles VIES en Jésus&nbsp;»</span></a>
+            <a class="contact-link" href="https://whatsapp.com/channel/0029VbCXLHm72WToQsw68F0N" target="_blank" rel="noopener"><span class="cl-ic" aria-hidden="true">📢</span><span data-i18n="footer.contact.channel">Chaîne «&nbsp;Nouvelles VIES — Enseignements&nbsp;»</span></a>
+          </div>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© <span data-year>2026</span> <span data-i18n="footer.rights">Nouvelles Vies en Jésus — Tous droits réservés.</span></span>
-        <span><a href="#" data-i18n="footer.privacy">Confidentialité</a> · <a href="#" data-i18n="footer.legal">Mentions légales</a></span>
+        <span><a href="#" data-i18n="footer.privacy">Confidentialité</a> · <a href="#" data-i18n="footer.legal">Mentions légales</a> · <a href="admin.html" rel="nofollow" style="opacity:0.55" data-i18n="footer.admin">Espace responsable</a></span>
       </div>
     </div>
   </footer>
 
+  <!-- Modal : prise de RDV de prière (créneaux Mar–Sam 19h–20h) -->
+  <div class="modal-overlay" id="booking-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+      <button class="modal-close" id="m-close" type="button" aria-label="Fermer">×</button>
+      <span class="result-badge" data-i18n="book.eyebrow">Un temps rien que pour toi</span>
+      <h2 id="m-title" style="color:var(--navy)" data-i18n="book.title">Réserve ton entretien de prière</h2>
+      <p class="lead" data-i18n="book.text">Du mardi au samedi, de 19h à 20h, prenons un vrai temps de prière ensemble.</p>
+      <form id="m-form" style="text-align:left">
+        <div class="field">
+          <label for="m-firstname" data-i18n="optin.firstname">Ton prénom</label>
+          <input id="m-firstname" type="text" autocomplete="given-name" required />
+        </div>
+        <div class="field">
+          <label for="m-email" data-i18n="optin.email">Ton email</label>
+          <input id="m-email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="m-slot" data-i18n="book.choose">Choisis ton créneau</label>
+          <select id="m-slot" required></select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" id="m-submit" data-i18n="book.cta">Réserver mon créneau</button>
+      </form>
+      <div id="m-done" class="prayer-box" hidden style="margin-top:14px;text-align:center">
+        <p style="margin:0;font-family:var(--font-sans)" data-i18n="book.done">🙏 C'est noté ! Tu recevras une confirmation par email. À très vite.</p>
+      </div>
+      <p class="mt-2 center"><a id="m-wa" href="#" target="_blank" rel="noopener" style="color:var(--muted);font-size:0.9rem" data-i18n="book.whatsapp">Je préfère réserver via WhatsApp →</a></p>
+    </div>
+  </div>
+
+  <script src="assets/js/config.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/video.js"></script>
   <script src="assets/js/testi-player.js"></script>
   <script src="assets/js/main.js"></script>
    <script src="assets/js/chatbase.js"></script>
+  <script src="assets/js/footer.js"></script>
 </body>
 </html>

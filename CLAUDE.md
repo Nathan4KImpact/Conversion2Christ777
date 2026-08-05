@@ -277,7 +277,48 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     (flag `c2c_convert_sent`) si l'email du lead est connu. Guide d'ajout manuel dans `integrations/README.md`.
   - Correctif `&nbsp;` → espace insécable réel (U+00A0) dans i18n.
 
+- 2026-06-11 : **v13 — anti-doublon nurturing (bug : emails renvoyés toutes les 15 min)** :
+  - **Cause** : scénario nurturing planifié toutes les 15 min + formule re-matchant les mêmes
+    fiches toute la journée (`{Jours depuis entrée}=1` reste vrai 24 h) → même email renvoyé
+    à chaque exécution.
+  - **Airtable** : 4 nouveaux champs case à cocher **`J1 envoyé` / `J3 envoyé` / `J5 envoyé` /
+    `J7 envoyé`** (créés via l'API).
+  - **Blueprint nurturing** : formule Search = `AND({Étape tunnel}='Lead', {RDV prière}=BLANK(),
+    OR(AND(jours=1, NOT({J1 envoyé})), … AND(jours=7, NOT({J7 envoyé}))))` ; après **chaque** Gmail,
+    un module Airtable `PATCH v0/base/table/{{1.id}}` coche `Jx envoyé` → scénario **idempotent**
+    (1 email max par campagne et par âme, quelle que soit la fréquence). Validé schéma Make.
+  - **Blueprint capture (J0)** : filtre ajouté entre l'upsert Airtable et le Gmail J0 →
+    n'envoie que si `{{length(3.body.createdRecords)}} > 0` (fiche réellement créée) ;
+    un re-passage du même email dans le formulaire ne redéclenche plus le J0.
+  - **README intégrations** : procédure de mise à jour **manuelle du scénario déjà en ligne**
+    (sans ré-import) documentée ; planification recommandée **1×/jour** (15 min = gaspillage d'ops).
+
+- 2026-06-11 : **v14 — espace responsable (admin) + tableau de bord des âmes** :
+  - **Pourquoi un back-end** : les fiches (PII sensibles) interdisent d'exposer le token Airtable
+    côté navigateur. ➜ ajout d'une couche **Netlify Functions** (Node, **zéro dépendance npm**,
+    modules natifs `crypto`/`fetch`). Le site reste statique ; seules `/api/*` touchent Airtable.
+  - **Auth** : inscription (`admin-signup`) **gardée par un code d'invitation** (`ADMIN_SIGNUP_CODE`),
+    connexion (`admin-login`). Mots de passe **hachés scrypt**, **JWT HS256** maison (12 h).
+    Comptes dans une **nouvelle table Airtable `Admins` `tblYWX1NiR5dcVliI`** (Email, Password Hash,
+    Nom, Rôle, Actif, Créé le, Dernière connexion).
+  - **Données** : `admin-stats` (agrégats only), `admin-leads` (liste nominative, authentifiée),
+    `admin-lead-update` (PATCH étape/statut/notes, liste blanche stricte).
+  - **Front** : `admin.html` + `assets/js/admin.js` + `assets/css/admin.css` — 5 KPIs, **funnel**
+    avec déperdition, répartitions persona/langue/sources/nurturing, **évolution 30 j** (SVG),
+    **à relancer** (leads ≥ 7 j sans RDV, WhatsApp/email pré-remplis), **table** (recherche, filtres,
+    changement d'étape inline, **export CSV**). Bilingue FR/EN, charts faits main (aucune lib).
+  - **Config** : `netlify.toml` (functions dir + route `/api/*` + en-têtes de sécurité + Node 20).
+    Variables Netlify à renseigner : `AIRTABLE_TOKEN` (PAT base PDVIE), `JWT_SECRET`, `ADMIN_SIGNUP_CODE`.
+    Guide complet : `integrations/ADMIN.md`. Page admin en `noindex`, non liée publiquement (URL `/admin.html`).
+  - Vérifs locales : `node --check` sur les 6 fonctions + `admin.js` ; round-trip scrypt + JWT testés.
+  - **Lien discret** vers `/admin.html` ajouté dans le footer-bottom de `index.html` (clé i18n
+    `footer.admin`, `rel="nofollow"`, opacité réduite). Secrets générés et transmis au porteur
+    en chat (jamais commités) : à coller dans les variables Netlify.
+
 ### Reste à faire / décisions en attente
+- **Admin** : renseigner les 3 variables Netlify puis créer le 1er compte sur `/admin.html`
+  (cf. `integrations/ADMIN.md`). Optionnel : reset mot de passe self-service, attribution d'un référent
+  depuis le tableau, blocage anti-force-brute persistant.
 - *(Optionnel)* **Airtable Automation** « anti-rétrogradation cosmétique » : *Quand une fiche a
   `Étape tunnel`=Lead ET `RDV prière` non vide → repasser `Étape tunnel`=RDV pris*. (L'API ne permet
   pas de créer des automations → à faire à la main dans Airtable ▸ Automatisations.)
