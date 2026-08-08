@@ -91,15 +91,23 @@ AND({Étape tunnel}='Lead', {RDV prière}=BLANK(),
 Filtres des 4 branches Gmail (routeur) — à mettre en cohérence avec les fenêtres :
 | Branche | Condition sur `Jours depuis entrée` |
 |---------|-------------------------------------|
-| Jour 1  | `≥ 1` (number) **ET** `< 3` (number) |
-| Jour 3  | `≥ 3` **ET** `< 5` |
-| Jour 5  | `≥ 5` **ET** `< 7` |
-| Jour 7  | `≥ 7` |
+| Jour 1  | `parseNumber(1.Jours depuis entrée)` **≥** `1` (number) **ET** **<** `3` (number) |
+| Jour 3  | `parseNumber(1.Jours depuis entrée)` **≥** `3` **ET** **<** `5` |
+| Jour 5  | `parseNumber(1.Jours depuis entrée)` **≥** `5` **ET** **<** `7` |
+| Jour 7  | `parseNumber(1.Jours depuis entrée)` **≥** `7` |
+
+> 🐛 **Piège corrigé (bug observé en prod)** : le connecteur Airtable de Make déclare les
+> champs **formule** avec `type: text` (par sécurité, car une formule peut renvoyer du texte),
+> même quand elle renvoie un nombre. Résultat : un filtre `number:greaterorequal` sur la valeur
+> brute rejette tout silencieusement — les 4 branches affichent `⊘0` malgré des bundles reçus.
+> **Fix : enrober la valeur avec `parseNumber(...)`** dans les 7 conditions du routeur pour
+> forcer la conversion en nombre.
 
 > **Mettre à jour le scénario déjà en ligne sans ré-importer** :
 > 1. Module **Airtable – Search Records** → remplace la **formule** par celle ci-dessus.
-> 2. Sur **chaque** branche, ouvre le **filtre avant le Gmail** et passe-le en fenêtre numérique
->    (tableau ci-dessus) — opérateurs *Greater than or equal to (number)* / *Less than (number)*.
+> 2. Sur **chaque** branche, ouvre le **filtre avant le Gmail**, mets le champ « A » à
+>    `{{parseNumber(1.\`Jours depuis entrée\`)}}` (au lieu de `{{1.\`Jours depuis entrée\`}}`)
+>    et bascule les opérateurs en **Numeric** (`Greater than or equal to` / `Less than`).
 > 3. Après **chaque** module Gmail (J1, J3, J5, J7), un module **Airtable → Make an API Call**
 >    (connexion qui écrit) coche la case :
 >    - URL : `v0/appRLYZbJgmORxkxz/tblqFCCV7BAO8IJNL/{{1.id}}` · Méthode : `PATCH`
@@ -108,6 +116,25 @@ Filtres des 4 branches Gmail (routeur) — à mettre en cohérence avec les fen�
 > 4. De même, sur le **Scénario 1**, ajoute un **filtre** entre le module Airtable upsert et le
 >    Gmail J0 : condition `{{length(3.body.createdRecords)}}` **Greater than (number)** `0`
 >    (remplace `3` par le n° réel du module Airtable de la branche lead).
+
+### Bilingue FR / EN — sélection automatique de la langue 🌍
+
+Chaque email (sujet + corps HTML) est **bilingue via un `switch(1.Langue; "EN"; <en>; <fr>)`**.
+FR sert de valeur par défaut : si `Langue` est vide ou différent de `"EN"`, l'email part en
+français ; si `Langue = "EN"`, l'email part en anglais. Le champ `Langue` est renseigné
+automatiquement par le formulaire du site (`optin.html`) et par `merci.html` selon la langue
+active de l'utilisateur au moment de la capture.
+
+Fonctionne aussi sur le **titre de la vidéo** (le lecteur est le même en FR ou EN, mais le
+libellé est traduit) grâce à une **imbrication d'expressions** :
+```
+{{switch(1.Langue; "EN";
+   switch(1.Persona; "Ouvert"; "Nick Vujicic — a life…"; …);
+   switch(1.Persona; "Ouvert"; "Nick Vujicic — une vie…"; …))}}
+```
+⚠️ Important : les `switch` imbriqués doivent être passés comme **expressions**, PAS comme
+strings. Écrire `switch(…; "{{switch(…)}}"; …)` ne fonctionne pas — Make renverrait le
+placeholder littéral. Le blueprint ci-joint respecte cette forme.
 
 ### Vidéos personnalisées selon le persona 🎥
 
