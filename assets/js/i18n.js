@@ -191,6 +191,13 @@ const I18N = {
     "reassure3.title": "Une présence humaine",
     "reassure3.text": "Derrière l'écran, des personnes réelles, prêtes à t'écouter et à prier avec toi quand tu le souhaites.",
 
+    /* --- À propos de Nathanaël (landing + histoire.html) --- */
+    "about.eyebrow": "Qui est derrière tout cela",
+    "about.title": "Nathanaël Fongang",
+    "about.subtitle": "Porteur du projet, disciple de Jésus-Christ",
+    "about.short": "Depuis plus de 15 ans, Nathanaël accompagne des personnes en quête de sens et de transformation. Formé comme Ingénieur en Systèmes d'Information, il travaille aujourd'hui comme Consultant SI au sein de grands groupes sur des projets critiques — mais sa véritable passion est d'aider les autres à rencontrer Jésus et à grandir dans la foi.",
+    "about.long": "Bienvenue. Moi, c'est Nathanaël Fongang.<br/><br/>Depuis plus de 15 ans, je marche aux côtés de personnes qui cherchent — qui cherchent la paix, le sens, la guérison, l'identité. Certaines m'ont trouvé par des vidéos, d'autres par des conversations tardives, d'autres simplement parce qu'elles n'avaient nulle part où aller. À chaque fois, ma conviction grandit : ce que les gens cherchent vraiment, c'est une Personne.<br/><br/>J'ai été formé comme Ingénieur Informatique en Systèmes d'Information (depuis mes 18 ans). Aujourd'hui, je travaille comme Consultant SI au sein de grands groupes sur des projets critiques. Ce métier m'a appris la rigueur, la clarté et le respect de ceux à qui je sers. Mais ça m'a aussi fait voir combien de personnes brillantes se sentent vides malgré le succès.<br/><br/>Ce projet — ce tunnel de conversion, ces témoignages, cette communauté — c'est pour toi. Tu mérites plus qu'une technique de développement personnel ou une promesse vide. Tu mérites une rencontre réelle avec Celui qui a créé ta vie et qui ne cesse de t'appeler.<br/><br/>Si tu as des questions, besoin de prier ou simplement envie de parler — je suis là. Pour toi, personnellement.",
+
     /* --- Footer --- */
     "footer.tagline": "Nouvelles Vies en Jésus — accueillir, accompagner et affermir chaque personne dans une rencontre vivante avec Jésus-Christ.",
     "footer.explore": "Explorer",
@@ -577,6 +584,12 @@ const I18N = {
     "reassure2.text": "Your information stays confidential and is never sold. You can unsubscribe at any time.",
     "reassure3.title": "Real human presence",
     "reassure3.text": "Behind the screen, real people, ready to listen and pray with you whenever you wish.",
+
+    "about.eyebrow": "Who's behind all this",
+    "about.title": "Nathanaël Fongang",
+    "about.subtitle": "Project founder, disciple of Jesus Christ",
+    "about.short": "For over 15 years, Nathanaël has walked alongside people searching for meaning and transformation. Trained as an IT Systems Engineer, he works today as an IT Systems Consultant within large enterprises on critical projects — but his true passion is helping others encounter Jesus and grow in faith.",
+    "about.long": "Welcome. I'm Nathanaël Fongang.<br/><br/>For over 15 years, I've walked with people who are searching — searching for peace, meaning, healing, identity. Some found me through videos, others through late-night conversations, still others simply because they had nowhere else to go. Each time, my conviction deepens: what people are really searching for is a Person.<br/><br/>I was trained as an IT Systems Engineer (since I was 18). Today, I work as an IT Systems Consultant within large enterprises on critical projects. This career has taught me rigor, clarity, and respect for those I serve. But it's also shown me how many brilliant people feel empty despite success.<br/><br/>This project — this conversion funnel, these testimonies, this community — it's for you. You deserve more than a personal development technique or an empty promise. You deserve a real encounter with the One who created your life and never stops calling you.<br/><br/>If you have questions, need prayer, or just want to talk — I'm here. For you, personally.",
 
     "footer.tagline": "New Lives in Jesus — to welcome, walk alongside, and strengthen every person in a living encounter with Jesus Christ.",
     "footer.explore": "Explore",
