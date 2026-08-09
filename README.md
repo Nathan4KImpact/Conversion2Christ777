@@ -14,7 +14,7 @@ Réseaux sociaux (flyers, FB, WTA, réels)
 index.html   → Landing : hook + 3 portes (personas) + l'alternative + offre + témoignages
         │
         ▼
-quiz.html    → Lead magnet « La source de ta soif » (4 questions, segmentation auto)
+quiz.html    → Lead magnet « La source de ta quête » (4 questions, segmentation auto)
         │
         ▼
 optin.html   → Capture (prénom + email + WhatsApp, consentement RGPD)
@@ -31,7 +31,7 @@ prier.html   → Moment de décision : prière du salut guidée + accompagnement
 | Fichier | Rôle |
 |---------|------|
 | `index.html` | Landing page complète (8 sections) |
-| `quiz.html` | Quiz lead magnet « La source de ta soif » |
+| `quiz.html` | Quiz lead magnet « La source de ta quête » |
 | `optin.html` | Formulaire de capture du lead |
 | `merci.html` | Page de remerciement + premier pas |
 | `prier.html` | Page de décision (prière du salut) |

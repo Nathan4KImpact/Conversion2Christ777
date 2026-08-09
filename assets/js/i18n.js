@@ -18,9 +18,9 @@ const I18N = {
 
     /* --- Hero --- */
     "hero.eyebrow": "Tu as cliqué. Ce n'était pas un hasard.",
-    "hero.title": "Et si ta plus grande <span class=\"accent\">soif</span> avait enfin une réponse ?",
+    "hero.title": "Et si ta plus grande <span class=\"accent\">quête</span> avait enfin une réponse ?",
     "hero.sub": "Paix, sens, guérison intérieure, vraie identité. Des millions les cherchent partout. Découvre la source vers laquelle tout convergeait depuis le début.",
-    "hero.cta1": "Découvrir la source de ma soif",
+    "hero.cta1": "Découvrir la source de ma quête",
     "hero.cta2": "Voir des histoires de vies transformées",
     "hero.trust1": "100% gratuit",
     "hero.trust2": "Sans jugement",
@@ -165,7 +165,7 @@ const I18N = {
     /* --- CTA final --- */
     "ctaFinal.eyebrow": "Prêt(e) pour la suite ?",
     "ctaFinal.title": "Le premier pas tient en 2 minutes",
-    "ctaFinal.sub": "Réponds à 4 questions simples. Nous t'aiderons à comprendre la source de ta soif — et le chemin précis pour l'étancher.",
+    "ctaFinal.sub": "Réponds à 4 questions simples. Nous t'aiderons à comprendre la source de ta quête — et le chemin précis pour y répondre.",
     "ctaFinal.cta": "Commencer le test gratuit",
 
     /* --- Réassurance --- */
@@ -182,7 +182,7 @@ const I18N = {
     "footer.tagline": "Nouvelles Vies en Jésus — accueillir, accompagner et affermir chaque personne dans une rencontre vivante avec Jésus-Christ.",
     "footer.explore": "Explorer",
     "footer.link.home": "Accueil",
-    "footer.link.quiz": "Le test de la soif",
+    "footer.link.quiz": "Le test de la quête",
     "footer.link.story": "Histoires de vie",
     "footer.link.pray": "Prier maintenant",
     "footer.contact": "Contact",
@@ -197,7 +197,7 @@ const I18N = {
     "footer.admin": "Espace responsable",
 
     /* --- Quiz --- */
-    "quiz.title": "La source de ta soif",
+    "quiz.title": "La source de ta quête",
     "quiz.intro": "4 questions, 2 minutes. À la fin, tu recevras une lecture personnalisée et un premier pas concret.",
     "quiz.start": "Commencer",
     "quiz.q1": "Quand tu es seul(e) et que tout devient silencieux, qu'est-ce qui remonte le plus souvent ?",
@@ -224,7 +224,7 @@ const I18N = {
     "quiz.q4c": "Une paix profonde et durable",
     "quiz.q4d": "La certitude de qui est vraiment Jésus",
     "quiz.q4e": "Des raisons claires et honnêtes de croire",
-    "quiz.result.title": "Voici la source de ta soif",
+    "quiz.result.title": "Voici la source de ta quête",
     "quiz.result.cta": "Recevoir mon premier pas",
     "quiz.back": "← Retour",
 
@@ -398,9 +398,9 @@ const I18N = {
     "lang.en": "EN",
 
     "hero.eyebrow": "You clicked. It wasn't by chance.",
-    "hero.title": "What if your deepest <span class=\"accent\">thirst</span> finally had an answer?",
+    "hero.title": "What if your deepest <span class=\"accent\">quest</span> finally had an answer?",
     "hero.sub": "Peace, meaning, inner healing, true identity. Millions search everywhere for them. Discover the source it was all pointing to from the start.",
-    "hero.cta1": "Discover the source of my thirst",
+    "hero.cta1": "Discover the source of my quest",
     "hero.cta2": "See transformed lives",
     "hero.trust1": "100% free",
     "hero.trust2": "No judgment",
@@ -540,7 +540,7 @@ const I18N = {
 
     "ctaFinal.eyebrow": "Ready for what's next?",
     "ctaFinal.title": "The first step takes 2 minutes",
-    "ctaFinal.sub": "Answer 4 simple questions. We'll help you understand the source of your thirst — and the exact path to quench it.",
+    "ctaFinal.sub": "Answer 4 simple questions. We'll help you understand the source of your quest — and the exact path to answer it.",
     "ctaFinal.cta": "Start the free test",
 
     "reassure.eyebrow": "You can move forward with confidence",
@@ -555,7 +555,7 @@ const I18N = {
     "footer.tagline": "New Lives in Jesus — to welcome, walk alongside, and strengthen every person in a living encounter with Jesus Christ.",
     "footer.explore": "Explore",
     "footer.link.home": "Home",
-    "footer.link.quiz": "The thirst test",
+    "footer.link.quiz": "The quest test",
     "footer.link.story": "Life stories",
     "footer.link.pray": "Pray now",
     "footer.contact": "Contact",
@@ -569,7 +569,7 @@ const I18N = {
     "footer.legal": "Legal notice",
     "footer.admin": "Admin area",
 
-    "quiz.title": "The source of your thirst",
+    "quiz.title": "The source of your quest",
     "quiz.intro": "4 questions, 2 minutes. At the end, you'll get a personalized reading and a concrete first step.",
     "quiz.start": "Start",
     "quiz.q1": "When you're alone and everything goes quiet, what surfaces most often?",
@@ -596,7 +596,7 @@ const I18N = {
     "quiz.q4c": "A deep and lasting peace",
     "quiz.q4d": "Certainty about who Jesus really is",
     "quiz.q4e": "Clear, honest reasons to believe",
-    "quiz.result.title": "Here is the source of your thirst",
+    "quiz.result.title": "Here is the source of your quest",
     "quiz.result.cta": "Receive my first step",
     "quiz.back": "← Back",
 

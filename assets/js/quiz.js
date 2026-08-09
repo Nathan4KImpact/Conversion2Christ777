@@ -1,5 +1,5 @@
 /* =========================================================================
-   quiz.js — « La source de ta soif »
+   quiz.js — « La source de ta quête »
    4 questions ; chaque réponse vote pour un persona (a=p1, b=p2, c=p3).
    Le persona majoritaire détermine le résultat + le pas suivant.
    Le résultat est mémorisé (localStorage) pour personnaliser l'opt-in.
