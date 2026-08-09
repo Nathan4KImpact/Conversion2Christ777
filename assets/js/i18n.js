@@ -1,8 +1,9 @@
 /* =========================================================================
    i18n — Bascule de langue FR / EN
-   Usage : <element data-i18n="key"></element>  (textContent)
+   Usage : <element data-i18n="key"></element>  (textContent — marche aussi sur <title>)
            <element data-i18n-html="key"></element>  (innerHTML, pour le gras/lignes)
            <input data-i18n-ph="key">  (placeholder)
+           <img data-i18n-alt="key">  (texte alternatif)
    La langue est mémorisée dans localStorage ("c2c_lang").
    ========================================================================= */
 
@@ -191,12 +192,87 @@ const I18N = {
     "reassure3.title": "Une présence humaine",
     "reassure3.text": "Derrière l'écran, des personnes réelles, prêtes à t'écouter et à prier avec toi quand tu le souhaites.",
 
-    /* --- À propos de Nathanaël (landing + histoire.html) --- */
-    "about.eyebrow": "Qui est derrière tout cela",
-    "about.title": "Nathanaël Fongang",
-    "about.subtitle": "Porteur du projet, disciple de Jésus-Christ",
-    "about.short": "Depuis plus de 15 ans, Nathanaël accompagne des personnes en quête de sens et de transformation. Formé comme Ingénieur en Systèmes d'Information, il travaille aujourd'hui comme Consultant SI au sein de grands groupes sur des projets critiques — mais sa véritable passion est d'aider les autres à rencontrer Jésus et à grandir dans la foi.",
-    "about.long": "Bienvenue. Moi, c'est Nathanaël Fongang.<br/><br/>Depuis plus de 15 ans, je marche aux côtés de personnes qui cherchent — qui cherchent la paix, le sens, la guérison, l'identité. Certaines m'ont trouvé par des vidéos, d'autres par des conversations tardives, d'autres simplement parce qu'elles n'avaient nulle part où aller. À chaque fois, ma conviction grandit : ce que les gens cherchent vraiment, c'est une Personne.<br/><br/>J'ai été formé comme Ingénieur Informatique en Systèmes d'Information (depuis mes 18 ans). Aujourd'hui, je travaille comme Consultant SI au sein de grands groupes sur des projets critiques. Ce métier m'a appris la rigueur, la clarté et le respect de ceux à qui je sers. Mais ça m'a aussi fait voir combien de personnes brillantes se sentent vides malgré le succès.<br/><br/>Ce projet — ce tunnel de conversion, ces témoignages, cette communauté — c'est pour toi. Tu mérites plus qu'une technique de développement personnel ou une promesse vide. Tu mérites une rencontre réelle avec Celui qui a créé ta vie et qui ne cesse de t'appeler.<br/><br/>Si tu as des questions, besoin de prier ou simplement envie de parler — je suis là. Pour toi, personnellement.",
+    /* --- Qui est Nathanaël ? (bloc landing) --- */
+    "about.eyebrow": "Qui est derrière ce site ?",
+    "about.title": "Bonjour, moi c'est Nathanaël 👋",
+    "about.p1": "Je suis né au Cameroun, avant-dernier d'une fratrie de six. Aujourd'hui, à 40 ans, je vis en France avec ma femme et nos trois filles.",
+    "about.p2": "À 10 ans déjà, une question me hantait : « Comment être sûr d'être avec Dieu quand ma vie sur terre s'arrêtera ? » J'ai interrogé les aînés autour de moi — sans réponse. Alors un jour, j'ai posé la question à Dieu directement, dans une prière d'enfant toute simple.",
+    "about.p3": "À 15 ans, un aîné m'a défié : « Raoul, es-tu sauvé ? » Il a ouvert sa Bible à <strong>Éphésiens 2:8-9</strong>. Ce jour-là, j'ai compris la grâce. Mon cœur a changé. Je suis entré dans l'expérience de <strong>2 Corinthiens 5:17</strong> — « Si quelqu'un est en Christ, il est une nouvelle création. »",
+    "about.p4": "Formé <strong>Ingénieur en Systèmes d'Information</strong>, je suis aujourd'hui <strong>Consultant SI en Grands Comptes, sur des projets critiques</strong>. Et depuis ce jour de mes 15 ans, une passion m'habite : partager ce trésor. Premier livret publié à 17 ans, grandi dans les mouvements chrétiens étudiants (GBU / IFES), voyagé pour Christ dans plusieurs pays. Aujourd'hui je sers Dieu au sein de l'Organisation VIE (Ministère Message de Vie & Églises Vases d'Honneurs).",
+    "about.p5": "Ce site, c'est ce chemin que je veux partager avec toi. Prends ton temps. <strong>Sans jugement, sans pression.</strong> Une seule prière peut tout changer — c'est ce qui m'est arrivé.",
+    "about.cta": "Lire mon histoire complète →",
+    "about.alt": "Nathanaël, porteur du projet Nouvelles Vies en Jésus",
+
+    /* --- Mon histoire (histoire.html) --- */
+    "story.pageTitle": "Mon histoire — Nathanaël | Nouvelles Vies en Jésus",
+    "story.eyebrow": "Mon témoignage",
+    "story.title": "Qui suis-je ?",
+    "story.sub": "L'histoire la plus merveilleuse de ma vie — et pourquoi ce site existe.",
+    "story.alt.portrait": "Nathanaël — portrait",
+    "story.alt.couple": "Nathanaël et son épouse",
+    "story.alt.family": "Nathanaël, son épouse et leurs trois filles",
+
+    "story.s1.t": "Bonjour, moi c'est Nathanaël",
+    "story.s1.p1": "Je m'appelle <strong>Raoul Nathanaël</strong>. Je suis né au Cameroun, avant-dernier d'une fratrie de six. Cette année, à l'occasion de mes 40 ans et de mon stage de formation à l'École <em>Porteurs de Vie</em> (fondée par l'Homme de Dieu, le Pasteur <strong>Mohammed Sanogo</strong>), je voulais te partager l'histoire la plus merveilleuse de ma vie.",
+    "story.s1.p2": "J'ai grandi dans une famille chrétienne. On m'a transmis des valeurs de foi dès l'enfance. Mais avoir des valeurs et vivre une relation vivante avec Dieu — ce sont deux choses très différentes. Et j'allais l'apprendre.",
+
+    "story.s2.t": "Les débuts de ma quête",
+    "story.s2.p1": "À partir de mes 10 ans, une soif s'est installée dans mon âme. Une question revenait sans cesse : « Et après ? » J'avais compris qu'après cette vie, chacun irait soit auprès de Dieu pour l'éternité, soit loin de Lui. Alors je me demandais : « Comment être sûr, moi, d'être avec Dieu ? »",
+    "story.s2.p2": "J'ai interrogé des aînés. Aucun n'a pu me donner une réponse claire. Alors, un jour, je me suis tourné directement vers Dieu, avec une prière d'enfant toute innocente :",
+    "story.s2.q": "« Seigneur, je sais que je ne suis pas parfait. Mais j'ai appris que Tu es un Dieu d'amour, et aussi tout-puissant. Donc Tu peux me sauver. Tu peux garantir que je serai avec Toi après ma vie sur terre. Alors je Te le demande : sauve-moi. »",
+
+    "story.s3.t": "La question qui m'a bouleversé",
+    "story.s3.p1": "À 15 ans, en 2001, un grand frère m'a posé une question qui a été comme un coup de massue :",
+    "story.s3.q": "« Raoul, es-tu sauvé ? »",
+    "story.s3.p2": "Je ne savais pas quoi répondre. Voyant mon embarras, il a calmement ouvert sa Bible et m'a tendu <strong>Éphésiens 2:8-9</strong> pour que je le lise moi-même :",
+    "story.s3.v": "« Car c'est par la grâce que vous êtes sauvés, par le moyen de la foi. Et cela ne vient pas de vous, c'est le don de Dieu. Ce n'est point par les œuvres, afin que personne ne se glorifie. »",
+
+    "story.s4.t": "Le déclic",
+    "story.s4.p1": "À la lecture de ce passage, comme des écailles sont tombées de mes yeux. J'ai réalisé la grandeur et la puissance de l'amour de Dieu comme jamais auparavant. Je n'avais pas à <em>mériter</em> mon salut — c'était un don. Il fallait simplement le recevoir.",
+    "story.s4.p2": "J'ai ouvert mon cœur. Mon cœur a changé.",
+
+    "story.s5.t": "Ma transformation — une nouvelle création",
+    "story.s5.p1": "À partir de ce jour, je suis entré dans l'expérience merveilleuse de <strong>2 Corinthiens 5:17</strong> :",
+    "story.s5.v": "« Si quelqu'un est en Christ, il est une nouvelle création. Les choses anciennes sont passées, voici, toutes choses sont devenues nouvelles. »",
+    "story.s5.p2": "Mon approche de la vie a changé. Mes valeurs, mes priorités se sont recalibrées. Certains attachements ne correspondaient plus à l'homme nouveau qui grandissait en moi — un homme façonné dans l'amour, la pureté, l'excellence. Je voyais littéralement toutes choses devenir nouvelles.",
+
+    "story.s6.t": "Ma Nouvelle Vie en Jésus",
+    "story.s6.p1": "Depuis ce jour, une passion m'habite : partager ce trésor. Comment aurais-je pu le garder pour moi ?",
+    "story.s6.p2": "J'étais en Première Scientifique. Je parlais librement de cette grâce à mes camarades. Un jour, un ami m'a posé une question à laquelle je n'ai pas su répondre sur le coup. De retour chez moi, allongé sur mon lit, je méditais encore… quand le <strong>Saint-Esprit</strong> a commencé à m'expliquer. La réponse est venue d'un seul coup, comme un colis entier à ouvrir. J'ai passé la soirée à mettre par écrit ce que je venais de recevoir.",
+    "story.s6.p3": "Un premier livret est né. <strong>J'avais 16 ans.</strong>",
+    "story.s6.p4": "Je l'ai fait lire à mon ami, qui l'a montré aux autres. Un camarade l'a emprunté un soir — et me l'a rendu le lendemain, imprimé (rare, à l'époque, en 2002, dans mon pays). À l'insistance de mon père, une maison d'édition l'a publié sous forme de livret-traité évangélique. <strong>J'ai publié mon premier livre à 17 ans.</strong>",
+
+    "story.s7.t": "Grandir dans la foi — GBU / IFES",
+    "story.s7.p1": "J'ai ensuite rejoint un mouvement d'étudiants chrétiens évangéliques, les <strong>Groupes Bibliques Universitaires</strong> (<strong>IFES</strong> en anglais). C'est là que j'ai grandi : études bibliques, prières, retraites, camps de formation et de consécration.",
+
+    "story.s8.t": "Mon métier — la rigueur des projets critiques",
+    "story.s8.p1": "En parallèle de cette vie de foi, j'ai suivi un cursus scientifique et je me suis formé comme <strong>Ingénieur en Systèmes d'Information</strong>. Mon parcours professionnel m'a conduit à exercer aujourd'hui comme <strong>Consultant SI au sein de Grands Comptes, sur des projets critiques</strong> — de ceux où l'erreur coûte cher et où l'on ne peut pas tricher avec la rigueur.",
+    "story.s8.p2": "Je le précise pour une raison simple : ce que je partage ici n'est pas un refuge. Je n'ai pas trouvé Dieu faute d'avoir trouvé autre chose. J'ai une vie professionnelle exigeante, que j'aime — et c'est justement en la vivant que je vois combien de personnes brillantes, compétentes, bien installées, portent un vide que la réussite ne comble pas. La foi n'est pas l'ennemie de la raison : elle lui donne sa respiration.",
+
+    "story.s9.t": "Aujourd'hui — en France, en famille, au service de Dieu",
+    "story.s9.p1": "À 23 ans, j'ai commencé un parcours qui m'a conduit à voyager pour Christ dans plusieurs nations, avant d'arriver en <strong>France en 2022</strong> où je réside désormais avec ma famille.",
+    "story.s9.p2": "Dieu m'a béni d'une merveilleuse épouse, et nous avons <strong>trois filles</strong>.",
+    "story.s9.p3": "Nous avons rejoint l'<strong>Organisation Chrétienne VIE</strong>, qui rassemble le <strong>Ministère Message de Vie</strong> et les <strong>Églises Vases d'Honneurs</strong>, où nous servons le Seigneur et continuons notre aventure merveilleuse avec Jésus.",
+
+    "story.s10.t": "Un mot pour toi",
+    "story.s10.p1": "Ce que Dieu a fait dans ma vie, Il peut le faire dans la tienne.",
+    "story.s10.p2": "Il n'y a pas de « bon moment ». Il n'y a pas de « pas assez bien pour Dieu ». Il y a juste toi, tel(le) que tu es, et un Père qui t'attend.",
+    "story.s10.p3": "Prends ton temps sur ce site. Regarde les histoires de vies transformées. Fais le test si tu veux. Ou écris-moi, simplement. Sans jugement. Sans pression.",
+    "story.s10.bless": "Que Dieu te bénisse, et que Sa grâce t'accompagne dans le voyage.",
+    "story.s10.sign": "— Nathanaël",
+
+    "story.cta.title": "Et toi, où en es-tu ?",
+    "story.cta.sub": "2 minutes, 4 questions. Pour comprendre la source de ta quête — et le premier pas qui te correspond.",
+    "story.cta.quiz": "Faire le test — 2 min →",
+    "story.cta.pray": "Je veux prier maintenant",
+    "story.cta.write": "M'écrire directement",
+
+    "story.refs.t": "Références et sources d'inspiration",
+    "story.refs.1": "École Porteurs de Vie / Pasteur Mohammed Sanogo",
+    "story.refs.2": "Ministère Message de Vie",
+    "story.refs.3": "Églises Vases d'Honneurs",
+    "story.refs.4": "GBU / IFES — Ce que nous croyons",
+    "story.back": "← Retour à l'accueil",
 
     /* --- Footer --- */
     "footer.tagline": "Nouvelles Vies en Jésus — accueillir, accompagner et affermir chaque personne dans une rencontre vivante avec Jésus-Christ.",
@@ -377,6 +453,7 @@ const I18N = {
     "fond.cta": "Rejoindre la communauté",
     "fond.back": "← Revenir à « Grandir »",
     "footer.link.fond": "Fondations de la foi",
+    "footer.link.about": "Mon histoire",
 
     "fond.mod1.obj": "Avant tout « faire », découvre qui tu ES. Dieu n'est pas un juge distant : c'est un Père bon. En Christ, tu es son enfant — choisi, aimé, pardonné, appelé Ã  une vie nouvelle. Ton identité ne dépend plus de tes performances, mais de son amour.",
     "fond.mod1.key": "« À tous ceux qui l'ont reçue… elle a donné le pouvoir de devenir enfants de Dieu. » — Jean 1:12",
@@ -585,11 +662,85 @@ const I18N = {
     "reassure3.title": "Real human presence",
     "reassure3.text": "Behind the screen, real people, ready to listen and pray with you whenever you wish.",
 
-    "about.eyebrow": "Who's behind all this",
-    "about.title": "Nathanaël Fongang",
-    "about.subtitle": "Project founder, disciple of Jesus Christ",
-    "about.short": "For over 15 years, Nathanaël has walked alongside people searching for meaning and transformation. Trained as an IT Systems Engineer, he works today as an IT Systems Consultant within large enterprises on critical projects — but his true passion is helping others encounter Jesus and grow in faith.",
-    "about.long": "Welcome. I'm Nathanaël Fongang.<br/><br/>For over 15 years, I've walked with people who are searching — searching for peace, meaning, healing, identity. Some found me through videos, others through late-night conversations, still others simply because they had nowhere else to go. Each time, my conviction deepens: what people are really searching for is a Person.<br/><br/>I was trained as an IT Systems Engineer (since I was 18). Today, I work as an IT Systems Consultant within large enterprises on critical projects. This career has taught me rigor, clarity, and respect for those I serve. But it's also shown me how many brilliant people feel empty despite success.<br/><br/>This project — this conversion funnel, these testimonies, this community — it's for you. You deserve more than a personal development technique or an empty promise. You deserve a real encounter with the One who created your life and never stops calling you.<br/><br/>If you have questions, need prayer, or just want to talk — I'm here. For you, personally.",
+    "about.eyebrow": "Who is behind this site?",
+    "about.title": "Hi, I'm Nathanaël 👋",
+    "about.p1": "I was born in Cameroon, second-youngest of six. Today, at 40, I live in France with my wife and our three daughters.",
+    "about.p2": "Already at 10, a question haunted me: “How can I be sure to be with God when my life on earth ends?” I asked the elders around me — no clear answer. So one day, I asked God directly, in a child's simple prayer.",
+    "about.p3": "At 15, an older brother challenged me: “Raoul, are you saved?” He opened his Bible to <strong>Ephesians 2:8-9</strong>. That day, I understood grace. My heart changed. I entered the experience of <strong>2 Corinthians 5:17</strong> — “If anyone is in Christ, he is a new creation.”",
+    "about.p4": "Trained as an <strong>Information Systems Engineer</strong>, I work today as an <strong>IS Consultant for major corporate accounts, on critical projects</strong>. And since that day at 15, one passion drives me: sharing this treasure. First booklet published at 17, grown in faith within Christian student movements (GBU / IFES), travelled for Christ in several countries. Today I serve God within Organisation VIE (Message de Vie Ministry &amp; Vases d'Honneurs Churches).",
+    "about.p5": "This site is that journey I want to share with you. Take your time. <strong>No judgment, no pressure.</strong> A single prayer can change everything — that's what happened to me.",
+    "about.cta": "Read my full story →",
+    "about.alt": "Nathanaël, founder of New Lives in Jesus",
+
+    "story.pageTitle": "My story — Nathanaël | New Lives in Jesus",
+    "story.eyebrow": "My testimony",
+    "story.title": "Who am I?",
+    "story.sub": "The most wonderful story of my life — and why this site exists.",
+    "story.alt.portrait": "Nathanaël — portrait",
+    "story.alt.couple": "Nathanaël and his wife",
+    "story.alt.family": "Nathanaël, his wife and their three daughters",
+
+    "story.s1.t": "Hi, I'm Nathanaël",
+    "story.s1.p1": "My name is <strong>Raoul Nathanaël</strong>. I was born in Cameroon, second-youngest of a family of six. This year, on the occasion of my 40th birthday and my class 3 training at the <em>Porteurs de Vie</em> School (founded by the Man of God, Pastor <strong>Mohammed Sanogo</strong>), I wanted to share with you the most wonderful story of my life.",
+    "story.s1.p2": "I grew up in a Christian family. Faith values were passed on to me from an early age. But having values and living a living relationship with God — these are two very different things. And I was about to learn it.",
+
+    "story.s2.t": "The beginnings of my quest",
+    "story.s2.p1": "From age 10, a thirst settled into my soul. One question kept coming back: “And after?” I had understood that after this life, each person would either be with God for eternity, or far from Him. So I wondered: “How can I be sure, myself, of being with God?”",
+    "story.s2.p2": "I asked elders. None could give me a clear answer. So one day, I turned directly to God, with an innocent child's prayer:",
+    "story.s2.q": "“Lord, I know I am not perfect. But I've learned that You are a God of love, and also almighty. So You can save me. You can guarantee that I will be with You after my life on earth. So I ask You: save me.”",
+
+    "story.s3.t": "The question that shook me",
+    "story.s3.p1": "At 15, in 2001, an older brother asked me a question that hit me like a hammer:",
+    "story.s3.q": "“Raoul, are you saved?”",
+    "story.s3.p2": "I didn't know what to answer. Seeing my embarrassment, he calmly opened his Bible and handed me <strong>Ephesians 2:8-9</strong> to read myself:",
+    "story.s3.v": "“For it is by grace you have been saved, through faith — and this is not from yourselves, it is the gift of God — not by works, so that no one can boast.”",
+
+    "story.s4.t": "The turning point",
+    "story.s4.p1": "As I read this passage, it was as if scales fell from my eyes. I realized the greatness and power of God's love as never before. I didn't have to <em>earn</em> my salvation — it was a gift. I simply had to receive it.",
+    "story.s4.p2": "I opened my heart. My heart changed.",
+
+    "story.s5.t": "My transformation — a new creation",
+    "story.s5.p1": "From that day on, I entered the wonderful experience of <strong>2 Corinthians 5:17</strong>:",
+    "story.s5.v": "“If anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.”",
+    "story.s5.p2": "My whole approach to life changed. My values, my priorities recalibrated. Certain attachments no longer matched the new man growing within me — a man shaped in love, purity, excellence. I literally saw all things become new.",
+
+    "story.s6.t": "My New Life in Jesus",
+    "story.s6.p1": "Since that day, one passion has driven me: sharing this treasure. How could I have kept it to myself?",
+    "story.s6.p2": "I was in Scientific 11th grade. I was speaking freely of this grace to my classmates. One day, a friend asked me a question I couldn't answer on the spot. Back home, lying on my bed, I was still meditating on his question… when the <strong>Holy Spirit</strong> began to explain to me. The answer came in one shot, like an entire package to unpack. I spent the evening writing down what I had just received.",
+    "story.s6.p3": "A first booklet was born. <strong>I was 16.</strong>",
+    "story.s6.p4": "I showed it to my friend, who showed it to others. A classmate borrowed it one evening — and gave it back the next day, printed (rare, at the time, in 2002, in my country). At my father's urging, a publishing house published it as an evangelistic tract-booklet. <strong>I published my first book at 17.</strong>",
+
+    "story.s7.t": "Growing in faith — GBU / IFES",
+    "story.s7.p1": "I then joined an evangelical Christian student movement, the <strong>GBU</strong> (<strong>IFES</strong> in English). That's where I grew: Bible studies, prayer times, retreats, training and consecration camps.",
+
+    "story.s8.t": "My profession — the rigor of critical projects",
+    "story.s8.p1": "Alongside this life of faith, I followed a scientific track and trained as an <strong>Information Systems Engineer</strong>. My career has led me to work today as an <strong>IS Consultant for major corporate accounts, on critical projects</strong> — the kind where mistakes are costly and where you cannot cut corners on rigor.",
+    "story.s8.p2": "I mention it for a simple reason: what I share here is not a refuge. I did not find God for lack of finding anything else. I have a demanding professional life that I love — and it is precisely there that I see how many brilliant, capable, well-established people carry an emptiness that success never fills. Faith is not the enemy of reason: it gives reason its breath.",
+
+    "story.s9.t": "Today — in France, with family, serving God",
+    "story.s9.p1": "At 23, I began a journey that led me to travel for Christ to several nations, before arriving in <strong>France in 2022</strong> where I now live with my family.",
+    "story.s9.p2": "God has blessed me with a wonderful wife, and we have <strong>three daughters</strong>.",
+    "story.s9.p3": "We joined the <strong>Organisation Chrétienne VIE</strong>, which brings together the <strong>Message de Vie Ministry</strong> and the <strong>Vases d'Honneurs Churches</strong>, where we serve the Lord and continue our wonderful adventure with Jesus.",
+
+    "story.s10.t": "A word for you",
+    "story.s10.p1": "What God has done in my life, He can do in yours.",
+    "story.s10.p2": "There is no “right time.” There is no “not good enough for God.” There is just you, as you are, and a Father waiting for you.",
+    "story.s10.p3": "Take your time on this site. Watch the stories of transformed lives. Take the test if you want. Or simply write to me. No judgment. No pressure.",
+    "story.s10.bless": "May God bless you, and may His grace go with you on the journey.",
+    "story.s10.sign": "— Nathanaël",
+
+    "story.cta.title": "And you — where are you?",
+    "story.cta.sub": "2 minutes, 4 questions. To understand the source of your quest — and the first step that fits you.",
+    "story.cta.quiz": "Take the test — 2 min →",
+    "story.cta.pray": "I want to pray now",
+    "story.cta.write": "Write to me directly",
+
+    "story.refs.t": "References and sources of inspiration",
+    "story.refs.1": "Porteurs de Vie School / Pastor Mohammed Sanogo",
+    "story.refs.2": "Message de Vie Ministry",
+    "story.refs.3": "Vases d'Honneurs Churches",
+    "story.refs.4": "GBU / IFES — What we believe",
+    "story.back": "← Back to home",
 
     "footer.tagline": "New Lives in Jesus — to welcome, walk alongside, and strengthen every person in a living encounter with Jesus Christ.",
     "footer.explore": "Explore",
@@ -761,6 +912,7 @@ const I18N = {
     "fond.cta": "Join the community",
     "fond.back": "← Back to “Grow”",
     "footer.link.fond": "Foundations of Faith",
+    "footer.link.about": "My story",
 
     "fond.mod1.obj": "Before any “doing,” discover who you ARE. God isn't a distant judge: He's a good Father. In Christ you are His child — chosen, loved, forgiven, called to a new life. Your identity no longer depends on your performance, but on His love.",
     "fond.mod1.key": "“To all who received Him… He gave the right to become children of God.” — John 1:12",
@@ -821,6 +973,10 @@ const I18N = {
     document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
       const key = el.getAttribute("data-i18n-ph");
       if (I18N[lang][key] != null) el.setAttribute("placeholder", I18N[lang][key]);
+    });
+    document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-alt");
+      if (I18N[lang][key] != null) el.setAttribute("alt", I18N[lang][key]);
     });
 
     document.querySelectorAll(".lang-switch button").forEach((b) => {

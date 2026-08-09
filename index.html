@@ -20,7 +20,7 @@
   <link rel="manifest" href="site.webmanifest" />
   <meta name="theme-color" content="#0f4d43" />
 </head>
-<body>
+<body data-track="visite">
 
   <!-- ===== Header ===== -->
   <header class="site-header">
@@ -46,7 +46,7 @@
   <!-- ===== Hero ===== -->
   <section class="hero">
     <div class="container">
-      <span class="eyebrow" data-i18n="hero.eyebrow">Tu es ici. Ce n'était pas un hasard.</span>
+      <span class="eyebrow" data-i18n="hero.eyebrow">Tu es arrivé ici. Ce n'était pas un hasard.</span>
       <h1 data-i18n-html="hero.title">Et si ta plus grande <span class="accent">quête</span> avait enfin une réponse&nbsp;?</h1>
       <p class="hero-sub" data-i18n="hero.sub">Paix, sens, guérison intérieure, vraie identité…</p>
       <div class="hero-cta">
@@ -272,6 +272,29 @@
   </section>
 
 
+  <!-- ===== Qui est Nathanaël ? ===== -->
+  <section id="about" class="about-sec">
+    <div class="container">
+      <div class="about-grid reveal">
+        <figure class="about-photo">
+          <img src="assets/img/nathanael-portrait.jpg" alt="Nathanaël, porteur du projet Nouvelles Vies en Jésus"
+               data-i18n-alt="about.alt" width="750" height="768" loading="lazy" decoding="async" />
+        </figure>
+        <div class="about-text">
+          <span class="eyebrow" data-i18n="about.eyebrow">Qui est derrière ce site&nbsp;?</span>
+          <h2 data-i18n="about.title">Bonjour, moi c'est Nathanaël 👋</h2>
+          <p data-i18n-html="about.p1">Je suis né au Cameroun, avant-dernier d'une fratrie de six…</p>
+          <p data-i18n-html="about.p2">À 10 ans déjà, une question me hantait…</p>
+          <p data-i18n-html="about.p3">À 15 ans, un aîné m'a défié…</p>
+          <p data-i18n-html="about.p4">Formé Ingénieur en Systèmes d'Information…</p>
+          <p data-i18n-html="about.p5">Ce site, c'est ce chemin que je veux partager avec toi…</p>
+          <a class="btn btn-primary btn-lg" href="histoire.html" data-i18n="about.cta">Lire mon histoire complète →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <!-- ===== CTA final ===== -->
   <section class="cta-final">
     <div class="container reveal">
@@ -332,6 +355,7 @@
           <p><a href="index.html" data-i18n="footer.link.home">Accueil</a></p>
           <p><a href="quiz.html" data-i18n="footer.link.quiz">Le test de la quête</a></p>
           <p><a href="index.html#testimonials" data-i18n="footer.link.story">Histoires de vie</a></p>
+          <p><a href="histoire.html" data-i18n="footer.link.about">Mon histoire</a></p>
           <p><a href="prier.html" data-i18n="footer.link.pray">Prier maintenant</a></p>
           <p><a href="nouveau-ne.html" data-i18n="footer.link.nn">Nouveau-né en Christ</a></p>
           <p><a href="grandir.html" data-i18n="footer.link.gr">Grandir dans la foi</a></p>
@@ -387,6 +411,7 @@
 
   <script src="assets/js/config.js"></script>
   <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/track.js"></script>
   <script src="assets/js/video.js"></script>
   <script src="assets/js/testi-player.js"></script>
   <script src="assets/js/main.js"></script>

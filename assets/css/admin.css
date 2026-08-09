@@ -279,3 +279,39 @@
   .bar-row { grid-template-columns: 92px 1fr 36px; }
   .leads-table th:nth-child(2), .leads-table td:nth-child(2) { display: none; }
 }
+
+/* ---------- Activation du tunnel (haut du tunnel) ---------- */
+/* 6 étapes : on vise 3+3 (ou 2+2+2) plutôt qu'une rangée de 5 + un orphelin. */
+.act-kpis {
+  margin-bottom: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+@media (min-width: 900px) { .act-kpis { grid-template-columns: repeat(6, 1fr); } }
+@media (min-width: 620px) and (max-width: 899px) { .act-kpis { grid-template-columns: repeat(3, 1fr); } }
+.act-funnel { max-width: 640px; }
+
+.setup-card {
+  border: 1px dashed rgba(15, 77, 67, 0.28);
+  border-radius: 14px;
+  padding: 22px;
+  background: rgba(26, 110, 96, 0.04);
+}
+.setup-card h3 {
+  margin: 0 0 8px;
+  color: var(--navy);
+  font-size: 1.12rem;
+}
+.setup-card p {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  max-width: 68ch;
+}
+.setup-msg {
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--red);
+}
+.setup-msg.ok { color: var(--teal); }

@@ -31,6 +31,23 @@
       "auth.signup.cta": "Créer mon compte",
       "dash.refresh": "↻ Rafraîchir",
       "dash.backsite": "← Retour au site",
+      "act.title": "Activation du tunnel — 30 derniers jours",
+      "act.hint": "Ce qui se passe avant la capture : visites, quiz, opt-in, prière.",
+      "act.visite": "Sessions",
+      "act.quiz_lance": "Quiz lancés",
+      "act.quiz_termine": "Quiz terminés",
+      "act.optin": "Opt-in",
+      "act.priere": "Prières",
+      "act.nouveau_ne": "Nouveau-nés",
+      "act.today": "{n} aujourd'hui",
+      "act.rate": "{p}% de l'étape précédente",
+      "act.empty": "Aucune donnée encore : les compteurs se rempliront dès les premières visites.",
+      "act.setup.title": "Le suivi d'activation n'est pas encore actif",
+      "act.setup.text": "Le tableau de bord ne voit aujourd'hui que les âmes ayant laissé leurs coordonnées. En activant le suivi, tu verras aussi combien de personnes ouvrent le site, lancent le quiz et le terminent — donc où le tunnel fuit. Aucune donnée personnelle n'est enregistrée : uniquement des compteurs par jour.",
+      "act.setup.cta": "Activer le suivi",
+      "act.setup.working": "Création en cours…",
+      "act.setup.done": "Suivi activé ✓ Les compteurs démarrent maintenant.",
+      "act.setup.manual": "Création automatique impossible (le jeton Airtable n'a pas le droit « schema.bases:write »). Crée la table à la main : voir integrations/ADMIN.md.",
       "chart.funnel": "Tunnel de conversion",
       "chart.persona": "Par profil (persona)",
       "chart.lang": "Par langue",
@@ -100,6 +117,23 @@
       "auth.signup.cta": "Create my account",
       "dash.refresh": "↻ Refresh",
       "dash.backsite": "← Back to site",
+      "act.title": "Funnel activation — last 30 days",
+      "act.hint": "What happens before capture: visits, quiz, opt-in, prayer.",
+      "act.visite": "Sessions",
+      "act.quiz_lance": "Quiz started",
+      "act.quiz_termine": "Quiz completed",
+      "act.optin": "Opt-in",
+      "act.priere": "Prayers",
+      "act.nouveau_ne": "Newborns",
+      "act.today": "{n} today",
+      "act.rate": "{p}% of previous step",
+      "act.empty": "No data yet: counters will fill up from the first visits.",
+      "act.setup.title": "Activation tracking is not enabled yet",
+      "act.setup.text": "Right now the dashboard only sees souls who left their details. Enabling tracking also shows how many people open the site, start the quiz and complete it — so you can see where the funnel leaks. No personal data is stored: only daily counters.",
+      "act.setup.cta": "Enable tracking",
+      "act.setup.working": "Creating…",
+      "act.setup.done": "Tracking enabled ✓ Counters start now.",
+      "act.setup.manual": "Automatic creation failed (the Airtable token lacks the “schema.bases:write” scope). Create the table manually: see integrations/ADMIN.md.",
       "chart.funnel": "Conversion funnel",
       "chart.persona": "By profile (persona)",
       "chart.lang": "By language",
@@ -361,6 +395,89 @@
       return { label: j, val: (s.nurturing && s.nurturing[j]) || 0, color: "#1a6e60" };
     }));
     renderTimeseries(s.timeseries || []);
+    renderActivation(s.activation);
+  }
+
+  /* ---------------- activation (haut du tunnel) ----------------
+     Étapes ordonnées : chacune est un sous-ensemble de la précédente, ce qui
+     rend le taux « % de l'étape précédente » lisible directement. */
+  var ACT_STEPS = [
+    { key: "visite", field: "Visites", color: "var(--teal)" },
+    { key: "quiz_lance", field: "Quiz lancés", color: "var(--p1)" },
+    { key: "quiz_termine", field: "Quiz terminés", color: "var(--p3)" },
+    { key: "optin", field: "Opt-in", color: "var(--gold-deep)" },
+    { key: "priere", field: "Prières", color: "var(--red)" },
+    { key: "nouveau_ne", field: "Nouveau-nés", color: "#5b6478" },
+  ];
+
+  function renderActivation(a) {
+    var host = $("activation-body");
+    if (!host) return;
+
+    if (!a || a.error) { host.innerHTML = setupCardHtml(); bindSetup(); return; }
+
+    var totals = a.totals || {};
+    var today = a.today || {};
+    var counts = ACT_STEPS.map(function (s) { return Number(totals[s.field] || 0); });
+    if (!counts.some(function (c) { return c > 0; })) {
+      host.innerHTML = '<p class="cell-sub">' + esc(t("act.empty")) + "</p>";
+      return;
+    }
+
+    var max = Math.max.apply(null, counts.concat([1]));
+    var kpis = ACT_STEPS.map(function (s, i) {
+      return '<div class="kpi" style="--accent:' + s.color + '">' +
+        '<div class="kpi-label">' + esc(t("act." + s.key)) + "</div>" +
+        '<div class="kpi-num">' + counts[i] + "</div>" +
+        '<div class="kpi-sub">' + esc(t("act.today", { n: Number(today[s.field] || 0) })) + "</div></div>";
+    }).join("");
+
+    var funnel = ACT_STEPS.map(function (s, i) {
+      var c = counts[i];
+      var w = Math.max(38, Math.round((c / max) * 100));
+      var rate = "";
+      if (i > 0 && counts[i - 1] > 0) {
+        rate = '<div class="funnel-drop">' +
+          esc(t("act.rate", { p: Math.round((c / counts[i - 1]) * 100) })) + "</div>";
+      }
+      return '<div class="funnel-step"><div class="funnel-bar" style="width:' + w + "%;background:" + s.color + '">' +
+        '<span class="fb-name">' + esc(t("act." + s.key)) + '</span><span class="fb-val">' + c + "</span></div>" +
+        rate + "</div>";
+    }).join("");
+
+    host.innerHTML = '<div class="kpi-grid act-kpis">' + kpis + "</div>" +
+      '<div class="funnel act-funnel">' + funnel + "</div>";
+  }
+
+  function setupCardHtml(msg, ok) {
+    return '<div class="setup-card">' +
+      "<h3>" + esc(t("act.setup.title")) + "</h3>" +
+      "<p>" + esc(t("act.setup.text")) + "</p>" +
+      '<button class="btn-soft" id="act-setup-btn">' + esc(t("act.setup.cta")) + "</button>" +
+      (msg ? '<p class="setup-msg' + (ok ? " ok" : "") + '">' + esc(msg) + "</p>" : "") +
+      "</div>";
+  }
+
+  function bindSetup() {
+    var btn = $("act-setup-btn");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      btn.disabled = true;
+      btn.textContent = t("act.setup.working");
+      api("/admin-track-setup", { method: "POST", body: {} }).then(function (r) {
+        if (r.status === 401) { logout(); return; }
+        if (r.ok && r.data && r.data.ok) {
+          $("activation-body").innerHTML =
+            '<p class="setup-msg ok">' + esc(t("act.setup.done")) + "</p>";
+          return;
+        }
+        $("activation-body").innerHTML = setupCardHtml(t("act.setup.manual"));
+        bindSetup();
+      }).catch(function () {
+        $("activation-body").innerHTML = setupCardHtml(t("err.network"));
+        bindSetup();
+      });
+    });
   }
 
   function renderBarList(id, rows) {

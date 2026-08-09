@@ -819,3 +819,145 @@ html[lang="en"] .player-item.en-only { display: grid; }
   font-size: 0.95rem;
   margin: 6px 0 4px;
 }
+
+/* ---------- Qui est Nathanaël ? (bloc landing) ---------- */
+.about-grid {
+  display: grid;
+  gap: clamp(22px, 4vw, 44px);
+  grid-template-columns: 1fr;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 44px);
+  background: #fff;
+  border: 1px solid rgba(15, 77, 67, 0.1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+@media (min-width: 860px) { .about-grid { grid-template-columns: 300px 1fr; } }
+.about-photo { margin: 0; }
+.about-photo img {
+  display: block; width: 100%; height: auto;
+  border-radius: var(--radius);
+  border: 3px solid var(--gold);
+  box-shadow: var(--shadow-soft);
+  background: var(--cream-2);
+}
+.about-text h2 {
+  color: var(--navy);
+  font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+  margin: 6px 0 16px;
+}
+.about-text p {
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+  margin: 0 0 12px;
+}
+.about-text p strong { color: var(--navy); }
+.about-text .btn { margin-top: 12px; }
+
+/* ---------- Mon histoire (histoire.html) ---------- */
+.story-hero .container { max-width: 760px; }
+.story-portrait { margin: 0 auto 22px; width: clamp(120px, 26vw, 168px); }
+.story-portrait img {
+  display: block; width: 100%; height: auto;
+  aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 20%;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  box-shadow: var(--shadow);
+}
+
+.story { padding: clamp(40px, 6vw, 72px) 0; }
+.story-body { max-width: 720px; }
+.story-body section { padding: 0 0 clamp(26px, 4vw, 44px); }
+.story-body h2 {
+  position: relative;
+  padding-top: 18px;
+  margin: 0 0 16px;
+  color: var(--navy);
+  font-size: clamp(1.5rem, 3.2vw, 2.05rem);
+}
+.story-body h2::before {
+  content: ""; position: absolute; top: 0; left: 0;
+  width: 52px; height: 3px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-deep));
+}
+.story-body p {
+  margin: 0 0 16px;
+  font-size: 1.08rem;
+  line-height: 1.85;
+  color: #33383f;
+}
+.story-body p strong { color: var(--navy); }
+.story-body p.story-punch {
+  font-family: var(--font-serif);
+  font-style: italic; font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--teal-deep);
+}
+.story-body p.story-bless {
+  padding: 18px 0 6px;
+  text-align: center;
+  font-family: var(--font-serif); font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--teal-deep);
+}
+.story-body p.story-sign {
+  text-align: center; font-style: italic; color: var(--muted);
+}
+
+.story-quote {
+  margin: 0 0 18px;
+  padding: 18px 22px;
+  background: color-mix(in srgb, var(--teal) 7%, white);
+  border-left: 4px solid var(--teal);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 1.14rem; line-height: 1.7;
+  color: var(--navy);
+}
+.story-quote-strong {
+  background: color-mix(in srgb, var(--gold) 13%, white);
+  border-left-color: var(--gold-deep);
+  font-size: 1.35rem; font-weight: 600;
+  text-align: center;
+}
+.story-verse {
+  margin: 0 0 18px;
+  padding: 20px 24px;
+  background: var(--navy);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 1.14rem; line-height: 1.75;
+  color: var(--cream);
+}
+
+.story-figure { margin: 26px 0; }
+.story-figure img {
+  display: block; width: 100%; height: auto;
+  max-width: 360px; margin: 0 auto;
+  border-radius: var(--radius);
+  border: 3px solid var(--gold);
+  box-shadow: var(--shadow-soft);
+}
+.story-figure-wide img { max-width: 100%; }
+
+.story-refs { max-width: 720px; margin: 0 auto; }
+.story-refs h4 {
+  margin: 0 0 12px;
+  font-family: var(--font-sans); font-size: 1rem;
+  color: var(--navy);
+}
+.story-refs ul { list-style: none; padding: 0; margin: 0; }
+.story-refs li { margin-bottom: 8px; font-size: 0.95rem; }
+.story-refs a {
+  color: var(--teal); text-decoration: none;
+  border-bottom: 1px solid rgba(26, 110, 96, 0.3);
+}
+.story-refs a:hover { color: var(--teal-deep); border-bottom-color: var(--teal-deep); }
+
+/* En-tête collant : décale les ancres (#about, #testimonials…) pour que le
+   titre de section ne se retrouve pas caché sous la barre de navigation. */
+section[id] { scroll-margin-top: 100px; }

@@ -93,6 +93,16 @@ exports.handler = async (event) => {
 
     const conversionRate = total ? Math.round((conversions / total) * 1000) / 10 : 0;
 
+    // --- Activation (table « Stats ») : ce qui se passe AVANT la capture ---
+    // Absente tant que la table n'a pas été créée → le tableau de bord
+    // affiche alors le bouton d'activation plutôt qu'une erreur.
+    let activation = null;
+    try {
+      activation = await readActivation();
+    } catch (err) {
+      if (!lib.isMissingTable(err)) activation = { error: "airtable_error" };
+    }
+
     return lib.json(200, {
       generatedAt: new Date().toISOString(),
       total,
@@ -110,8 +120,57 @@ exports.handler = async (event) => {
       topSources,
       nurturing,
       timeseries,
+      activation,
     });
   } catch (err) {
     return lib.json(502, { error: "airtable_error", status: err && err.status });
   }
 };
+
+/* Compteurs d'activation sur les 30 derniers jours (+ aujourd'hui). */
+async function readActivation() {
+  const records = await lib.listAll(lib.STATS_TABLE);
+  const today = lib.todayKey();
+
+  // Squelette des 30 derniers jours, pour des séries continues même à zéro.
+  const days = [];
+  const base = Date.parse(today + "T12:00:00Z");
+  for (let i = 29; i >= 0; i--) {
+    days.push(new Date(base - i * 86400000).toISOString().slice(0, 10));
+  }
+  const inWindow = new Set(days);
+
+  const fieldNames = Object.keys(lib.TRACK_FIELDS).map((k) => lib.TRACK_FIELDS[k]);
+  const totals = {};
+  const todayCounts = {};
+  const series = {};
+  fieldNames.forEach((f) => {
+    totals[f] = 0;
+    todayCounts[f] = 0;
+    series[f] = {};
+    days.forEach((d) => (series[f][d] = 0));
+  });
+
+  records.forEach((r) => {
+    const f = r.fields || {};
+    const day = String(f["Jour"] || "").slice(0, 10);
+    if (!day) return;
+    fieldNames.forEach((name) => {
+      const v = Number(f[name] || 0);
+      if (!v) return;
+      if (inWindow.has(day)) {
+        totals[name] += v;
+        series[name][day] = v;
+      }
+      if (day === today) todayCounts[name] += v;
+    });
+  });
+
+  return {
+    days,
+    totals,
+    today: todayCounts,
+    series,
+    trackedDays: records.length,
+  };
+}

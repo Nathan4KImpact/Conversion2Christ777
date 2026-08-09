@@ -28,12 +28,17 @@
     back: document.getElementById("quiz-back"),
   };
 
+  function track(ev) {
+    if (window.C2C_TRACK) window.C2C_TRACK.send(ev);
+  }
+
   function start() {
     current = 0;
     answers.fill(null);
     els.intro.hidden = true;
     els.result.hidden = true;
     els.game.hidden = false;
+    track("quiz_lance");
     render();
   }
 
@@ -88,6 +93,7 @@
   function finish() {
     const p = winner();
     localStorage.setItem("c2c_persona", p);
+    track("quiz_termine");
     els.bar.style.width = "100%";
     els.game.hidden = true;
     els.result.hidden = false;
