@@ -119,6 +119,10 @@
       if (img) { img.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg"; img.alt = t("result." + p + ".title"); }
       if (window.C2C_Video) window.C2C_Video.init(rv.parentNode);
     }
+
+    // Lien secondaire vers la bibliothèque complète, ancré sur le persona détecté
+    const rm = document.getElementById("result-more");
+    if (rm) rm.href = "temoignages.html#" + p;
   }
 
   // Re-render textes si la langue change pendant le quiz
