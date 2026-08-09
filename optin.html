@@ -73,6 +73,7 @@
 
   <script src="assets/js/config.js"></script>
   <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/track.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
     // Capture du lead → envoi au webhook Make (si configuré) + sauvegarde locale de secours.
@@ -95,6 +96,7 @@
         ts: new Date().toISOString(),
       };
       try { localStorage.setItem("c2c_lead", JSON.stringify(lead)); } catch (_) {}
+      if (window.C2C_TRACK) window.C2C_TRACK.send("optin");
 
       function go() { window.location.href = "merci.html"; }
 

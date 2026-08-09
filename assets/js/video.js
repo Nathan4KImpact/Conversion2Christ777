@@ -7,8 +7,10 @@
    IMPORTANT : la lecture intégrée ne fonctionne que si la page est servie en
    http(s) (domaine déployé ou `python3 -m http.server`). Ouvrir le fichier en
    double-clic (file://) provoque l'« Erreur 153 » de YouTube (origine invalide).
-   Un lien de secours « Regarder sur YouTube » est ajouté sous chaque vidéo pour
-   couvrir aussi les vidéos dont le propriétaire a désactivé l'intégration.
+
+   NB rétention : le lien « Regarder sur YouTube » n'est PAS affiché par défaut
+   (on veut garder les visiteurs sur le site). La fonction addFallback() reste
+   disponible si on veut le réactiver localement pour une page spécifique.
 
    Markup attendu :
    <div class="lite-yt" role="button" tabindex="0" data-id="VIDEO_ID" data-title="...">
@@ -76,10 +78,17 @@
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); load(el); }
     });
 
-    addFallback(el, id);
+    // Pas de fallback YouTube par défaut — retention over redirection.
+  }
+
+  // Nettoyage : retire les fallbacks éventuellement injectés par une version
+  // précédente qui aurait été mise en cache par le navigateur.
+  function pruneLegacyFallbacks(root) {
+    (root || document).querySelectorAll(".yt-fallback").forEach(function (a) { a.remove(); });
   }
 
   function initAll(root) {
+    pruneLegacyFallbacks(root);
     (root || document).querySelectorAll(".lite-yt[data-id]").forEach(build);
   }
 

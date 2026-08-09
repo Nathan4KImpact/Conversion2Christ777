@@ -12,6 +12,14 @@ admin.html  (connexion / inscription)
                 admin-signup / admin-login        ▸ table Airtable « Admins »
                 admin-stats  / admin-leads        ▸ table Airtable « Ames » (lecture)
                 admin-lead-update                 ▸ table Airtable « Ames » (écriture)
+                admin-track-setup                 ▸ crée la table « Stats »
+```
+
+```
+Site public (aucune donnée personnelle)
+   │  POST /api/track  { event: "quiz_lance" }
+   ▼
+track  ──►  table Airtable « Stats » : +1 sur le compteur du jour
 ```
 
 ## Pourquoi un mini back-end ?
@@ -33,6 +41,9 @@ serveur** (variable d'environnement) ; le navigateur ne reçoit que ce qu'un
 - **5 indicateurs clés** : âmes touchées (+ aujourd'hui), nouvelles sur 7 j
   (+ 30 j), « ont prié ou + » (+ taux de conversion), RDV à venir (+ total),
   à relancer.
+- **Activation du tunnel (30 j)** : sessions → quiz lancés → quiz terminés →
+  opt-in → prières → nouveau-nés, avec le taux de passage d'une étape à l'autre.
+  C'est ce qui montre **où le tunnel fuit avant la capture**.
 - **Tunnel de conversion** (Lead → Prière faite → RDV pris → Affermi) avec le
   taux de déperdition entre étapes.
 - **Répartitions** : par persona, par langue, top sources, nurturing envoyé
@@ -51,7 +62,8 @@ serveur** (variable d'environnement) ; le navigateur ne reçoit que ce qu'un
 ### 1) Créer un token Airtable (Personal Access Token)
 
 1. https://airtable.com/create/tokens → **Create token**.
-2. Scopes : `data.records:read`, `data.records:write`, `schema.bases:read`.
+2. Scopes : `data.records:read`, `data.records:write`, `schema.bases:read`
+   et — pour le bouton « Activer le suivi » — `schema.bases:write`.
 3. Accès : ajoute la base **« Suivi des Ames PDVIE »**.
 4. Copie le token (commence par `pat…`).
 
@@ -130,3 +142,72 @@ Base `appRLYZbJgmORxkxz` · table `Admins` `tblYWX1NiR5dcVliI`.
   Pour durcir : ajouter un blocage persistant (table Airtable ou Netlify Blobs).
 - Évolutions faciles : export par persona, graphe « temps jusqu'à la prière »,
   notifications de nouvelles âmes, attribution d'un référent depuis le tableau.
+
+---
+
+## Suivi d'activation (haut du tunnel)
+
+### Le problème qu'il résout
+
+Le tableau de bord ne voyait que les âmes **ayant déjà laissé leurs
+coordonnées**. Impossible de savoir si 10 ou 1 000 personnes étaient passées
+avant, ni **à quelle étape elles décrochaient**. Un tunnel qui convertit 5 %
+de 20 visiteurs et un tunnel qui convertit 0,1 % de 1 000 visiteurs donnent le
+même nombre de leads — mais appellent des décisions opposées.
+
+### Ce qui est mesuré
+
+| Évènement       | Colonne Airtable  | Déclenché par |
+|-----------------|-------------------|---------------|
+| `visite`        | `Visites`         | ouverture de `index` / `temoignages` / `histoire` / `quiz` |
+| `quiz_lance`    | `Quiz lancés`     | clic sur « Commencer » dans le quiz |
+| `quiz_termine`  | `Quiz terminés`   | affichage du résultat (4 réponses) |
+| `optin`         | `Opt-in`          | envoi du formulaire de capture |
+| `priere`        | `Prières`         | ouverture de `prier.html` |
+| `nouveau_ne`    | `Nouveau-nés`     | ouverture de `nouveau-ne.html` |
+
+### Vie privée
+
+**Aucune donnée personnelle n'est enregistrée** : ni IP, ni user agent, ni
+identifiant, ni cookie, ni traceur tiers. Le serveur incrémente uniquement un
+compteur dans la fiche du jour. Il n'y a donc **rien à consentir** au sens
+RGPD — contrairement à Google Analytics.
+
+Chaque évènement n'est compté **qu'une fois par session de navigation**
+(`sessionStorage`) : rafraîchir une page ne gonfle pas les chiffres.
+
+### Activation (une seule fois)
+
+1. Connecte-toi sur `/admin.html`.
+2. Bloc « Activation du tunnel » → bouton **« Activer le suivi »**.
+3. C'est fait : la table `Stats` est créée et les compteurs démarrent.
+
+Si le bouton affiche que la création automatique est impossible, c'est que le
+token Airtable n'a pas le scope `schema.bases:write`. Deux options :
+
+- **soit** ajouter ce scope au token (https://airtable.com/create/tokens),
+  puis recliquer sur le bouton ;
+- **soit** créer la table à la main dans Airtable, base « Suivi des Ames
+  PDVIE », table nommée exactement **`Stats`** :
+
+  | Champ           | Type                        |
+  |-----------------|-----------------------------|
+  | `Jour`          | Texte court (champ primaire) |
+  | `Visites`       | Nombre (0 décimale)          |
+  | `Quiz lancés`   | Nombre (0 décimale)          |
+  | `Quiz terminés` | Nombre (0 décimale)          |
+  | `Opt-in`        | Nombre (0 décimale)          |
+  | `Prières`       | Nombre (0 décimale)          |
+  | `Nouveau-nés`   | Nombre (0 décimale)          |
+
+### Notes techniques
+
+- **1 fiche = 1 jour** (clé `Jour` au format `YYYY-MM-DD`, heure de Paris).
+  Volume : ~365 fiches/an, sans risque pour les quotas Airtable.
+- L'incrément est un *read-then-write* : deux évènements strictement
+  simultanés peuvent, très rarement, n'en compter qu'un. Sans importance à
+  l'échelle du tunnel — et sans transaction possible côté API Airtable.
+- La fonction `/api/track` **ne casse jamais le site** : table absente ou
+  Airtable indisponible → réponse `200 { ok: false }`, le visiteur ne voit rien.
+- Tant que la table n'existe pas, `admin-stats` renvoie `activation: null` et
+  le tableau de bord affiche le bouton d'activation au lieu d'une erreur.

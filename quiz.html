@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Le test de la soif — Nouvelles Vies en Jésus</title>
-  <meta name="description" content="4 questions, 2 minutes. Découvre la source de ta soif et ton premier pas." />
+  <title>Le test de la quête — Nouvelles Vies en Jésus</title>
+  <meta name="description" content="4 questions, 2 minutes. Découvre la source de ta quête et ton premier pas." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -16,7 +16,7 @@
   <link rel="manifest" href="site.webmanifest" />
   <meta name="theme-color" content="#0f4d43" />
 </head>
-<body>
+<body data-track="visite">
   <div class="page-wrap">
     <header class="site-header">
       <nav class="nav">
@@ -42,8 +42,8 @@
 
         <!-- Intro -->
         <div class="card narrow center" id="quiz-intro">
-          <span class="eyebrow" style="justify-content:center" data-i18n="quiz.title">La source de ta soif</span>
-          <h1 data-i18n="quiz.title">La source de ta soif</h1>
+          <span class="eyebrow" style="justify-content:center" data-i18n="quiz.title">La source de ta quête</span>
+          <h1 data-i18n="quiz.title">La source de ta quête</h1>
           <p class="lead" data-i18n="quiz.intro">4 questions, 2 minutes…</p>
           <button class="btn btn-primary btn-lg mt-2" id="quiz-start" data-i18n="quiz.start">Commencer</button>
         </div>
@@ -67,6 +67,7 @@
             </div>
           </div>
           <a class="btn btn-primary btn-lg mt-2" href="optin.html" data-i18n="quiz.result.cta">Recevoir mon premier pas</a>
+          <p class="mt-2"><a id="result-more" href="temoignages.html" style="color:var(--muted);font-size:0.92rem" data-i18n="quiz.result.moreLink">Plus de témoignages comme celui-ci →</a></p>
         </div>
 
       </div>
@@ -74,6 +75,7 @@
   </div>
 
   <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/track.js"></script>
   <script src="assets/js/video.js"></script>
   <script src="assets/js/quiz.js"></script>
   <script src="assets/js/main.js"></script>

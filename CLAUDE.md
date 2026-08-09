@@ -315,6 +315,39 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     `footer.admin`, `rel="nofollow"`, opacité réduite). Secrets générés et transmis au porteur
     en chat (jamais commités) : à coller dans les variables Netlify.
 
+- 2026-08-09 : **v15 — Sprint 0.3 (« Mon histoire ») + 0.5 (KPIs d'activation)** :
+  - **Correctifs de copie** : `hero.eyebrow` FR/EN passe au passé composé
+    (« Tu es **arrivé** ici. » / « You **arrived** here. ») — concordance des temps.
+  - **0.3 — Qui est Nathanaël ?** Bloc de confiance sur la landing (photo portrait + bio
+    courte + CTA), placé **après les témoignages, avant le CTA final**. Nouvelle page
+    **`histoire.html`** : récit complet en 10 sections, **3 photos** (`nathanael-portrait.jpg`,
+    `-couple.jpg`, `-famille.jpg`, extraites du PDF du porteur), versets et citations en exergue.
+    Textes FR/EN issus du **témoignage d'origine** (né au Cameroun, question à 10 ans, « Raoul,
+    es-tu sauvé ? » à 15 ans en 2001, 1er livret à 16 ans / publié à 17, GBU-IFES, France 2022,
+    épouse + 3 filles, Organisation VIE).
+    ⚠️ **Une bio générique avait été committée par erreur** (v14bis, contenu inventé : « 15 ans
+    d'accompagnement », « formé depuis mes 18 ans ») — **remplacée** par la vraie histoire.
+  - **Parcours professionnel ajouté** (demande du porteur) : section « Mon métier — la rigueur des
+    projets critiques » → **Ingénieur en Systèmes d'Information**, aujourd'hui **Consultant SI en
+    Grands Comptes sur des projets critiques**, avec le paragraphe qui lève l'ambiguïté (« ce que
+    je partage ici n'est pas un refuge »). Sert aussi le persona P5 (athée/sceptique).
+  - **i18n** : support de `data-i18n-alt` (alt des images) ; les `<title>` sont traduisibles via
+    `data-i18n`. Parité FR/EN vérifiée (413 clés de chaque côté). Ancres décalées sous l'en-tête
+    collant (`section[id] { scroll-margin-top: 100px }`).
+  - **0.5 — Suivi d'activation (haut du tunnel)** : le dashboard ne voyait que les âmes déjà
+    capturées. Ajout de **`/api/track`** (public) qui incrémente un compteur du jour dans une
+    **table Airtable « Stats »** (1 fiche = 1 jour). **Aucune donnée personnelle, aucun cookie,
+    aucun traceur tiers → rien à consentir (RGPD)** ; 1 mesure par session (`sessionStorage`).
+    Évènements : `visite`, `quiz_lance`, `quiz_termine`, `optin`, `priere`, `nouveau_ne`.
+  - **`/api/admin-track-setup`** (authentifié) : bouton « Activer le suivi » dans le tableau de
+    bord qui **crée la table**. Nécessite le scope `schema.bases:write` sur le PAT Airtable ;
+    sinon repli manuel documenté dans `integrations/ADMIN.md`.
+  - **Dashboard** : nouveau bloc « Activation du tunnel — 30 derniers jours » (6 indicateurs +
+    entonnoir avec **taux de passage** entre étapes), bilingue, 3 états gérés (données /
+    non configuré / échec de création).
+  - **Vérifié au navigateur** (Chromium) : rendu FR-EN desktop + mobile, chargement des 3 photos,
+    aucun débordement horizontal, séquence complète des évènements sans doublon au rechargement.
+
 ### Reste à faire / décisions en attente
 - **Admin** : renseigner les 3 variables Netlify puis créer le 1er compte sur `/admin.html`
   (cf. `integrations/ADMIN.md`). Optionnel : reset mot de passe self-service, attribution d'un référent
@@ -322,8 +355,8 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
 - *(Optionnel)* **Airtable Automation** « anti-rétrogradation cosmétique » : *Quand une fiche a
   `Étape tunnel`=Lead ET `RDV prière` non vide → repasser `Étape tunnel`=RDV pris*. (L'API ne permet
   pas de créer des automations → à faire à la main dans Airtable ▸ Automatisations.)
-- **Élargir la landing aux 6 profils** (portes P4 musulman / P5 athée-sceptique) + témoignages §2bis
-  (mettre en plus grand frame les 1-2 meilleurs par bloc).
+- **Activation** : cliquer « Activer le suivi » sur `/admin.html` (ajouter au préalable le scope
+  `schema.bases:write` au PAT Airtable si la création automatique échoue).
 - **Activer/planifier le scénario de nurturing** (1×/jour) ; supprimer les connexions Airtable inutiles.
 - **Confirmer le texte exact de la prière du salut** (vidéo `-Fn0ScYZ7PY`).
 - Nettoyer à la main les champs Airtable par défaut résiduels (limite API).

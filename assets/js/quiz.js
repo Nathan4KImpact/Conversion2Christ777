@@ -1,5 +1,5 @@
 /* =========================================================================
-   quiz.js — « La source de ta soif »
+   quiz.js — « La source de ta quête »
    4 questions ; chaque réponse vote pour un persona (a=p1, b=p2, c=p3).
    Le persona majoritaire détermine le résultat + le pas suivant.
    Le résultat est mémorisé (localStorage) pour personnaliser l'opt-in.
@@ -28,12 +28,17 @@
     back: document.getElementById("quiz-back"),
   };
 
+  function track(ev) {
+    if (window.C2C_TRACK) window.C2C_TRACK.send(ev);
+  }
+
   function start() {
     current = 0;
     answers.fill(null);
     els.intro.hidden = true;
     els.result.hidden = true;
     els.game.hidden = false;
+    track("quiz_lance");
     render();
   }
 
@@ -88,6 +93,7 @@
   function finish() {
     const p = winner();
     localStorage.setItem("c2c_persona", p);
+    track("quiz_termine");
     els.bar.style.width = "100%";
     els.game.hidden = true;
     els.result.hidden = false;
@@ -119,6 +125,10 @@
       if (img) { img.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg"; img.alt = t("result." + p + ".title"); }
       if (window.C2C_Video) window.C2C_Video.init(rv.parentNode);
     }
+
+    // Lien secondaire vers la bibliothèque complète, ancré sur le persona détecté
+    const rm = document.getElementById("result-more");
+    if (rm) rm.href = "temoignages.html#" + p;
   }
 
   // Re-render textes si la langue change pendant le quiz

@@ -18,6 +18,9 @@ const crypto = require("crypto");
 const BASE = process.env.AIRTABLE_BASE || "appRLYZbJgmORxkxz";
 const AMES_TABLE = process.env.AMES_TABLE || "tblqFCCV7BAO8IJNL";
 const ADMINS_TABLE = process.env.ADMINS_TABLE || "tblYWX1NiR5dcVliI";
+// Table des compteurs d'activation : adressée par NOM (et non par id) pour
+// rester valide même si elle est (re)créée depuis le tableau de bord.
+const STATS_TABLE = process.env.STATS_TABLE || "Stats";
 const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN || "";
 const JWT_SECRET = process.env.JWT_SECRET || "";
 const SIGNUP_CODE = process.env.ADMIN_SIGNUP_CODE || "";
@@ -225,6 +228,51 @@ async function patchRecord(tableId, recordId, fields) {
   return data;
 }
 
+async function createRecord(tableId, fields) {
+  return at(BASE + "/" + encodeURIComponent(tableId), {
+    method: "POST",
+    body: JSON.stringify({ typecast: true, fields }),
+  });
+}
+
+/* ---- Compteurs d'activation (table « Stats », 1 fiche = 1 jour) ---- */
+
+/** Colonne Airtable correspondant à chaque évènement public accepté. */
+const TRACK_FIELDS = {
+  visite: "Visites",
+  quiz_lance: "Quiz lancés",
+  quiz_termine: "Quiz terminés",
+  optin: "Opt-in",
+  priere: "Prières",
+  nouveau_ne: "Nouveau-nés",
+};
+
+/** Jour courant « YYYY-MM-DD » en heure de Paris (le repère du porteur). */
+function todayKey(d) {
+  // 'fr-CA' produit déjà le format ISO YYYY-MM-DD.
+  return new Intl.DateTimeFormat("fr-CA", {
+    timeZone: "Europe/Paris",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(d || new Date());
+}
+
+/** true si l'erreur Airtable signifie « la table n'existe pas encore ».
+    Airtable répond 404 (TABLE_NOT_FOUND / NOT_FOUND) sur une table inconnue. */
+function isMissingTable(err) {
+  return !!err && err.status === 404;
+}
+
+/** Fiche du jour dans la table Stats, ou null. */
+async function findStatsDay(day) {
+  const formula = encodeURIComponent('{Jour}="' + String(day).replace(/"/g, "") + '"');
+  const data = await at(
+    BASE + "/" + encodeURIComponent(STATS_TABLE) + "?maxRecords=1&filterByFormula=" + formula
+  );
+  return (data.records && data.records[0]) || null;
+}
+
 /* ---- Garde-fou anti-force-brute (best effort, par instance chaude) ---- */
 const _hits = new Map();
 function rateLimit(event, bucket, max, windowMs) {
@@ -267,7 +315,13 @@ module.exports = {
   BASE,
   AMES_TABLE,
   ADMINS_TABLE,
+  STATS_TABLE,
+  TRACK_FIELDS,
   SIGNUP_CODE,
+  createRecord,
+  todayKey,
+  isMissingTable,
+  findStatsDay,
   json,
   readJson,
   configError,
