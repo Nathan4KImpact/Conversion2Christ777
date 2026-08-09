@@ -1,0 +1,14 @@
+# Secrets locaux — NE JAMAIS committer.
+# `netlify dev` lit ces fichiers pour faire tourner les fonctions /api en local
+# (token Airtable, secret JWT…). Un token poussé sur GitHub est un token brûlé.
+.env
+.env.*
+!.env.example
+
+# Netlify CLI (lien vers le site, cache de build)
+.netlify/
+
+# Divers
+node_modules/
+.DS_Store
+Thumbs.db
