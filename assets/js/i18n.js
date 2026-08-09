@@ -17,7 +17,7 @@ const I18N = {
     "lang.en": "EN",
 
     /* --- Hero --- */
-    "hero.eyebrow": "Tu es ici. Ce n'était pas un hasard.",
+    "hero.eyebrow": "Tu es arrivé ici. Ce n'était pas un hasard.",
     "hero.title": "Et si ta plus grande <span class=\"accent\">quête</span> avait enfin une réponse ?",
     "hero.sub": "Paix, sens, guérison intérieure, vraie identité. Des millions les cherchent partout. Découvre la source vers laquelle tout convergeait depuis le début.",
     "hero.cta1": "Découvrir la source de ma quête",
@@ -410,7 +410,7 @@ const I18N = {
     "lang.fr": "FR",
     "lang.en": "EN",
 
-    "hero.eyebrow": "You landed here. It wasn't by chance.",
+    "hero.eyebrow": "You arrived here. It wasn't by chance.",
     "hero.title": "What if your deepest <span class=\"accent\">quest</span> finally had an answer?",
     "hero.sub": "Peace, meaning, inner healing, true identity. Millions search everywhere for them. Discover the source it was all pointing to from the start.",
     "hero.cta1": "Discover the source of my quest",
