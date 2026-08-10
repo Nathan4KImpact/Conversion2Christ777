@@ -471,7 +471,9 @@
             '<p class="setup-msg ok">' + esc(t("act.setup.done")) + "</p>";
           return;
         }
-        $("activation-body").innerHTML = setupCardHtml(t("act.setup.manual"));
+        var raw = r.data && r.data.detail;
+        var msg = t("act.setup.manual") + (raw ? " — " + raw : "");
+        $("activation-body").innerHTML = setupCardHtml(msg);
         bindSetup();
       }).catch(function () {
         $("activation-body").innerHTML = setupCardHtml(t("err.network"));
