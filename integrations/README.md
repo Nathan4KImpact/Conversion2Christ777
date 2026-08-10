@@ -57,6 +57,20 @@ Payload **booking** :
 L'événement Agenda est créé sur `nathanaelfongang@gmail.com` (le même calendrier que les
 créneaux récurrents Mar–Sam 19h–20h), avec l'âme en invité → elle reçoit l'invitation.
 
+> **Email de bienvenue (J0) harmonisé avec le nurturing (2026-08)** : le module Gmail J0
+> était resté en texte brut, non bilingue, avec l'ancienne signature « Vases d'Honneur ·
+> Porteurs de vie » (identité retirée en juin). Il reprend maintenant exactement le langage
+> visuel de J1/J3/J5/J7 : verset en exergue, encadré doré « 🎥 Choisi pour toi » avec le
+> **même témoignage phare que celui du quiz** pour le persona détecté (repli générique si
+> le lead n'a pas fait le quiz), bilingue via `switch(upper(1.lang); "EN"; …; …)`, signature
+> correcte. Le blueprint du repo est à jour ; **le scénario déjà en ligne dans Make ne se
+> met pas à jour tout seul** — sans nouvel import, il faut reporter le changement à la main :
+> 1. Ouvre le scénario **« PDVIE — Capture & RDV »** dans Make, module Gmail **J0** (branche `lead`).
+> 2. Onglet **Subject** → colle le nouveau `mapper.subject` du fichier `make-blueprint.json`.
+> 3. Onglet **Content** (HTML) → colle le nouveau `mapper.html`.
+> 4. **Save**, puis lance un test avec un faux lead (les 5 personas + `personaLabel` vide,
+>    en FR et en EN) pour vérifier le rendu avant de laisser tourner en prod.
+
 ---
 
 ## Scénario 2 — Nurturing J1 → J7
