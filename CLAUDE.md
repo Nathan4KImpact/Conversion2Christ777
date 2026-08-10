@@ -348,6 +348,33 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - **Vérifié au navigateur** (Chromium) : rendu FR-EN desktop + mobile, chargement des 3 photos,
     aucun débordement horizontal, séquence complète des évènements sans doublon au rechargement.
 
+- 2026-08-10 : **v16 — Origine des visiteurs (pays + ville) dans le dashboard** :
+  - **Nouveau /api/track = Netlify Edge Function** (`netlify/edge-functions/track.js`,
+    Deno) : lit `context.geo` (pays code+nom, ville) fourni par Netlify à partir
+    de l'IP, **sans jamais la stocker**, sans dépendance, sans appel HTTP sortant.
+    Route déclarée par `export const config = { path: "/api/track" }` — passe
+    avant les redirects, donc reçoit `/api/track` de préférence à l'ancienne
+    fonction Node conservée en repli.
+  - Continue à incrémenter la table **Stats** (comportement historique) et
+    ajoute une ligne dans une **nouvelle table `Geo`** pour chaque évènement
+    `visite` uniquement (les autres sont post-visite, même origine).
+  - **Table `Geo`** : `Clé` (primaire, `YYYY-MM-DD|CC|Ville`), `Jour`,
+    `Pays code`, `Pays`, `Ville`, `Visites` (nombre). 1 fiche = 1 jour × pays
+    × ville, upsert idempotent par la clé.
+  - **`/api/admin-geo`** (authentifié) : agrège 30 j → top 12 pays + top 12
+    villes + total + « visites sans origine » (VPN/opérateur mobile).
+  - **`/api/admin-track-setup`** étendu : crée maintenant **les deux tables**
+    (`Stats` et `Geo`), avec état par table renvoyé pour un message clair.
+  - **Dashboard** : nouveau bloc « Origine des visiteurs — 30 derniers jours »
+    (2 colonnes barres, drapeaux emoji des pays, résumé), placé après
+    l'Activation. Bilingue FR/EN, dégradation propre si la table `Geo`
+    n'existe pas encore.
+  - **RGPD inchangé** : aucune IP, aucun cookie, aucun traceur tiers, aucune
+    donnée personnelle stockée — uniquement des compteurs agrégés. Toujours
+    rien à consentir.
+  - Documentation `integrations/ADMIN.md` mise à jour (schéma table `Geo` +
+    repli manuel).
+
 ### Reste à faire / décisions en attente
 - **Admin** : renseigner les 3 variables Netlify puis créer le 1er compte sur `/admin.html`
   (cf. `integrations/ADMIN.md`). Optionnel : reset mot de passe self-service, attribution d'un référent

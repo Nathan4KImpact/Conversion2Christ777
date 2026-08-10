@@ -48,6 +48,14 @@
       "act.setup.working": "Création en cours…",
       "act.setup.done": "Suivi activé ✓ Les compteurs démarrent maintenant.",
       "act.setup.manual": "Création automatique impossible (le jeton Airtable n'a pas le droit « schema.bases:write »). Crée la table à la main : voir integrations/ADMIN.md.",
+      "geo.title": "Origine des visiteurs — 30 derniers jours",
+      "geo.hint": "Pays et ville détectés par Netlify à partir de l'IP (jamais stockée). Aucune donnée personnelle.",
+      "geo.countries": "Par pays",
+      "geo.cities": "Par ville",
+      "geo.empty": "Aucune origine détectée pour l'instant : les premiers visiteurs alimenteront cette carte.",
+      "geo.unresolved": "{n} visite(s) sans origine détectée (VPN, opérateur mobile…)",
+      "geo.summary": "{v} visite(s) géolocalisée(s) · {c} pays · {t} ville(s)",
+      "geo.missing": "La table « Geo » n'existe pas encore : clique sur « Activer le suivi » ci-dessus pour la créer, puis reviens ici.",
       "chart.funnel": "Tunnel de conversion",
       "chart.persona": "Par profil (persona)",
       "chart.lang": "Par langue",
@@ -134,6 +142,14 @@
       "act.setup.working": "Creating…",
       "act.setup.done": "Tracking enabled ✓ Counters start now.",
       "act.setup.manual": "Automatic creation failed (the Airtable token lacks the “schema.bases:write” scope). Create the table manually: see integrations/ADMIN.md.",
+      "geo.title": "Where visitors come from — last 30 days",
+      "geo.hint": "Country and city detected by Netlify from the IP (never stored). No personal data.",
+      "geo.countries": "By country",
+      "geo.cities": "By city",
+      "geo.empty": "No origin detected yet: your first visitors will fill in this map.",
+      "geo.unresolved": "{n} visit(s) with no origin detected (VPN, mobile carrier…)",
+      "geo.summary": "{v} geolocated visit(s) · {c} country/countries · {t} city/cities",
+      "geo.missing": "The “Geo” table doesn't exist yet: click “Enable tracking” above to create it, then come back here.",
       "chart.funnel": "Conversion funnel",
       "chart.persona": "By profile (persona)",
       "chart.lang": "By language",
@@ -344,8 +360,8 @@
 
   function loadDashboard() {
     $("dash-error").hidden = true;
-    Promise.all([api("/admin-stats"), api("/admin-leads")]).then(function (res) {
-      var sRes = res[0], lRes = res[1];
+    Promise.all([api("/admin-stats"), api("/admin-leads"), api("/admin-geo")]).then(function (res) {
+      var sRes = res[0], lRes = res[1], gRes = res[2];
       if (sRes.status === 401 || lRes.status === 401) { logout(); return; }
       if (!sRes.ok) { dashError(errMsg(sRes.data)); return; }
       if (!lRes.ok) { dashError(errMsg(lRes.data)); return; }
@@ -354,6 +370,9 @@
       buildFilters();
       renderFollowup();
       renderTable();
+      // /api/admin-geo peut renvoyer 404 (fonction pas encore déployée) ou
+      // {ok:false, reason:"geo_table_missing"} : les deux cas sont gérés proprement.
+      renderGeo(gRes.ok ? gRes.data : { ok: false, reason: gRes.status === 404 ? "not_deployed" : "error" });
     }).catch(function () { dashError(t("err.network")); });
   }
   function dashError(msg) {
@@ -480,6 +499,69 @@
         bindSetup();
       });
     });
+  }
+
+  /* ---------------- origine des visiteurs (pays + villes) ----------------
+     Aucune donnée nominative : la fonction /api/admin-geo agrège la table
+     Airtable « Geo » (compteurs par jour × pays × ville) sur 30 jours. */
+
+  // Convertit un code ISO2 (ex. « FR ») en emoji drapeau via Regional Indicator Symbols.
+  function flagEmoji(cc) {
+    if (!cc || cc.length !== 2) return "";
+    var A = 0x1F1E6, base = "A".charCodeAt(0);
+    var up = cc.toUpperCase();
+    var c1 = up.charCodeAt(0) - base, c2 = up.charCodeAt(1) - base;
+    if (c1 < 0 || c1 > 25 || c2 < 0 || c2 > 25) return "";
+    return String.fromCodePoint(A + c1) + String.fromCodePoint(A + c2);
+  }
+
+  function renderGeo(g) {
+    var host = $("geo-body");
+    if (!host) return;
+    if (!g || g.ok === false) {
+      var msg = (g && g.reason === "geo_table_missing") ? t("geo.missing") : t("geo.empty");
+      host.innerHTML = '<p class="cell-sub">' + esc(msg) + "</p>";
+      return;
+    }
+    var countries = g.topCountries || [];
+    var cities = g.topCities || [];
+    if (!countries.length && !cities.length) {
+      host.innerHTML = '<p class="cell-sub">' + esc(t("geo.empty")) + "</p>";
+      return;
+    }
+
+    var summary = t("geo.summary", { v: g.totalVisits || 0, c: g.countries || 0, t: g.cities || 0 });
+    var unresolved = g.unresolved ? ' · <span class="cell-sub">' +
+      esc(t("geo.unresolved", { n: g.unresolved })) + "</span>" : "";
+
+    var maxC = Math.max.apply(null, countries.map(function (r) { return r.count; }).concat([1]));
+    var maxV = Math.max.apply(null, cities.map(function (r) { return r.count; }).concat([1]));
+
+    function countryRow(r) {
+      var pct = Math.round((r.count / maxC) * 100);
+      var flag = flagEmoji(r.code);
+      var lbl = (flag ? flag + " " : "") + esc(r.name || r.code);
+      return '<div class="bar-row"><span class="bar-label" title="' + esc(r.name || r.code) + '">' + lbl + "</span>" +
+        '<span class="bar-track"><span class="bar-fill" style="width:' + pct + "%;background:var(--teal)\"></span></span>" +
+        '<span class="bar-val">' + r.count + "</span></div>";
+    }
+    function cityRow(r) {
+      var pct = Math.round((r.count / maxV) * 100);
+      var flag = flagEmoji(r.code);
+      var lbl = (flag ? flag + " " : "") + esc(r.city);
+      return '<div class="bar-row"><span class="bar-label" title="' + esc(r.city + " — " + (r.country || r.code)) + '">' + lbl + "</span>" +
+        '<span class="bar-track"><span class="bar-fill" style="width:' + pct + '%;background:var(--gold-deep)"></span></span>' +
+        '<span class="bar-val">' + r.count + "</span></div>";
+    }
+
+    host.innerHTML =
+      '<p class="geo-summary">' + esc(summary) + unresolved + "</p>" +
+      '<div class="geo-grid">' +
+        '<div class="geo-col"><h4>' + esc(t("geo.countries")) + "</h4>" +
+          '<div class="barlist">' + (countries.map(countryRow).join("") || '<p class="cell-sub">—</p>') + "</div></div>" +
+        '<div class="geo-col"><h4>' + esc(t("geo.cities")) + "</h4>" +
+          '<div class="barlist">' + (cities.map(cityRow).join("") || '<p class="cell-sub">—</p>') + "</div></div>" +
+      "</div>";
   }
 
   function renderBarList(id, rows) {

@@ -315,3 +315,25 @@
   color: var(--red);
 }
 .setup-msg.ok { color: var(--teal); }
+
+/* ---------- Origine des visiteurs (pays + villes) ---------- */
+.geo-summary {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.geo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 720px) { .geo-grid { grid-template-columns: 1fr; } }
+.geo-col h4 {
+  margin: 0 0 10px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

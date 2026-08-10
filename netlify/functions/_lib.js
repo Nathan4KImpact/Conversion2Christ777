@@ -21,6 +21,8 @@ const ADMINS_TABLE = process.env.ADMINS_TABLE || "tblYWX1NiR5dcVliI";
 // Table des compteurs d'activation : adressée par NOM (et non par id) pour
 // rester valide même si elle est (re)créée depuis le tableau de bord.
 const STATS_TABLE = process.env.STATS_TABLE || "Stats";
+// Table « Origine des visiteurs » (compteurs par jour × pays × ville, sans PII).
+const GEO_TABLE = process.env.GEO_TABLE || "Geo";
 const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN || "";
 const JWT_SECRET = process.env.JWT_SECRET || "";
 const SIGNUP_CODE = process.env.ADMIN_SIGNUP_CODE || "";
@@ -273,6 +275,15 @@ async function findStatsDay(day) {
   return (data.records && data.records[0]) || null;
 }
 
+/** Ping la table Geo : renvoie null si vide, throw 404 si absente. Sert
+    à savoir depuis admin-track-setup si la table doit être créée. */
+async function pingGeoTable() {
+  const data = await at(
+    BASE + "/" + encodeURIComponent(GEO_TABLE) + "?maxRecords=1"
+  );
+  return (data.records && data.records[0]) || null;
+}
+
 /* ---- Garde-fou anti-force-brute (best effort, par instance chaude) ---- */
 const _hits = new Map();
 function rateLimit(event, bucket, max, windowMs) {
@@ -316,12 +327,14 @@ module.exports = {
   AMES_TABLE,
   ADMINS_TABLE,
   STATS_TABLE,
+  GEO_TABLE,
   TRACK_FIELDS,
   SIGNUP_CODE,
   createRecord,
   todayKey,
   isMissingTable,
   findStatsDay,
+  pingGeoTable,
   json,
   readJson,
   configError,
