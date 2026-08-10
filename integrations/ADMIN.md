@@ -12,14 +12,18 @@ admin.html  (connexion / inscription)
                 admin-signup / admin-login        ▸ table Airtable « Admins »
                 admin-stats  / admin-leads        ▸ table Airtable « Ames » (lecture)
                 admin-lead-update                 ▸ table Airtable « Ames » (écriture)
-                admin-track-setup                 ▸ crée la table « Stats »
+                admin-geo                         ▸ table Airtable « Geo »    (lecture)
+                admin-track-setup                 ▸ crée « Stats » + « Geo »
 ```
 
 ```
 Site public (aucune donnée personnelle)
    │  POST /api/track  { event: "quiz_lance" }
    ▼
-track  ──►  table Airtable « Stats » : +1 sur le compteur du jour
+track  ──►  Edge Function (Deno) : lit context.geo (pays + ville)
+             │
+             ├──►  table « Stats » : +1 sur le compteur du jour
+             └──►  table « Geo »   : +1 sur (jour × pays × ville) — visite uniquement
 ```
 
 ## Pourquoi un mini back-end ?
@@ -48,6 +52,8 @@ serveur** (variable d'environnement) ; le navigateur ne reçoit que ce qu'un
   taux de déperdition entre étapes.
 - **Répartitions** : par persona, par langue, top sources, nurturing envoyé
   (J1/J3/J5/J7).
+- **Origine des visiteurs (30 j)** : top pays + top villes, détectés par
+  Netlify côté serveur à partir de l'IP (jamais enregistrée). Rien à consentir.
 - **Évolution** des nouvelles âmes sur 30 jours.
 - **À relancer en priorité** : leads sans RDV depuis ≥ 7 j, avec boutons
   WhatsApp / Email pré-remplis et « marquer Prière faite ».
@@ -187,8 +193,10 @@ token Airtable n'a pas le scope `schema.bases:write`. Deux options :
 
 - **soit** ajouter ce scope au token (https://airtable.com/create/tokens),
   puis recliquer sur le bouton ;
-- **soit** créer la table à la main dans Airtable, base « Suivi des Ames
-  PDVIE », table nommée exactement **`Stats`** :
+- **soit** créer les tables à la main dans Airtable, base « Suivi des Ames
+  PDVIE ». Il en faut **deux** :
+
+  **Table `Stats`** (compteurs globaux du jour)
 
   | Champ           | Type                        |
   |-----------------|-----------------------------|
@@ -200,14 +208,34 @@ token Airtable n'a pas le scope `schema.bases:write`. Deux options :
   | `Prières`       | Nombre (0 décimale)          |
   | `Nouveau-nés`   | Nombre (0 décimale)          |
 
+  **Table `Geo`** (origine des visiteurs — pays + ville, 1 fiche = 1 jour × pays × ville)
+
+  | Champ         | Type                        |
+  |---------------|-----------------------------|
+  | `Clé`         | Texte court (champ primaire — `Jour|Pays code|Ville`) |
+  | `Jour`        | Texte court (`YYYY-MM-DD`)   |
+  | `Pays code`   | Texte court (ISO 3166-1 α-2, ex. `FR`) |
+  | `Pays`        | Texte court (ex. `France`)   |
+  | `Ville`       | Texte court                  |
+  | `Visites`     | Nombre (0 décimale)          |
+
 ### Notes techniques
 
-- **1 fiche = 1 jour** (clé `Jour` au format `YYYY-MM-DD`, heure de Paris).
-  Volume : ~365 fiches/an, sans risque pour les quotas Airtable.
+- **1 fiche = 1 jour** dans `Stats` (clé `Jour` au format `YYYY-MM-DD`,
+  heure de Paris). Volume : ~365 fiches/an, sans risque pour les quotas
+  Airtable.
+- `/api/track` est une **Netlify Edge Function** (Deno) : le pays et la ville
+  sont fournis nativement par `context.geo` (à partir de l'IP, jamais stockée),
+  sans appel HTTP sortant, sans dépendance, sans cookie.
+- La table `Geo` reçoit une ligne par **(jour × pays × ville)** — uniquement
+  pour l'évènement `visite` (les autres évènements sont post-visite, même
+  origine). Volume : borné par le nombre réel d'origines qui visitent chaque
+  jour ; à l'échelle du site, quelques dizaines par jour au maximum.
 - L'incrément est un *read-then-write* : deux évènements strictement
   simultanés peuvent, très rarement, n'en compter qu'un. Sans importance à
   l'échelle du tunnel — et sans transaction possible côté API Airtable.
 - La fonction `/api/track` **ne casse jamais le site** : table absente ou
   Airtable indisponible → réponse `200 { ok: false }`, le visiteur ne voit rien.
-- Tant que la table n'existe pas, `admin-stats` renvoie `activation: null` et
-  le tableau de bord affiche le bouton d'activation au lieu d'une erreur.
+- Tant que les tables n'existent pas, `admin-stats` renvoie `activation: null`
+  (bouton d'activation affiché) et `admin-geo` renvoie
+  `{ ok: false, reason: "geo_table_missing" }` (message explicite dans le bloc).
