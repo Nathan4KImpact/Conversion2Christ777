@@ -247,7 +247,7 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - **`config.js`** : nouveau `WEBHOOK_URL` = `https://hook.eu1.make.com/oitxtgf9y4kas0b4nqk762pimdpdbkln`.
   - **Hébergement** : `.nojekyll` + chemins relatifs vérifiés ; guide Netlify/GitHub Pages dans le README.
 - 2026-06-10 : **v8 — site en ligne + tunnel Make opérationnel + évolutions** :
-  - **EN LIGNE** : https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app (Netlify, auto-deploy).
+  - **EN LIGNE** : https://nouvellesviesenjesus.fr (Netlify, auto-deploy).
   - **Scénario 1 (capture & RDV) opérationnel** après débogage : (a) body Airtable en **chaîne JSON**
     (corrige 422 « Could not parse request body ») ; (b) URL par **ID de table** ;
     (c) **les 2 branches en upsert** sur `Email` (POST→PATCH+performUpsert) → **1 ligne par email**.
@@ -374,6 +374,25 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     rien à consentir.
   - Documentation `integrations/ADMIN.md` mise à jour (schéma table `Geo` +
     repli manuel).
+
+- 2026-08-11 : **v17 — Nom de domaine officiel `nouvellesviesenjesus.fr`** :
+  - Le porteur a réservé le domaine. Toutes les URLs de production du repo sont
+    passées de `nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app` vers
+    `https://nouvellesviesenjesus.fr` : `og:image` de `index.html` et
+    `histoire.html`, README, blueprints Make (capture + nurturing, 5 liens
+    email au total), `integrations/ADMIN.md`.
+  - **Côté porteur** : configurer le domaine sur Netlify — Site settings ▸
+    Domain management ▸ Add domain → `nouvellesviesenjesus.fr` puis suivre les
+    instructions DNS (soit CNAME chez le registrar vers `apex-loadbalancer.netlify.com`,
+    soit délégation NS complète à Netlify). HTTPS auto via Let's Encrypt.
+  - **Scénarios Make déjà en ligne** : les emails partants continueront d'utiliser
+    l'ancienne URL netlify.app tant que les modules Gmail n'ont pas été édités
+    manuellement dans Make. L'ancienne URL restera fonctionnelle (Netlify sert
+    les deux), donc pas d'urgence — mais à mettre à jour à l'occasion pour
+    l'unification du branding.
+  - **Flyers de campagne** regénérés (`flyer-A/B/C.png`) : QR code encodé vers
+    `https://nouvellesviesenjesus.fr`, mention affichée `nouvellesviesenjesus.fr`
+    sous le QR.
 
 ### Reste à faire / décisions en attente
 - **Admin** : renseigner les 3 variables Netlify puis créer le 1er compte sur `/admin.html`

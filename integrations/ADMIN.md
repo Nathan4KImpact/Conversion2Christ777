@@ -104,7 +104,7 @@ fonctions sont détectées automatiquement dans `netlify/functions/`.
 
 ### 4) Créer le premier compte admin
 
-1. Ouvre `https://<ton-site>.netlify.app/admin.html`.
+1. Ouvre `https://nouvellesviesenjesus.fr/admin.html`.
 2. Onglet **« Créer un compte »** → nom, email, mot de passe (8 car. min.),
    et le **code d'invitation** (`ADMIN_SIGNUP_CODE`).
 3. Tu es connecté(e) : le tableau de bord se charge.
