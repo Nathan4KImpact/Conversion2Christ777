@@ -61,7 +61,7 @@ python3 -m http.server 8000
 
 ## 🌐 Mettre en ligne (gratuit)
 
-> ✅ **En ligne** : https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app
+> ✅ **En ligne** : https://nouvellesviesenjesus.fr
 
 Le site est 100 % statique (aucun build) → hébergeable tel quel. Deux options gratuites.
 
