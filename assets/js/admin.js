@@ -9,6 +9,8 @@
   var LS_TOKEN = "c2c_admin_token";
   var LS_USER = "c2c_admin_user";
   var LS_LANG = "c2c_lang";
+  var LS_LEADSVIEW = "c2c_admin_leadsview"; // "table" (défaut) | "cards"
+  var LS_GEOVIEW = "c2c_admin_geoview";     // "list" (défaut) | "map"
 
   /* ---------------- i18n ---------------- */
   var I18N = {
@@ -56,6 +58,16 @@
       "geo.unresolved": "{n} visite(s) sans origine détectée (VPN, opérateur mobile…)",
       "geo.summary": "{v} visite(s) géolocalisée(s) · {c} pays · {t} ville(s)",
       "geo.missing": "La table « Geo » n'existe pas encore : clique sur « Activer le suivi » ci-dessus pour la créer, puis reviens ici.",
+      "geo.view.list": "Liste",
+      "geo.view.map": "Carte",
+      "geo.map.unplaced": "{n} pays non placé(s) sur la carte (pas de coordonnées dans la table)",
+      "leads.view.table": "Tableau",
+      "leads.view.cards": "Fiches",
+      "card.pray": "Marquer prière faite",
+      "card.stage": "Étape",
+      "card.entered": "Entrée",
+      "card.source": "Source",
+      "card.days": "{n} j",
       "chart.funnel": "Tunnel de conversion",
       "chart.persona": "Par profil (persona)",
       "chart.lang": "Par langue",
@@ -150,6 +162,16 @@
       "geo.unresolved": "{n} visit(s) with no origin detected (VPN, mobile carrier…)",
       "geo.summary": "{v} geolocated visit(s) · {c} country/countries · {t} city/cities",
       "geo.missing": "The “Geo” table doesn't exist yet: click “Enable tracking” above to create it, then come back here.",
+      "geo.view.list": "List",
+      "geo.view.map": "Map",
+      "geo.map.unplaced": "{n} country/countries not shown on map (no coordinates)",
+      "leads.view.table": "Table",
+      "leads.view.cards": "Cards",
+      "card.pray": "Mark prayed",
+      "card.stage": "Stage",
+      "card.entered": "Joined",
+      "card.source": "Source",
+      "card.days": "{n} d",
       "chart.funnel": "Conversion funnel",
       "chart.persona": "By profile (persona)",
       "chart.lang": "By language",
@@ -233,6 +255,9 @@
   var user = null;
   try { user = JSON.parse(localStorage.getItem(LS_USER) || "null"); } catch (e) {}
   var allLeads = [];
+  var lastGeo = null; // conservé pour re-rendre au changement de vue sans requête
+  var leadsView = localStorage.getItem(LS_LEADSVIEW) === "cards" ? "cards" : "table";
+  var geoView = localStorage.getItem(LS_GEOVIEW) === "map" ? "map" : "list";
 
   /* ---------------- helpers DOM ---------------- */
   function $(id) { return document.getElementById(id); }
@@ -505,63 +530,116 @@
      Aucune donnée nominative : la fonction /api/admin-geo agrège la table
      Airtable « Geo » (compteurs par jour × pays × ville) sur 30 jours. */
 
-  // Convertit un code ISO2 (ex. « FR ») en emoji drapeau via Regional Indicator Symbols.
-  function flagEmoji(cc) {
-    if (!cc || cc.length !== 2) return "";
-    var A = 0x1F1E6, base = "A".charCodeAt(0);
-    var up = cc.toUpperCase();
-    var c1 = up.charCodeAt(0) - base, c2 = up.charCodeAt(1) - base;
-    if (c1 < 0 || c1 > 25 || c2 < 0 || c2 > 25) return "";
-    return String.fromCodePoint(A + c1) + String.fromCodePoint(A + c2);
+  // Pastille code-pays (ex. « FR ») — fiable sur tous les systèmes, contrairement
+  // aux emoji drapeaux (Regional Indicator Symbols) qui ne rendent pas sur Windows.
+  function flagPill(cc) {
+    var up = String(cc || "").toUpperCase().slice(0, 2);
+    if (!up) return "";
+    return '<span class="flag-pill" aria-hidden="true">' + esc(up) + "</span>";
   }
 
   function renderGeo(g) {
+    if (g !== undefined) lastGeo = g;
     var host = $("geo-body");
     if (!host) return;
-    if (!g || g.ok === false) {
-      var msg = (g && g.reason === "geo_table_missing") ? t("geo.missing") : t("geo.empty");
+    syncViewToggle("geo-view-toggle", geoView);
+    var data = lastGeo;
+    if (!data || data.ok === false) {
+      var msg = (data && data.reason === "geo_table_missing") ? t("geo.missing") : t("geo.empty");
       host.innerHTML = '<p class="cell-sub">' + esc(msg) + "</p>";
       return;
     }
-    var countries = g.topCountries || [];
-    var cities = g.topCities || [];
+    var countries = data.topCountries || [];
+    var cities = data.topCities || [];
     if (!countries.length && !cities.length) {
       host.innerHTML = '<p class="cell-sub">' + esc(t("geo.empty")) + "</p>";
       return;
     }
 
-    var summary = t("geo.summary", { v: g.totalVisits || 0, c: g.countries || 0, t: g.cities || 0 });
-    var unresolved = g.unresolved ? ' · <span class="cell-sub">' +
-      esc(t("geo.unresolved", { n: g.unresolved })) + "</span>" : "";
+    var summary = t("geo.summary", { v: data.totalVisits || 0, c: data.countries || 0, t: data.cities || 0 });
+    var unresolved = data.unresolved ? ' · <span class="cell-sub">' +
+      esc(t("geo.unresolved", { n: data.unresolved })) + "</span>" : "";
 
+    var body = geoView === "map" ? renderGeoMap(countries) : renderGeoList(countries, cities);
+    host.innerHTML = '<p class="geo-summary">' + esc(summary) + unresolved + "</p>" + body;
+  }
+
+  function renderGeoList(countries, cities) {
     var maxC = Math.max.apply(null, countries.map(function (r) { return r.count; }).concat([1]));
     var maxV = Math.max.apply(null, cities.map(function (r) { return r.count; }).concat([1]));
 
     function countryRow(r) {
       var pct = Math.round((r.count / maxC) * 100);
-      var flag = flagEmoji(r.code);
-      var lbl = (flag ? flag + " " : "") + esc(r.name || r.code);
+      var lbl = flagPill(r.code) + " " + esc(r.name || r.code);
       return '<div class="bar-row"><span class="bar-label" title="' + esc(r.name || r.code) + '">' + lbl + "</span>" +
-        '<span class="bar-track"><span class="bar-fill" style="width:' + pct + "%;background:var(--teal)\"></span></span>" +
+        '<span class="bar-track"><span class="bar-fill" style="width:' + pct + '%;background:var(--teal)"></span></span>' +
         '<span class="bar-val">' + r.count + "</span></div>";
     }
     function cityRow(r) {
       var pct = Math.round((r.count / maxV) * 100);
-      var flag = flagEmoji(r.code);
-      var lbl = (flag ? flag + " " : "") + esc(r.city);
+      var lbl = flagPill(r.code) + " " + esc(r.city);
       return '<div class="bar-row"><span class="bar-label" title="' + esc(r.city + " — " + (r.country || r.code)) + '">' + lbl + "</span>" +
         '<span class="bar-track"><span class="bar-fill" style="width:' + pct + '%;background:var(--gold-deep)"></span></span>' +
         '<span class="bar-val">' + r.count + "</span></div>";
     }
 
-    host.innerHTML =
-      '<p class="geo-summary">' + esc(summary) + unresolved + "</p>" +
-      '<div class="geo-grid">' +
-        '<div class="geo-col"><h4>' + esc(t("geo.countries")) + "</h4>" +
-          '<div class="barlist">' + (countries.map(countryRow).join("") || '<p class="cell-sub">—</p>') + "</div></div>" +
-        '<div class="geo-col"><h4>' + esc(t("geo.cities")) + "</h4>" +
-          '<div class="barlist">' + (cities.map(cityRow).join("") || '<p class="cell-sub">—</p>') + "</div></div>" +
-      "</div>";
+    return '<div class="geo-grid">' +
+      '<div class="geo-col"><h4>' + esc(t("geo.countries")) + "</h4>" +
+        '<div class="barlist">' + (countries.map(countryRow).join("") || '<p class="cell-sub">—</p>') + "</div></div>" +
+      '<div class="geo-col"><h4>' + esc(t("geo.cities")) + "</h4>" +
+        '<div class="barlist">' + (cities.map(cityRow).join("") || '<p class="cell-sub">—</p>') + "</div></div>" +
+    "</div>";
+  }
+
+  /* Vue « Carte » — projection équirectangulaire (viewBox 720×360). Fond = tracé
+     Natural Earth 110m simplifié (assets/js/admin-data.js), dots aux centroïdes
+     des pays, rayon proportionnel à √(visites) — comparaison visuelle plus juste
+     qu'une échelle linéaire. */
+  function renderGeoMap(countries) {
+    var data = (window.C2C_ADMIN_DATA || {});
+    var land = data.WORLD_LAND_PATH || "";
+    var centroids = data.COUNTRY_CENTROIDS || {};
+
+    var maxN = countries.reduce(function (m, r) { return Math.max(m, r.count); }, 1);
+    var rMin = 5, rMax = 22;
+    function radius(n) {
+      var f = Math.sqrt(n / maxN);
+      return +(rMin + (rMax - rMin) * f).toFixed(1);
+    }
+    function project(lat, lng) {
+      var x = (lng + 180) * (720 / 360);
+      var y = (90 - lat) * (360 / 180);
+      return [+x.toFixed(1), +y.toFixed(1)];
+    }
+
+    var unplaced = 0;
+    var dots = countries.map(function (r) {
+      var c = centroids[String(r.code || "").toUpperCase()];
+      if (!c || c[0] == null || c[1] == null) { unplaced++; return ""; }
+      var xy = project(c[0], c[1]);
+      var rad = radius(r.count);
+      var name = (r.name || r.code) + " — " + r.count;
+      return '<circle class="gm-dot" cx="' + xy[0] + '" cy="' + xy[1] + '" r="' + rad + '">' +
+        '<title>' + esc(name) + "</title></circle>";
+    }).join("");
+
+    var note = unplaced ? '<p class="cell-sub geo-map-note">' +
+      esc(t("geo.map.unplaced", { n: unplaced })) + "</p>" : "";
+
+    return '<div class="geo-map-wrap">' +
+      '<svg class="geo-map" viewBox="0 0 720 360" preserveAspectRatio="xMidYMid meet" role="img">' +
+        '<rect class="gm-ocean" x="0" y="0" width="720" height="360"/>' +
+        '<path class="gm-land" d="' + land + '"/>' +
+        '<g class="gm-dots">' + dots + "</g>" +
+      "</svg>" + note + "</div>";
+  }
+
+  /* Positionne le bon bouton comme actif dans un toggle de vue. */
+  function syncViewToggle(hostId, current) {
+    var host = $(hostId); if (!host) return;
+    host.querySelectorAll("button[data-view]").forEach(function (b) {
+      b.classList.toggle("active", b.getAttribute("data-view") === current);
+    });
   }
 
   function renderBarList(id, rows) {
@@ -685,18 +763,51 @@
   function renderTable() {
     var rows = filteredLeads();
     $("table-empty").hidden = rows.length > 0;
-    $("leads-tbody").innerHTML = rows.map(function (l) {
-      return "<tr>" +
-        '<td><div class="cell-name">' + esc(l.firstname || "—") + "</div>" +
-          '<div class="cell-sub">' + esc(l.lang || "") + (l.source ? " · " + esc(l.source) : "") + "</div>" + nudge(l) + "</td>" +
-        '<td class="cell-contact">' + (l.email ? '<a href="mailto:' + esc(l.email) + '">' + esc(l.email) + "</a>" : "—") +
-          (l.whatsapp ? '<div class="cell-sub">' + esc(l.whatsapp) + "</div>" : "") + "</td>" +
-        "<td>" + personaTag(l.persona) + "</td>" +
-        "<td>" + esc(fmtDate(l.entered)) + '<div class="cell-sub">' + (typeof l.daysSince === "number" ? l.daysSince + " j" : "") + "</div></td>" +
-        '<td>' + stageSelect(l) + "</td>" +
-        '<td><div class="cell-actions">' + waBtn(l) + mailBtn(l) + "</div></td>" +
-        "</tr>";
-    }).join("");
+    syncViewToggle("leads-view-toggle", leadsView);
+    var tableWrap = $("leads-table-wrap");
+    var cardsWrap = $("leads-cards");
+    if (leadsView === "cards") {
+      tableWrap.hidden = true;
+      cardsWrap.hidden = false;
+      cardsWrap.innerHTML = rows.map(leadCardHtml).join("");
+    } else {
+      cardsWrap.hidden = true;
+      tableWrap.hidden = false;
+      $("leads-tbody").innerHTML = rows.map(function (l) {
+        return "<tr>" +
+          '<td><div class="cell-name">' + esc(l.firstname || "—") + "</div>" +
+            '<div class="cell-sub">' + esc(l.lang || "") + (l.source ? " · " + esc(l.source) : "") + "</div>" + nudge(l) + "</td>" +
+          '<td class="cell-contact">' + (l.email ? '<a href="mailto:' + esc(l.email) + '">' + esc(l.email) + "</a>" : "—") +
+            (l.whatsapp ? '<div class="cell-sub">' + esc(l.whatsapp) + "</div>" : "") + "</td>" +
+          "<td>" + personaTag(l.persona) + "</td>" +
+          "<td>" + esc(fmtDate(l.entered)) + '<div class="cell-sub">' + (typeof l.daysSince === "number" ? l.daysSince + " j" : "") + "</div></td>" +
+          '<td>' + stageSelect(l) + "</td>" +
+          '<td><div class="cell-actions">' + waBtn(l) + mailBtn(l) + "</div></td>" +
+          "</tr>";
+      }).join("");
+    }
+  }
+
+  /* Vue « Fiches » — chaque âme rendue comme une carte compacte, avec les
+     mêmes actions que la table (stage, WhatsApp, email). Grille responsive. */
+  function leadCardHtml(l) {
+    var ds = typeof l.daysSince === "number" ? t("card.days", { n: l.daysSince }) : "";
+    var emailHtml = l.email ? '<a href="mailto:' + esc(l.email) + '">' + esc(l.email) + "</a>" : "—";
+    var whatsapp = l.whatsapp ? '<div class="lc-line"><span class="lc-key">WhatsApp</span><span class="lc-val">' + esc(l.whatsapp) + "</span></div>" : "";
+    var srcLine = l.source ? '<div class="lc-line"><span class="lc-key">' + esc(t("card.source")) + '</span><span class="lc-val">' + esc(l.source) + "</span></div>" : "";
+    return '<article class="lc" data-id="' + esc(l.id) + '">' +
+      '<header class="lc-head">' +
+        '<div class="lc-title">' + esc(l.firstname || "—") + " " + personaTag(l.persona) + "</div>" +
+        '<div class="lc-sub">' + esc(l.lang || "") + " · " + esc(fmtDate(l.entered)) + (ds ? " · " + esc(ds) : "") + "</div>" +
+      "</header>" +
+      '<div class="lc-body">' +
+        '<div class="lc-line"><span class="lc-key">Email</span><span class="lc-val">' + emailHtml + "</span></div>" +
+        whatsapp + srcLine +
+        '<div class="lc-line"><span class="lc-key">' + esc(t("card.stage")) + '</span><span class="lc-val">' + stageSelect(l) + "</span></div>" +
+        '<div class="lc-nudge">' + nudge(l) + "</div>" +
+      "</div>" +
+      '<footer class="lc-actions">' + waBtn(l) + mailBtn(l) + "</footer>" +
+    "</article>";
   }
 
   /* ---------------- mise à jour d'une fiche ---------------- */
@@ -740,14 +851,33 @@
     $("filter-persona").addEventListener("change", renderTable);
     $("filter-stage").addEventListener("change", renderTable);
 
-    // délégation : changement d'étape + bouton "prière faite"
-    $("leads-tbody").addEventListener("change", function (e) {
+    // délégation : changement d'étape (table OU cartes) + bouton "prière faite"
+    function onStageChange(e) {
       var sel = e.target.closest("select[data-stage-id]");
       if (sel) updateLead(sel.getAttribute("data-stage-id"), { stage: sel.value });
-    });
+    }
+    $("leads-tbody").addEventListener("change", onStageChange);
+    $("leads-cards").addEventListener("change", onStageChange);
     $("followup-list").addEventListener("click", function (e) {
       var b = e.target.closest("button[data-act=pray]");
       if (b) updateLead(b.getAttribute("data-id"), { stage: "Prière faite" });
+    });
+
+    // Toggle de vue (leads : Tableau / Fiches)
+    $("leads-view-toggle").addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-view]");
+      if (!b) return;
+      leadsView = b.getAttribute("data-view") === "cards" ? "cards" : "table";
+      localStorage.setItem(LS_LEADSVIEW, leadsView);
+      renderTable();
+    });
+    // Toggle de vue (origine géo : Liste / Carte)
+    $("geo-view-toggle").addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-view]");
+      if (!b) return;
+      geoView = b.getAttribute("data-view") === "map" ? "map" : "list";
+      localStorage.setItem(LS_GEOVIEW, geoView);
+      renderGeo(); // re-rend depuis lastGeo, pas de requête réseau
     });
 
     document.querySelectorAll(".lang-switch button").forEach(function (b) {

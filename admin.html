@@ -119,8 +119,14 @@
     <!-- Origine des visiteurs (pays + villes) -->
     <section class="panel">
       <div class="panel-head">
-        <h2 data-ai="geo.title">Origine des visiteurs — 30 derniers jours</h2>
-        <span class="panel-hint" data-ai="geo.hint">Pays et ville détectés par Netlify à partir de l'IP (jamais stockée). Aucune donnée personnelle.</span>
+        <div>
+          <h2 data-ai="geo.title">Origine des visiteurs — 30 derniers jours</h2>
+          <span class="panel-hint" data-ai="geo.hint">Pays et ville détectés par Netlify à partir de l'IP (jamais stockée). Aucune donnée personnelle.</span>
+        </div>
+        <div class="view-toggle" id="geo-view-toggle" role="group" aria-label="Mode d'affichage">
+          <button data-view="list" data-ai="geo.view.list">Liste</button>
+          <button data-view="map" data-ai="geo.view.map">Carte</button>
+        </div>
       </div>
       <div id="geo-body"></div>
     </section>
@@ -167,26 +173,33 @@
       <div class="panel-head">
         <h2 data-ai="leads.title">Toutes les âmes</h2>
         <div class="panel-tools">
+          <div class="view-toggle" id="leads-view-toggle" role="group" aria-label="Mode d'affichage">
+            <button data-view="table" data-ai="leads.view.table">Tableau</button>
+            <button data-view="cards" data-ai="leads.view.cards">Fiches</button>
+          </div>
           <input type="search" id="lead-search" data-ai-ph="leads.search" placeholder="Rechercher (nom, email)…" />
           <select id="filter-persona"><option value="" data-ai="leads.allpersona">Tous profils</option></select>
           <select id="filter-stage"><option value="" data-ai="leads.allstage">Toutes étapes</option></select>
           <button class="btn-soft" id="export-btn" data-ai="leads.export">⤓ Export CSV</button>
         </div>
       </div>
-      <div class="table-wrap">
-        <table class="leads-table" id="leads-table">
-          <thead>
-            <tr>
-              <th data-ai="th.name">Nom</th>
-              <th data-ai="th.contact">Contact</th>
-              <th data-ai="th.persona">Profil</th>
-              <th data-ai="th.entered">Entrée</th>
-              <th data-ai="th.stage">Étape</th>
-              <th data-ai="th.actions">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="leads-tbody"></tbody>
-        </table>
+      <div id="leads-view">
+        <div class="table-wrap" id="leads-table-wrap">
+          <table class="leads-table" id="leads-table">
+            <thead>
+              <tr>
+                <th data-ai="th.name">Nom</th>
+                <th data-ai="th.contact">Contact</th>
+                <th data-ai="th.persona">Profil</th>
+                <th data-ai="th.entered">Entrée</th>
+                <th data-ai="th.stage">Étape</th>
+                <th data-ai="th.actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="leads-tbody"></tbody>
+          </table>
+        </div>
+        <div class="leads-cards" id="leads-cards" hidden></div>
         <p class="table-empty" id="table-empty" hidden data-ai="leads.empty">Aucune âme pour ces filtres.</p>
       </div>
     </section>
@@ -197,6 +210,7 @@
     </footer>
   </main>
 
+  <script src="assets/js/admin-data.js"></script>
   <script src="assets/js/admin.js"></script>
 </body>
 </html>
