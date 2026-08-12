@@ -10,6 +10,16 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Unification du branding : les visiteurs qui arrivent encore sur l'ancienne URL
+# Netlify (liens historiques, emails déjà envoyés, favoris) sont redirigés vers
+# le domaine officiel. 301 = permanent (les moteurs de recherche mettent à jour
+# leur index), force = true = s'applique même si un fichier statique existe.
+[[redirects]]
+  from = "https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/*"
+  to = "https://nouvellesviesenjesus.fr/:splat"
+  status = 301
+  force = true
+
 # Jolies URLs : /api/admin-login  ->  /.netlify/functions/admin-login
 [[redirects]]
   from = "/api/*"
