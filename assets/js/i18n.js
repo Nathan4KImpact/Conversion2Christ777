@@ -949,8 +949,16 @@ const I18N = {
 (function () {
   const STORE = "c2c_lang";
   function detect() {
+    // 1) Paramètre URL (?lang=en) — permet aux flyers EN de forcer l'anglais
+    //    à l'atterrissage sans rompre la persistance pour les visites suivantes.
+    try {
+      const q = new URLSearchParams(location.search).get("lang");
+      if (q && I18N[q.toLowerCase()]) return q.toLowerCase();
+    } catch (_) { /* URL API indisponible → on ignore */ }
+    // 2) Choix mémorisé lors d'une visite précédente
     const saved = localStorage.getItem(STORE);
     if (saved && I18N[saved]) return saved;
+    // 3) Repli sur la langue du navigateur
     const nav = (navigator.language || "fr").slice(0, 2).toLowerCase();
     return I18N[nav] ? nav : "fr";
   }
