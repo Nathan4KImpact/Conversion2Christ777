@@ -375,6 +375,30 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - Documentation `integrations/ADMIN.md` mise à jour (schéma table `Geo` +
     repli manuel).
 
+- 2026-08-11 : **v18 — Dashboard v2 : Vue Carte géo + Vue Fiches âmes + fix drapeaux** (PR #8) :
+  - **Toggle Liste / Carte** sur le bloc « Origine des visiteurs » (localStorage
+    `c2c_admin_geoview`). La vue Carte affiche une mappemonde SVG en projection
+    équirectangulaire (viewBox 720×360) avec un dot par pays visité, rayon
+    proportionnel à √(visites), tooltip au survol.
+  - **Fond de carte** : contour Natural Earth 110m (domaine public) simplifié via
+    Douglas-Peucker à 2 px, encodé en un unique tracé SVG (~6 KB). Data statique
+    dans **`assets/js/admin-data.js`** (~12 KB) : le contour + 241 centroïdes pays
+    (dataset country-json MIT + overrides manuels pour Russie, RDC, Nouvelle-Zélande,
+    Monténégro, Serbie, Vatican…). Zéro dépendance runtime.
+  - **`/api/admin-geo`** renvoie déjà les codes ISO2 des pays présents dans la table
+    `Geo`, l'appariement dot ↔ centroïde se fait côté client. Compteur des pays
+    « non placés » (pas de centroïde connu) affiché sous la carte pour transparence.
+  - **Toggle Tableau / Fiches** sur le bloc « Toutes les âmes » (localStorage
+    `c2c_admin_leadsview`). La vue Fiches rend chaque lead en carte compacte
+    (grille responsive `auto-fill 280 px`) avec toutes les infos et **les mêmes
+    actions** que le tableau (changement d'étape, WhatsApp, Email). Filtres et
+    recherche continuent de s'appliquer.
+  - **Fix drapeaux** : les emoji Regional Indicator Symbol (invisibles sous
+    Windows — la capture du porteur montrait `fr / us` en petites lettres) sont
+    remplacés par des **pastilles CSS code-pays** (`.flag-pill`). Rendu identique
+    et fiable sur tous les OS, pour la vue Liste ET la carte (tooltip).
+  - i18n FR/EN complet (102 clés de chaque côté vérifiées).
+
 - 2026-08-11 : **v17 — Nom de domaine officiel `nouvellesviesenjesus.fr`** :
   - Le porteur a réservé le domaine. Toutes les URLs de production du repo sont
     passées de `nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app` vers
@@ -393,17 +417,108 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - **Flyers de campagne** regénérés (`flyer-A/B/C.png`) : QR code encodé vers
     `https://nouvellesviesenjesus.fr`, mention affichée `nouvellesviesenjesus.fr`
     sous le QR.
+  - **DNS live** confirmé côté porteur (option B : Zone DNS conservée chez OVH,
+    apex `A 75.2.60.5`, `www` CNAME vers apex, MX Plan OVH intact pour l'email
+    `@nouvellesviesenjesus.fr`). Certificat Let's Encrypt provisionné par Netlify.
+
+- 2026-08-11 : **v19 — Redirect 301 de l'ancienne URL netlify.app vers le domaine officiel** (PR #11) :
+  - Règle dans `netlify.toml` : `https://nouvellevieenchrist-pdvie-vdh-mks2026.netlify.app/*`
+    → `https://nouvellesviesenjesus.fr/:splat` (301 permanent, `force = true`, chemin
+    préservé). Les anciens liens (favoris, partages historiques, cache moteurs,
+    emails de nurturing déjà envoyés) atterrissent tous sur le nouveau domaine.
+  - N'affecte pas les requêtes qui arrivent directement sur le nouveau domaine
+    (matching par host source dans le `from`).
+
+- 2026-08-11 : **v20 — Support `?lang=en` (ou `?lang=fr`) dans l'URL** (PR #12) :
+  - Patch dans `assets/js/i18n.js` : `detect()` lit le paramètre URL en priorité
+    (avant localStorage et navigator.language). 8 lignes, aucune régression.
+  - Permet aux flyers EN de la campagne d'ouvrir directement le site en anglais
+    à l'atterrissage — sans obliger le visiteur à cliquer le sélecteur FR/EN.
+  - Le choix mémorisé n'est pas écrasé silencieusement : une visite ultérieure
+    sans le paramètre retrouve la préférence explicite de l'utilisateur.
+
+- 2026-08-11 : **v21 — Campagne d'août : 20 flyers de communication (10 FR + 10 EN)** :
+  - Générés hors repo (livrés au porteur en chat, PNG 1080×1080 et 1080×1920).
+    Style inspiré des flyers historiques du porteur, rebrandés « Nouvelles Vies
+    en Jésus », zéro dépendance runtime (générateur Node + Playwright headless).
+  - **10 angles complémentaires** : A1 Histoire (Éph 2.8-9), A2 Ingénieur (Rom 1.20,
+    persona P5), B Quiz (Jn 4.14, segmentation), C1 Offre Salut/Guérison/Paix
+    (Jn 4.10), C2 Blessés (Ps 34.18, palette teal-coral), C3 Avenir (Ps 37.5),
+    D1 Prière (Rom 10.9), D2 Communauté (Mt 18.20), E1 Musulman (Jn 14.6, Isâ),
+    E2 Story vertical 1080×1920 (variante quiz pour IG/WA stories).
+  - **QR code fonctionnel** dans chaque flyer, pointant vers la bonne page
+    (`/quiz`, `/prier`, `/histoire` ou `/`) — les EN encodent `?lang=en` pour
+    ouverture directe en anglais (grâce à v20).
+  - **Signature « He is real. He is love. »** sur pastille cream translucide avec
+    liseré or et script italique légèrement incliné, positionnée sur le plastron
+    du portrait de Nathanaël (A1 et A2 uniquement) — après itération, la version
+    initiale sur la veste sombre était illisible.
+  - Générateurs conservés dans le scratchpad de la session (`gen-flyers-v2.js`,
+    `gen-flyers-en.js`) pour ré-utilisation / itération future.
+
+- 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
+  L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc
+  confiance + page dédiée) et Sprint 0.5 « KPIs d'activation » (haut du tunnel).
+  Le porteur ayant validé plusieurs extensions en cours de sprint, la portée
+  livrée couvre en réalité **onze sous-sprints** :
+
+  | # | Livré | Ver. |
+  |---|---|---|
+  | 0.1 | Fondation admin (Netlify Functions + JWT + scrypt) — antérieur | v14 |
+  | 0.2 | Bloc de confiance « Qui est Nathanaël » + page `histoire.html` (10 sections) | v15 |
+  | 0.3 | KPIs d'activation (`/api/track` + table Stats + dashboard « Activation ») | v15 |
+  | 0.4 | Origine des visiteurs — pays + ville (Edge Function + table Geo + dashboard) | v16 |
+  | 0.5 | Dashboard v2 — vue Carte géo + vue Fiches leads + pastilles code pays | v18 |
+  | 0.6 | Nom de domaine officiel `nouvellesviesenjesus.fr` (OVH ↔ Netlify) | v17 |
+  | 0.7 | Redirect 301 ancien Netlify.app → nouveau domaine (unification) | v19 |
+  | 0.8 | Support `?lang=en` dans i18n (préparation flyers EN) | v20 |
+  | 0.9 | Campagne d'août — 20 flyers (10 FR + 10 EN) avec QR ciblés | v21 |
+  | 0.10 | Ajustements copie (`hero.eyebrow` au passé composé), i18n `data-i18n-alt`, ancres | v15 |
+  | 0.11 | Documentation (README, `ADMIN.md`, journal `CLAUDE.md`) mise à jour continue | v14→v21 |
+
+  **Éléments transverses** : RGPD préservé (aucun cookie, aucune IP stockée, aucun
+  traceur tiers, rien à consenter), bilinguisme FR/EN maintenu partout, zéro
+  dépendance npm côté site public (les fonctions Netlify utilisent uniquement
+  les modules natifs Node), Airtable comme unique source de vérité.
+
+  **Ce qui reste hors Sprint 0** (livrable plus tard) : étapes 5-8 du parcours
+  discipulat (onboarding nouveau converti, intégration, rétention), reset mot
+  de passe self-service, Kanban leads glisser-déposer, filtre de période sur
+  géo, choroplèthe pays au lieu de dots.
 
 ### Reste à faire / décisions en attente
-- **Admin** : renseigner les 3 variables Netlify puis créer le 1er compte sur `/admin.html`
-  (cf. `integrations/ADMIN.md`). Optionnel : reset mot de passe self-service, attribution d'un référent
-  depuis le tableau, blocage anti-force-brute persistant.
-- *(Optionnel)* **Airtable Automation** « anti-rétrogradation cosmétique » : *Quand une fiche a
-  `Étape tunnel`=Lead ET `RDV prière` non vide → repasser `Étape tunnel`=RDV pris*. (L'API ne permet
-  pas de créer des automations → à faire à la main dans Airtable ▸ Automatisations.)
-- **Activation** : cliquer « Activer le suivi » sur `/admin.html` (ajouter au préalable le scope
-  `schema.bases:write` au PAT Airtable si la création automatique échoue).
-- **Activer/planifier le scénario de nurturing** (1×/jour) ; supprimer les connexions Airtable inutiles.
-- **Confirmer le texte exact de la prière du salut** (vidéo `-Fn0ScYZ7PY`).
-- Nettoyer à la main les champs Airtable par défaut résiduels (limite API).
-- Construire les **étapes 5-8** (onboarding nouveau converti, intégration/rétention).
+
+**Sprint 0 — clos ✅** (voir tableau récapitulatif ci-dessus).
+
+**Actions restantes côté porteur (opérationnel, pas de code)** :
+- ✅ Compte admin créé et connecté sur `/admin.html`.
+- ✅ Suivi d'activation (table `Stats`) et origine des visiteurs (table `Geo`)
+  actifs — le porteur voit les compteurs se remplir.
+- ✅ Domaine `nouvellesviesenjesus.fr` en ligne, HTTPS Let's Encrypt actif.
+- 🔲 **Éditer les modules Gmail dans les scénarios Make** pour remplacer l'ancienne URL
+  netlify.app par `nouvellesviesenjesus.fr` (facultatif — l'ancienne URL est
+  toujours redirigée 301 par Netlify, cf. v19, donc pas d'urgence).
+- 🔲 **Confirmer le texte exact de la prière du salut** (transcription de la vidéo
+  `-Fn0ScYZ7PY`) — actuellement un brouillon fidèle sert de repli.
+- 🔲 *(Optionnel)* **Airtable Automation « anti-rétrogradation cosmétique »** :
+  *Quand une fiche a `Étape tunnel`=Lead ET `RDV prière` non vide → repasser
+  `Étape tunnel`=RDV pris*. (L'API ne permet pas de créer des automations → à faire
+  à la main dans Airtable ▸ Automatisations.)
+- 🔲 Nettoyer à la main les champs Airtable par défaut résiduels (limite API).
+
+**Prochains sprints candidats** :
+- **Sprint 1 — Étapes 5-8 du parcours discipulat** : onboarding nouveau converti,
+  intégration en cellule, rétention, contenus de formation. Les pages
+  `nouveau-ne.html`, `grandir.html`, `fondations.html` existent déjà (v10-v11) —
+  reste à affiner les contenus, câbler l'attribution d'un mentor, mesurer la
+  rétention à 30/60/90 jours.
+- **Sprint 2 — Dashboard v3** : filtre de période sur le bloc géo (7 j / 30 j /
+  tout), Kanban leads (glisser-déposer entre colonnes d'étape), notifications
+  temps réel des nouvelles âmes (email ou WhatsApp au responsable), export
+  segmenté par persona.
+- **Sprint 3 — Admin polish** : reset mot de passe self-service, attribution
+  d'un référent depuis le tableau, blocage anti-force-brute persistant (Netlify
+  Blobs), journal d'audit.
+- **Sprint 4 — Contenus** : autres angles de campagne (Noël, Pâques, rentrée),
+  contenus longs (blog, podcast), traductions supplémentaires (arabe, espagnol,
+  portugais pour les personas P4 et le lusophone d'Afrique).
