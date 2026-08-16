@@ -456,6 +456,39 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - Générateurs conservés dans le scratchpad de la session (`gen-flyers-v2.js`,
     `gen-flyers-en.js`) pour ré-utilisation / itération future.
 
+- 2026-08-14 : **v22 — Emails de nurturing : désamorçage du risque d'étiquetage + harmonisation** :
+  - **Problème observé** : une destinataire (persona « Blessé ») a reçu l'email J3
+    avec un sujet « L'histoire de quelqu'un qui te ressemble » + une vidéo
+    « J'ai chuté dans l'homosexualité… ». La persona « Blessé » regroupe des
+    blessures très variées (angoisse, deuil, traumas, identité, LGBTQI, abus…) —
+    un contenu très spécifique par défaut = risque réel de stigmatisation.
+    Aussi : le J7 était resté en `<p>` bruts, sans le design des autres emails.
+  - **Sujets révisés** (moins projectifs) :
+    - J1 : « L'histoire de quelqu'un qui te ressemble » → **« Une histoire à te partager »**.
+    - J3, J5, J7 inchangés (déjà universels).
+  - **Intro J1 révisée** : retrait de « comme toi peut-être » → « Une personne qui
+    portait des questions… Regarde à ton rythme. »
+  - **Vidéos Blessé remplacées** (plus universelles, moins identitaires) dans
+    les 4 emails (J0, J1, J3, J5) :
+    - J0 & J1 : « J'ai chuté dans l'homosexualité » → **Pauline — relevée de ses
+      crises d'angoisse** (`Ewm8bIZe8bs`).
+    - J3 : Janick « Je croyais être un homme » → **Nick Vujicic — une vie devenue
+      bénédiction** (`UjpCD926y20`).
+    - J5 : Sarah « revivre après l'épreuve » (viol) → **« Témoignages de guérison
+      et de restauration »** (`cmqgfaNQhFc`, EMCI, générique).
+  - **Label carte vidéo** harmonisé : « 🎥 Choisi pour toi » → **« 🎥 Une histoire
+    à regarder »** (sender-owned, ne présume pas du destinataire).
+  - **Design J7** (« On prie ensemble ? ») repris dans le même moule que J1/J3/J5 :
+    verset italique vert (Mt 18:20), encart cream + liseré or, CTA « Réserver mon
+    créneau » vers `/merci.html#book`, lien secondaire vers témoignages.
+  - **Les vidéos identitaires** (Janick, Sarah, Al-Azzaz-homosexualité) restent
+    disponibles dans le site (`temoignages.html` — bibliothèque complète, découverte
+    volontaire) mais ne sont **plus poussées par défaut** dans un email.
+  - **⚠️ Côté porteur** : les scénarios Make **en ligne** utilisent encore les
+    anciens templates. Pour appliquer : (a) ré-importer les blueprints mis à jour,
+    ou (b) éditer manuellement chaque module Gmail dans Make.com. Sans ça, les
+    emails continueront à partir avec l'ancien contenu.
+
 - 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
   L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc
   confiance + page dédiée) et Sprint 0.5 « KPIs d'activation » (haut du tunnel).
