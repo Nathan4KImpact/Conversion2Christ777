@@ -555,3 +555,188 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
 - **Sprint 4 — Contenus** : autres angles de campagne (Noël, Pâques, rentrée),
   contenus longs (blog, podcast), traductions supplémentaires (arabe, espagnol,
   portugais pour les personas P4 et le lusophone d'Afrique).
+
+---
+
+## 7. Profil du porteur — Expertise IA & compétences développées
+
+> Section ajoutée le 2026-08-14 à la demande du porteur — base de connaissance
+> à préserver entre sessions Claude. Synthèse de son expertise acquise en
+> pilotant ce projet full-stack via collaboration IA (juin-août 2026).
+
+### 7.1 Identité & double compétence
+
+**Raoul Nathanaël** — 40 ans, camerounais, en France depuis 2022.
+Époux, père de 3 filles. Auteur (1er livret publié à 17 ans).
+
+Double compétence :
+
+- **Ingénieur en Systèmes d'Information** → aujourd'hui **Consultant SI en
+  Grands Comptes sur projets critiques**. Rigueur des systèmes où « l'erreur
+  coûte cher », gouvernance données, architecture distribuée, DevOps.
+- **Ministre chrétien évangélique** — Organisation VIE (Ministère Message de
+  Vie + Églises Vases d'Honneurs), École Porteurs de Vie (Pst Mohammed Sanogo).
+  25+ ans de foi vivante depuis un déclic à 15 ans (Éph 2:8-9), formé aux
+  Groupes Bibliques Universitaires (GBU/IFES).
+
+Cette double compétence est le socle : elle légitime le projet aussi bien
+auprès du persona P5 (sceptique/rationnel) que du persona P1 (background
+chrétien favorable).
+
+### 7.2 Nature de la collaboration IA sur ce projet
+
+- **Durée** : juin → août 2026 (3 mois actifs).
+- **Volume** : 22 versions livrées, 14 pull requests fusionnées.
+- **Modèle de travail** : porteur = direction, inspiration, révélation,
+  contenu théologique, validation qualitative. IA (Claude Code) = expertise
+  marketing/technique/théologique appliquée, exécution, itération, garde-fous
+  RGPD/sécurité, suggestions d'amélioration.
+- **Sprints réalisés** : Sprint 0 (planifié : 2 sous-sprints) → livré :
+  **11 sous-sprints** (§6 tableau récap). Le porteur a validé les extensions
+  au fur et à mesure, sans laisser la portée déraper.
+
+### 7.3 Compétences développées ou consolidées
+
+**Direction produit via IA**
+- Cadrage de la vision (5 personas, tunnel value-ladder, RGPD-first).
+- Priorisation quotidienne (« oui volontiers pour les visuels », « ne merge
+  pas si ça casse l'ancienne URL »).
+- Arbitrage rapide entre plusieurs options techniques présentées par l'IA
+  (ex. domaine Netlify DNS vs Zone DNS OVH — a choisi Option B en connaissance
+  de cause pour préserver l'email pro OVH).
+- Refus de solutions qui violeraient l'éthique produit (v22 emails
+  potentiellement stigmatisants → refactoring universel).
+
+**Debugging avec IA sur systèmes tiers hétérogènes**
+- **Make.com** : webhooks 403, 422 (body Airtable en chaîne JSON), scopes
+  OAuth Airtable insuffisants, filtres anti-doublon nurturing, cases à cocher
+  Jx envoyé pour idempotence.
+- **Airtable** : Personal Access Tokens, scopes fins
+  (`data.records:read/write` + `schema.bases:write`), limitations de l'API
+  (impossible de créer des Automations).
+- **Netlify** : Functions v1/v2, Edge Functions (Deno + `context.geo`),
+  variables d'environnement, scopes (Functions vs Edge Functions), custom
+  domain (apex-loadbalancer + CNAME + certificat Let's Encrypt), redirects 301.
+- **OVH DNS** : records A/CNAME/MX, règle RFC 1912 (CNAME ne coexiste pas
+  avec d'autres records), Zone DNS vs délégation NS, MX Plan gratuit.
+- **Git/GitHub** : PRs, merges, force-with-lease, redémarrage de branche
+  après merge sur main.
+
+**Content curation multi-persona bilingue**
+- 5 personas (Ouvert / Blessé / Chercheur / Musulman / Sceptique) avec
+  bibliothèque de témoignages vidéo maintenue et hiérarchisée.
+- Bilinguisme FR/EN complet (413 clés i18n × 2 langues côté site + 102 clés
+  côté admin + 4 emails de nurturing + 20 flyers de campagne).
+- Sensibilité éthique aiguë : détection d'une bio inventée par l'IA (v14bis
+  corrigée en v15), détection du risque de stigmatisation des emails
+  nurturing (v22).
+
+**Config et intégration d'outils no-code / low-code**
+- Airtable comme unique source de vérité (fiches Ames + Admins + Stats +
+  Geo).
+- Make.com scénarios (Router, Search, PATCH idempotents, planification).
+- Gmail (labels, brouillons de nurturing, séquence J0-J7).
+- Google Agenda (créneaux récurrents Mar-Sam 19h-20h).
+- Netlify (functions, edge functions, redirects, HTTPS, custom domain).
+
+**Éthique produit & RGPD**
+- Zéro donnée personnelle non consentie (pas d'IP stockée, pas de cookie,
+  pas de traceur tiers).
+- Retrait du branding Vases d'Honneur du site faute d'autorisation, tout
+  en le préservant dans les campagnes personnelles.
+- Refus des vidéos identitaires par défaut (LGBTQI, viol) dans les emails
+  automatiques — elles restent en découverte volontaire côté site.
+
+**Communication efficace avec l'IA**
+- Validations groupées (« vas-y sur les 3 »).
+- Corrections immédiates (« ne merge pas si… »).
+- Cadrage préalable par questions structurées (via `AskUserQuestion` de l'IA).
+- Screenshots systématiques pour valider visuellement.
+- Journal continu (`CLAUDE.md`) préservé et enrichi en permanence.
+
+### 7.4 Résultats obtenus (mesurables)
+
+- **Site public bilingue** : `https://nouvellesviesenjesus.fr` (HTTPS Let's
+  Encrypt, domaine OVH, hébergement Netlify).
+- **Tunnel complet de 9 pages** : landing (5 portes personas) · témoignages ·
+  histoire · quiz (4 questions, 5 issues) · optin · merci (avec réservation
+  RDV) · prière · nouveau-né · grandir · fondations (6 modules).
+- **Dashboard admin** : 5 KPIs, funnel avec taux de conversion, activation
+  du tunnel (30j), origine des visiteurs (top pays + top villes + mappemonde
+  SVG), 5 charts, table + fiches leads avec export CSV.
+- **Automatisation** : capture lead + RDV (Airtable + Google Agenda),
+  nurturing J0/J1/J3/J5/J7 idempotent, prière-du-salut avec attribution
+  automatique du stade « Prière faite ».
+- **Campagne d'août 2026** : 20 flyers (10 FR + 10 EN) prêts à publier —
+  QR codes fonctionnels ciblant les pages du tunnel, script d'incliner
+  la langue à l'atterrissage (`?lang=en`).
+- **Sécurité admin** : Netlify Functions + JWT HS256 maison + scrypt (aucune
+  dépendance npm côté site public), code d'invitation, en-têtes de sécurité
+  (X-Frame, X-Content-Type-Options, Referrer-Policy).
+- **RGPD** : rien à consenter (pas d'IP, pas de cookie, pas de traceur tiers).
+- **Documentation** : `README.md`, `integrations/README.md`, `ADMIN.md`,
+  `CLAUDE.md` (journal continu 22 versions).
+
+### 7.5 Patterns de travail avec IA identifiés
+
+| Pattern | Description | Bénéfice |
+|---|---|---|
+| **Journal continu** | Chaque décision & version consignée dans `CLAUDE.md` | Contexte préservé entre sessions Claude |
+| **Validation-itération** | Proposer, valider, construire, vérifier, itérer | Convergence rapide + qualité contrôlée |
+| **Cadrage préalable** | `AskUserQuestion` avant tout travail exploratoire | Évite le gaspillage sur mauvaise direction |
+| **Screenshots systématiques** | Preview visuel avant merge | Détection immédiate des débordements/coupures |
+| **« Ne merge pas si… »** | Arbitrage risque/vitesse explicité | Contrôle du blast radius |
+| **Rollback structuré** | PR de revert quand nécessaire (v14→v10 clos) | Trace + réversibilité |
+| **Séparation prod/repo/scénarios** | Repo = référence, Make = runtime, application manuelle | Zéro déploiement accidentel |
+
+### 7.6 Anti-patterns évités (leçons apprises)
+
+- **Bio inventée par l'IA** (v14bis : « 15 ans d'accompagnement », « formé
+  depuis mes 18 ans ») → **détectée immédiatement** par le porteur → remplacée
+  par le témoignage authentique en v15. *Leçon : toujours faire lire à l'IA
+  le contenu source (PDF témoignage) avant de générer du texte biographique.*
+- **Contenu stigmatisant** (email J3 pour persona « Blessé » avec vidéo
+  identité/homosexualité par défaut) → **détecté depuis une capture Gmail
+  réelle** → refactoré universel en v22. *Leçon : quand une persona regroupe
+  des sensibilités très variées, le contenu par défaut doit être le
+  dénominateur commun le plus large.*
+- **Branding Vases d'Honneur réutilisé sans autorisation** → **retiré du
+  site** (v12) tout en préservant les usages personnels autorisés (flyers
+  historiques). *Leçon : identité visuelle d'une organisation ≠ contenu
+  ministériel personnel — deux régimes distincts.*
+- **Merge trop rapide** (PR #9 og:image basculé sur nouveau domaine avant
+  propagation DNS → aperçus sociaux cassés temporairement) → **détecté par
+  le porteur** → rollback via PR #10. *Leçon : dépendances externes (DNS,
+  cache social) exigent un séquençage.*
+
+### 7.7 Ce que ce projet démontre (transférable à d'autres contextes)
+
+- **Un porteur non-tech au sens développeur** (mais ingénieur SI par formation,
+  ce qui aide) peut piloter un produit full-stack complet via IA, à condition
+  de garder la validation qualitative sur l'authenticité du contenu et
+  l'éthique produit.
+- **L'IA amplifie mais ne remplace pas** la validation humaine sur trois
+  dimensions non-négociables : théologie (justesse doctrinale), éthique
+  (non-stigmatisation, RGPD), style (voix authentique du porteur).
+- **La qualité vient de la boucle rapide** (proposer → valider → construire
+  → vérifier → journaliser) plus que de la sophistication technique.
+- **Zéro dépendance npm** côté site public est atteignable même sur un
+  produit riche — au prix d'un peu plus de code explicite mais avec un
+  audit de sécurité radicalement simplifié.
+- **Documentation continue** (`CLAUDE.md`) transforme une session ponctuelle
+  en actif durable — n'importe quel futur Claude reprend le contexte en
+  quelques minutes.
+
+### 7.8 Postures relationnelles observées chez le porteur
+
+- **Directif mais respectueux** : donne des instructions claires, arbitre
+  vite, mais laisse l'IA proposer ses recommandations avant de trancher.
+- **Verifie visuellement** : demande des previews, des screenshots, teste
+  sur son navigateur.
+- **Repère les faux-pas** : détecte le contenu inventé, la stigmatisation
+  latente, les débordements de scope.
+- **Corrige sans drame** : « ne merge pas si… », « réessayer », « refais
+  cet angle » — pas de blâme, juste des corrections chirurgicales.
+- **Communique en français** avec des messages courts, des captures
+  Windows, un vocabulaire non-jargonnant même sur des sujets techniques.
+
