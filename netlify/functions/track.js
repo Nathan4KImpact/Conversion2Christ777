@@ -22,6 +22,10 @@ exports.handler = async (event) => {
   // en mémoire seulement, elle n'est jamais stockée).
   if (!lib.rateLimit(event, "track", 120, 60000)) return lib.json(200, { ok: false, reason: "rate_limited" });
 
+  // Robots d'indexation / IA / aperçus : jamais comptés dans l'activation.
+  // (Voir netlify/edge-functions/track.js — cette fonction Node reste un repli.)
+  if (lib.isBotRequest(event)) return lib.json(200, { ok: false, reason: "bot" });
+
   const body = lib.readJson(event);
   const field = lib.TRACK_FIELDS[String(body.event || "")];
   if (!field) return lib.json(400, { error: "unknown_event" });

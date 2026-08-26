@@ -260,6 +260,51 @@ function todayKey(d) {
   }).format(d || new Date());
 }
 
+/* ---- Détection des robots (voir netlify/edge-functions/track.js) ----
+   ⚠️ Liste dupliquée depuis l'Edge Function : les deux runtimes (Deno / Node)
+   ne partagent pas de module. Toute mise à jour doit être reportée là-bas. */
+const BOT_UA = new RegExp(
+  [
+    "bot\\b", "\\bbots\\b", "crawler", "crawling", "spider", "scrap(er|ing)",
+    "slurp", "archiver", "indexer", "monitor(ing)?", "validator", "analyz(er|e)",
+    "googlebot", "google-inspectiontool", "storebot-google", "google-site-verification",
+    "bingbot", "bingpreview", "adidxbot", "msnbot", "yandex", "baiduspider",
+    "duckduckbot", "duckduckgo", "seznambot", "sogou", "exabot", "qwantify",
+    "petalbot", "applebot", "naver", "coccocbot",
+    "gptbot", "chatgpt-user", "oai-searchbot", "ccbot", "anthropic-ai", "claudebot",
+    "claude-web", "perplexitybot", "perplexity-user", "bytespider", "amazonbot",
+    "cohere-ai", "diffbot", "meta-externalagent", "google-extended", "timpibot",
+    "youbot", "imagesiftbot", "omgili", "webzio",
+    "ahrefs", "semrush", "mj12bot", "dotbot", "dataforseo", "blexbot", "serpstat",
+    "screaming ?frog", "sitebulb", "lighthouse", "pagespeed", "gtmetrix", "pingdom",
+    "uptimerobot", "statuscake", "site24x7", "newrelicpinger", "chrome-lighthouse",
+    "facebookexternalhit", "facebookcatalog", "facebot", "twitterbot", "linkedinbot",
+    "whatsapp", "telegrambot", "discordbot", "slackbot", "slack-imgproxy",
+    "pinterest", "redditbot", "embedly", "quora link preview", "skypeuripreview",
+    "vkshare", "tumblr", "nuzzel", "outbrain", "bitlybot", "flipboard",
+    "google-structured-data", "w3c_validator",
+    "headless", "phantomjs", "slimerjs", "electron", "puppeteer", "playwright",
+    "selenium", "webdriver", "cypress",
+    "python-requests", "python-urllib", "aiohttp", "httpx", "scrapy", "curl/",
+    "wget", "go-http-client", "java/", "okhttp", "apache-httpclient", "libwww-perl",
+    "axios/", "node-fetch", "guzzlehttp", "postmanruntime", "insomnia",
+    "restsharp", "httpie", "typhoeus", "faraday",
+  ].join("|"),
+  "i"
+);
+
+/** true si la requête vient d'un robot (ou d'un client non-navigateur). */
+function isBotRequest(event) {
+  try {
+    const h = (event && event.headers) || {};
+    const ua = h["user-agent"] || h["User-Agent"] || "";
+    if (!ua) return true; // un navigateur envoie toujours un User-Agent
+    return BOT_UA.test(ua);
+  } catch (_) {
+    return false;
+  }
+}
+
 /** true si l'erreur Airtable signifie « la table n'existe pas encore ».
     Airtable répond 404 (TABLE_NOT_FOUND / NOT_FOUND) sur une table inconnue. */
 function isMissingTable(err) {
@@ -332,6 +377,7 @@ module.exports = {
   SIGNUP_CODE,
   createRecord,
   todayKey,
+  isBotRequest,
   isMissingTable,
   findStatsDay,
   pingGeoTable,

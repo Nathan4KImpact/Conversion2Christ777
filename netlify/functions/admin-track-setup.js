@@ -27,6 +27,7 @@ const STATS_FIELDS = [
   { name: "Opt-in", type: "number", options: { precision: 0 }, description: "Formulaires de capture envoyés." },
   { name: "Prières", type: "number", options: { precision: 0 }, description: "Sessions arrivées sur la prière du salut." },
   { name: "Nouveau-nés", type: "number", options: { precision: 0 }, description: "Sessions ayant déclaré avoir prié." },
+  { name: "Bots", type: "number", options: { precision: 0 }, description: "Robots filtrés (indexation, IA, aperçus de liens). NON comptés dans les statistiques d'activation — affiché à part pour vérifier que le filtre fonctionne." },
 ];
 
 const GEO_FIELDS = [
@@ -55,6 +56,12 @@ exports.handler = async (event) => {
   try {
     await lib.findStatsDay(lib.todayKey());
     state.stats = "already";
+    // La table existe déjà, mais peut dater d'avant l'ajout d'une colonne
+    // (ex. « Bots », arrivée avec le filtrage des robots d'indexation).
+    // On complète ce qui manque, sans jamais toucher aux données existantes.
+    const added = await ensureFields(lib.STATS_TABLE, STATS_FIELDS);
+    if (added.length) state.statsFieldsAdded = added;
+    else if (added.failed) errors.push({ table: "Stats", detail: added.failed });
   } catch (err) {
     if (lib.isMissingTable(err)) {
       const r = await createTable(lib.STATS_TABLE, STATS_FIELDS, "Compteurs d'activation du tunnel, agrégés par jour. Aucune donnée personnelle : uniquement des nombres. Alimenté par /api/track.");
@@ -86,13 +93,46 @@ exports.handler = async (event) => {
   const already = state.stats === "already" && state.geo === "already";
   return lib.json(200, {
     ok: allOk,
-    already: already,
+    already: already && !(state.statsFieldsAdded && state.statsFieldsAdded.length),
     state: state,
     errors: errors.length ? errors : undefined,
     // le champ `detail` reste renseigné (utilisé par le front pour afficher un message brut)
     detail: errors[0] && (errors[0].detail || errors[0].error),
   });
 };
+
+/* Ajoute à une table existante les colonnes attendues qui lui manquent.
+   Renvoie la liste des colonnes ajoutées. Best effort : si le jeton n'a pas
+   le droit d'écrire le schéma, on renvoie l'erreur sans casser le reste. */
+async function ensureFields(tableName, expectedFields) {
+  const added = [];
+  let table;
+  try {
+    const meta = await lib.at("meta/bases/" + lib.BASE + "/tables");
+    table = (meta.tables || []).find((t) => t.name === tableName);
+  } catch (err) {
+    const d = err && err.data && err.data.error;
+    added.failed = (d && (d.message || d.type)) || "schema_read_failed";
+    return added;
+  }
+  if (!table) return added;
+
+  const existing = new Set((table.fields || []).map((f) => f.name));
+  for (const field of expectedFields) {
+    if (existing.has(field.name)) continue;
+    try {
+      await lib.at("meta/bases/" + lib.BASE + "/tables/" + table.id + "/fields", {
+        method: "POST",
+        body: JSON.stringify(field),
+      });
+      added.push(field.name);
+    } catch (err) {
+      const d = err && err.data && err.data.error;
+      added.failed = (d && (d.message || d.type)) || "field_create_failed";
+    }
+  }
+  return added;
+}
 
 async function createTable(name, fields, description) {
   try {

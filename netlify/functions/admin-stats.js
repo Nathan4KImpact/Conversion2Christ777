@@ -141,6 +141,9 @@ async function readActivation() {
   const inWindow = new Set(days);
 
   const fieldNames = Object.keys(lib.TRACK_FIELDS).map((k) => lib.TRACK_FIELDS[k]);
+  // Compteur des robots filtrés : hors tunnel (jamais dans le funnel), mais
+  // renvoyé à part pour rendre visible l'effet du filtre anti-crawlers.
+  let bots = 0;
   const totals = {};
   const todayCounts = {};
   const series = {};
@@ -155,6 +158,7 @@ async function readActivation() {
     const f = r.fields || {};
     const day = String(f["Jour"] || "").slice(0, 10);
     if (!day) return;
+    if (inWindow.has(day)) bots += Number(f["Bots"] || 0);
     fieldNames.forEach((name) => {
       const v = Number(f[name] || 0);
       if (!v) return;
@@ -171,6 +175,7 @@ async function readActivation() {
     totals,
     today: todayCounts,
     series,
+    bots,
     trackedDays: records.length,
   };
 }

@@ -44,6 +44,7 @@
       "act.today": "{n} aujourd'hui",
       "act.rate": "{p}% de l'étape précédente",
       "act.empty": "Aucune donnée encore : les compteurs se rempliront dès les premières visites.",
+      "act.bots": "🤖 {n} passage(s) de robots filtré(s) — non comptés ci-dessus (indexation, IA, aperçus de liens).",
       "act.setup.title": "Le suivi d'activation n'est pas encore actif",
       "act.setup.text": "Le tableau de bord ne voit aujourd'hui que les âmes ayant laissé leurs coordonnées. En activant le suivi, tu verras aussi combien de personnes ouvrent le site, lancent le quiz et le terminent — donc où le tunnel fuit. Aucune donnée personnelle n'est enregistrée : uniquement des compteurs par jour.",
       "act.setup.cta": "Activer le suivi",
@@ -148,6 +149,7 @@
       "act.today": "{n} today",
       "act.rate": "{p}% of previous step",
       "act.empty": "No data yet: counters will fill up from the first visits.",
+      "act.bots": "🤖 {n} bot visit(s) filtered out — not counted above (indexing, AI, link previews).",
       "act.setup.title": "Activation tracking is not enabled yet",
       "act.setup.text": "Right now the dashboard only sees souls who left their details. Enabling tracking also shows how many people open the site, start the quiz and complete it — so you can see where the funnel leaks. No personal data is stored: only daily counters.",
       "act.setup.cta": "Enable tracking",
@@ -489,8 +491,12 @@
         rate + "</div>";
     }).join("");
 
+    var botsNote = Number(a.bots || 0) > 0
+      ? '<p class="cell-sub act-bots">' + esc(t("act.bots", { n: Number(a.bots) })) + "</p>"
+      : "";
+
     host.innerHTML = '<div class="kpi-grid act-kpis">' + kpis + "</div>" +
-      '<div class="funnel act-funnel">' + funnel + "</div>";
+      '<div class="funnel act-funnel">' + funnel + "</div>" + botsNote;
   }
 
   function setupCardHtml(msg, ok) {
