@@ -172,6 +172,38 @@ même nombre de leads — mais appellent des décisions opposées.
 | `priere`        | `Prières`         | ouverture de `prier.html` |
 | `nouveau_ne`    | `Nouveau-nés`     | ouverture de `nouveau-ne.html` |
 
+### Filtrage des robots (indexation, IA, aperçus de liens)
+
+**Le problème :** les crawlers modernes exécutent le JavaScript. Googlebot, GPTBot
+ou Bytespider rendent la page et déclenchent donc le compteur `visite` exactement
+comme un vrai visiteur. Sans filtre, les statistiques mélangent machines et
+personnes — et le **taux de conversion devient faux** (dénominateur gonflé).
+
+**Trois couches de filtrage :**
+
+| Couche | Où | Ce qu'elle attrape |
+|--------|-----|--------------------|
+| 1. User-Agent | Serveur (`/api/track`) | Robots qui s'annoncent : moteurs de recherche, robots IA, SEO, aperçus de liens (WhatsApp, Facebook…), clients HTTP (`curl`, `python-requests`) |
+| 2. Automatisation | Navigateur (`track.js`) | `navigator.webdriver`, Puppeteer / Playwright / Selenium, Chrome headless — les robots déguisés en navigateur |
+| 3. Signal humain | Navigateur (`track.js`) | Ce qui reste : on ne compte une page qu'après **une interaction réelle** (défilement, clic, touche, toucher) **ou 2,5 s de présence à l'écran** |
+
+La couche 3 est la plus discriminante : un crawler rend la page, prend son
+instantané et repart — il ne défile pas et ne reste pas. Le critère « temps de
+présence » protège le visiteur qui lit sans rien toucher ; le critère
+« interaction » capte celui qui repart aussitôt (le clic précède la navigation).
+Les pages préchargées par le navigateur restent masquées : leur minuteur ne
+démarre jamais, elles ne sont donc pas comptées à tort.
+
+**Vérifier que le filtre fonctionne :** la colonne `Bots` de la table `Stats`
+compte les robots écartés, et le tableau de bord affiche sous l'entonnoir
+« 🤖 X passage(s) de robots filtré(s) ». Sans cette ligne, impossible de
+distinguer « le filtre marche » de « le site ne reçoit plus personne ».
+
+> La colonne `Bots` est ajoutée automatiquement aux installations existantes
+> en recliquant sur **« Activer le suivi »** dans le tableau de bord (nécessite
+> le scope `schema.bases:write`). Sinon, l'ajouter à la main dans Airtable :
+> table `Stats`, champ `Bots`, type Nombre (0 décimale).
+
 ### Vie privée
 
 **Aucune donnée personnelle n'est enregistrée** : ni IP, ni user agent, ni
@@ -207,6 +239,7 @@ token Airtable n'a pas le scope `schema.bases:write`. Deux options :
   | `Opt-in`        | Nombre (0 décimale)          |
   | `Prières`       | Nombre (0 décimale)          |
   | `Nouveau-nés`   | Nombre (0 décimale)          |
+  | `Bots`          | Nombre (0 décimale)          |
 
   **Table `Geo`** (origine des visiteurs — pays + ville, 1 fiche = 1 jour × pays × ville)
 

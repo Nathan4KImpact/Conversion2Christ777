@@ -489,6 +489,49 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     ou (b) éditer manuellement chaque module Gmail dans Make.com. Sans ça, les
     emails continueront à partir avec l'ancien contenu.
 
+- 2026-08-19 : **v23 — Filtrage des robots dans les statistiques d'activation** :
+  - **Problème repéré par le porteur** : certaines « ouvertures de session » dans
+    le tableau de bord semblaient venir de robots d'indexation. Confirmé : les
+    crawlers modernes (Googlebot, GPTBot, ClaudeBot, PerplexityBot, Bytespider…)
+    **exécutent le JavaScript**, rendent la page et déclenchent donc
+    `data-track="visite"` exactement comme un visiteur humain. Conséquence :
+    dénominateur gonflé → **taux de conversion du tunnel faussé**.
+  - **Couche 1 — User-Agent (serveur)** : liste de ~110 motifs dans
+    `netlify/edge-functions/track.js` (+ duplicata dans `netlify/functions/_lib.js`,
+    les runtimes Deno et Node ne partageant pas de module). Couvre moteurs de
+    recherche, robots IA/LLM, SEO/audit, aperçus de liens (WhatsApp, Facebook,
+    Discord…), navigateurs headless et clients HTTP (`curl`, `python-requests`,
+    `Go-http-client`…). **Un User-Agent vide est traité comme un robot** (un
+    navigateur en envoie toujours un).
+  - **Couche 2 — Automatisation (navigateur)** : `navigator.webdriver` (spec
+    WebDriver) + motifs headless/Puppeteer/Playwright/Selenium dans l'UA.
+    Attrape les robots déguisés en navigateur.
+  - **Couche 3 — Signal humain (navigateur)** : un évènement déclenché à
+    l'ouverture d'une page (`visite`, `priere`, `nouveau_ne`) n'est envoyé
+    qu'après **une interaction réelle** (scroll, pointerdown, keydown,
+    touchstart, wheel) **ou 2,5 s de présence avec l'onglet visible**. C'est la
+    couche la plus discriminante : un crawler rend, capture, repart — il ne
+    défile pas et ne reste pas. Le minuteur ne tourne que si
+    `visibilityState === "visible"`, donc les pages **préchargées/prérendues**
+    par le navigateur ne sont jamais comptées à tort. Les évènements appelés
+    explicitement depuis le code (`quiz_lance`, `quiz_termine`, `optin`)
+    résultent déjà d'une action utilisateur et partent directement.
+  - **Colonne `Bots`** ajoutée à la table `Stats` : les robots écartés y sont
+    comptés à part (jamais dans le funnel). Le tableau de bord affiche sous
+    l'entonnoir « 🤖 X passage(s) de robots filtré(s) » — sans cette ligne,
+    impossible de distinguer « le filtre marche » de « le site ne reçoit plus
+    personne ».
+  - **`admin-track-setup` étendu** : nouvelle fonction `ensureFields()` qui
+    ajoute à une table **déjà existante** les colonnes manquantes (via
+    `POST meta/bases/{base}/tables/{tableId}/fields`). Recliquer sur « Activer
+    le suivi » suffit donc à migrer une installation existante. Repli manuel
+    documenté dans `integrations/ADMIN.md`.
+  - **Validé** : 22 User-Agents de robots réels testés → 22 détectés ;
+    10 User-Agents de navigateurs réels (Chrome, Safari iOS, Firefox, Edge,
+    Samsung Internet, Opera…) → 0 faux positif.
+  - **RGPD inchangé** : le User-Agent est lu en mémoire pour la décision, il
+    n'est **jamais stocké**. Toujours aucune IP, aucun cookie, aucun traceur.
+
 - 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
   L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc
   confiance + page dédiée) et Sprint 0.5 « KPIs d'activation » (haut du tunnel).

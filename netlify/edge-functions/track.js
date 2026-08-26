@@ -155,6 +155,65 @@ async function incGeo(day, countryCode, countryName, city) {
   );
 }
 
+/* ---- Détection des robots (indexation, IA, aperçus, outils, scripts) ----
+
+   Pourquoi c'est nécessaire : les crawlers modernes exécutent le JavaScript.
+   Googlebot, GPTBot ou Bytespider rendent la page et déclenchent donc
+   `data-track="visite"` exactement comme un visiteur humain. Sans ce filtre,
+   les compteurs mélangent des machines et des personnes — et le taux de
+   conversion du tunnel devient faux (dénominateur gonflé).
+
+   Un robot bien élevé s'annonce dans son User-Agent : c'est le signal le plus
+   fiable et le moins coûteux. Complété côté navigateur (assets/js/track.js)
+   par la détection d'automatisation et l'attente d'un signal humain.
+
+   ⚠️ Cette liste est volontairement dupliquée dans netlify/functions/_lib.js
+   (repli Node) : les deux runtimes ne partagent pas de module. Toute mise à
+   jour doit être reportée dans les deux fichiers. */
+const BOT_UA = new RegExp(
+  [
+    // Familles génériques — couvre la majorité des robots qui s'annoncent
+    "bot\\b", "\\bbots\\b", "crawler", "crawling", "spider", "scrap(er|ing)",
+    "slurp", "archiver", "indexer", "monitor(ing)?", "validator", "analyz(er|e)",
+    // Moteurs de recherche
+    "googlebot", "google-inspectiontool", "storebot-google", "google-site-verification",
+    "bingbot", "bingpreview", "adidxbot", "msnbot", "yandex", "baiduspider",
+    "duckduckbot", "duckduckgo", "seznambot", "sogou", "exabot", "qwantify",
+    "petalbot", "applebot", "naver", "coccocbot",
+    // Robots IA / LLM
+    "gptbot", "chatgpt-user", "oai-searchbot", "ccbot", "anthropic-ai", "claudebot",
+    "claude-web", "perplexitybot", "perplexity-user", "bytespider", "amazonbot",
+    "cohere-ai", "diffbot", "meta-externalagent", "google-extended", "timpibot",
+    "youbot", "imagesiftbot", "omgili", "webzio",
+    // SEO / audit / veille
+    "ahrefs", "semrush", "mj12bot", "dotbot", "dataforseo", "blexbot", "serpstat",
+    "screaming ?frog", "sitebulb", "lighthouse", "pagespeed", "gtmetrix", "pingdom",
+    "uptimerobot", "statuscake", "site24x7", "newrelicpinger", "chrome-lighthouse",
+    // Aperçus de liens (réseaux sociaux, messageries)
+    "facebookexternalhit", "facebookcatalog", "facebot", "twitterbot", "linkedinbot",
+    "whatsapp", "telegrambot", "discordbot", "slackbot", "slack-imgproxy",
+    "pinterest", "redditbot", "embedly", "quora link preview", "skypeuripreview",
+    "vkshare", "tumblr", "nuzzel", "outbrain", "bitlybot", "flipboard",
+    "google-structured-data", "w3c_validator", "developers.google.com/\\+/web/snippet",
+    // Navigateurs sans interface / automatisation
+    "headless", "phantomjs", "slimerjs", "electron", "puppeteer", "playwright",
+    "selenium", "webdriver", "cypress",
+    // Clients HTTP / bibliothèques (jamais un vrai visiteur)
+    "python-requests", "python-urllib", "aiohttp", "httpx", "scrapy", "curl/",
+    "wget", "go-http-client", "java/", "okhttp", "apache-httpclient", "libwww-perl",
+    "axios/", "node-fetch", "got \\(", "guzzlehttp", "postmanruntime", "insomnia",
+    "restsharp", "httpie", "lwp::simple", "typhoeus", "faraday",
+  ].join("|"),
+  "i"
+);
+
+/** true si la requête vient d'un robot (ou d'un client non-navigateur). */
+function isBot(userAgent) {
+  // Un navigateur envoie toujours un User-Agent. Son absence est en soi un signal.
+  if (!userAgent) return true;
+  return BOT_UA.test(userAgent);
+}
+
 /* ---- Garde-fou anti-flood (par instance chaude, best effort) ---- */
 const _hits = new Map();
 function rateLimit(request, max, windowMs) {
@@ -180,6 +239,18 @@ function rateLimit(request, max, windowMs) {
 export default async (request, context) => {
   if (request.method !== "POST") return jsonResponse(405, { error: "method_not_allowed" });
   if (!rateLimit(request, 120, 60000)) return jsonResponse(200, { ok: false, reason: "rate_limited" });
+
+  // Robot : on ne compte pas dans les statistiques d'activation. On garde
+  // seulement un total agrégé à part, pour que le tableau de bord puisse
+  // montrer « X visites de robots filtrées » — sans quoi on ne saurait pas
+  // distinguer « le filtre marche » de « le site ne reçoit plus personne ».
+  if (isBot(request.headers.get("user-agent"))) {
+    if (TOKEN) {
+      // Best effort : si la colonne « Bots » n'existe pas encore, on ignore.
+      try { await incStats(todayKey(), "Bots"); } catch (_) { /* sans conséquence */ }
+    }
+    return jsonResponse(200, { ok: false, reason: "bot" });
+  }
 
   let body = {};
   try { body = await request.json(); } catch (_) { body = {}; }
