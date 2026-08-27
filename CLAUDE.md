@@ -532,6 +532,38 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - **RGPD inchangé** : le User-Agent est lu en mémoire pour la décision, il
     n'est **jamais stocké**. Toujours aucune IP, aucun cookie, aucun traceur.
 
+- 2026-08-19 : **v24 — Origine des visiteurs : bascule Humains / Robots** :
+  - **Suite de v23** : les robots étant désormais écartés *avant* d'atteindre la
+    table `Geo`, le porteur n'avait plus aucune visibilité sur leur provenance.
+    Or savoir **d'où viennent les crawlers** est utile (datacenters US/IE, etc.)
+    et permet de vérifier que le filtre vise juste.
+  - **Stockage** : colonne **`Bots`** ajoutée à la table `Geo`, à côté de
+    `Visites`. Les deux compteurs vivent sur la **même fiche** (même clé
+    `jour|pays|ville`) — pas de duplication de lignes, upsert inchangé.
+  - **Edge Function réordonnée** : le contrôle robot passe désormais **après**
+    la lecture du corps de requête (il faut connaître le type d'évènement pour
+    savoir s'il faut enregistrer l'origine). Un robot sur un évènement `visite`
+    incrémente `Geo.Bots` ; les humains incrémentent `Geo.Visites`. Aucun
+    mélange possible.
+  - **`/api/admin-geo`** renvoie deux jeux de même structure : l'audience
+    humaine à la racine (rétrocompatible) et l'audience robots sous `bots`.
+    **Deux classements indépendants** : trier sur les humains puis tronquer
+    masquerait un pays visité *uniquement* par des robots (et inversement).
+  - **Dashboard** : second sélecteur **👤 Humains / 🤖 Robots** à côté du
+    sélecteur Liste/Carte, mémorisé (`c2c_admin_geoaud`). La bascule est
+    **instantanée, sans appel réseau** — les deux jeux arrivent dans la même
+    réponse. Palette grise distincte en mode robots (barres et dots de la
+    carte) pour rendre toute confusion impossible, plus une note explicative.
+  - **`admin-track-setup`** : `ensureFields()` couvre maintenant aussi la table
+    `Geo` — recliquer sur « Activer le suivi » ajoute la colonne `Bots` à une
+    installation existante.
+  - **Validé** : jeu de test mixte (Paris 40h/3b, Lyon 12h/0b, Ashburn 1h/57b,
+    Dublin 0h/22b, origine inconnue 5h/8b) → les deux vues sont étanches,
+    Dublin (100 % robots) n'apparaît pas côté humains, Lyon (0 robot)
+    n'apparaît pas côté robots, totaux et « sans origine » séparés correctement.
+  - **RGPD inchangé** : toujours aucune IP, aucun cookie, uniquement des
+    compteurs agrégés par jour × pays × ville.
+
 - 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
   L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc
   confiance + page dédiée) et Sprint 0.5 « KPIs d'activation » (haut du tunnel).

@@ -126,7 +126,13 @@ function safe(s, max) {
     .slice(0, max || 80);
 }
 
-async function incGeo(day, countryCode, countryName, city) {
+/* Incrémente l'origine géographique du jour.
+   `column` vaut "Visites" (humains) ou "Bots" (robots filtrés) : les deux
+   comptent sur la MÊME fiche (même clé jour|pays|ville), dans deux colonnes
+   distinctes. Le tableau de bord peut ainsi basculer entre « humains seuls »
+   et « tout le trafic » sans dupliquer les lignes. */
+async function incGeo(day, countryCode, countryName, city, column) {
+  const col = column === "Bots" ? "Bots" : "Visites";
   const cc = safe(countryCode, 2).toUpperCase();
   if (!cc) return; // pas de pays connu → on saute le bonus géo (jamais bloquant)
   const cName = safe(countryName, 80);
@@ -135,10 +141,12 @@ async function incGeo(day, countryCode, countryName, city) {
 
   const rec = await findByFormula(GEO_TABLE, '{Clé}="' + key + '"');
   if (rec) {
-    const current = Number((rec.fields || {}).Visites || 0);
+    const current = Number((rec.fields || {})[col] || 0);
+    const patch = {};
+    patch[col] = current + 1;
     return airtable(
       BASE + "/" + encodeURIComponent(GEO_TABLE) + "/" + rec.id,
-      { method: "PATCH", body: JSON.stringify({ typecast: true, fields: { Visites: current + 1 } }) }
+      { method: "PATCH", body: JSON.stringify({ typecast: true, fields: patch }) }
     );
   }
   const fields = {
@@ -147,8 +155,8 @@ async function incGeo(day, countryCode, countryName, city) {
     "Pays code": cc,
     Pays: cName,
     Ville: cityName,
-    Visites: 1,
   };
+  fields[col] = 1;
   return airtable(
     BASE + "/" + encodeURIComponent(GEO_TABLE),
     { method: "POST", body: JSON.stringify({ typecast: true, fields: fields }) }
@@ -240,18 +248,6 @@ export default async (request, context) => {
   if (request.method !== "POST") return jsonResponse(405, { error: "method_not_allowed" });
   if (!rateLimit(request, 120, 60000)) return jsonResponse(200, { ok: false, reason: "rate_limited" });
 
-  // Robot : on ne compte pas dans les statistiques d'activation. On garde
-  // seulement un total agrégé à part, pour que le tableau de bord puisse
-  // montrer « X visites de robots filtrées » — sans quoi on ne saurait pas
-  // distinguer « le filtre marche » de « le site ne reçoit plus personne ».
-  if (isBot(request.headers.get("user-agent"))) {
-    if (TOKEN) {
-      // Best effort : si la colonne « Bots » n'existe pas encore, on ignore.
-      try { await incStats(todayKey(), "Bots"); } catch (_) { /* sans conséquence */ }
-    }
-    return jsonResponse(200, { ok: false, reason: "bot" });
-  }
-
   let body = {};
   try { body = await request.json(); } catch (_) { body = {}; }
   const evt = String(body.event || "");
@@ -261,6 +257,21 @@ export default async (request, context) => {
   if (!TOKEN) return jsonResponse(200, { ok: false, reason: "not_configured" });
 
   const day = todayKey();
+  const geo = (context && context.geo) || {};
+  const country = geo.country || {};
+
+  // Robot : jamais compté dans les statistiques d'activation ni dans les
+  // origines « humaines ». On le comptabilise à part (colonne « Bots » des
+  // tables Stats et Geo) pour deux raisons : vérifier que le filtre marche,
+  // et pouvoir afficher d'où vient le trafic robot si on le souhaite.
+  if (isBot(request.headers.get("user-agent"))) {
+    // Best effort : si les colonnes « Bots » n'existent pas encore, on ignore.
+    try { await incStats(day, "Bots"); } catch (_) { /* sans conséquence */ }
+    if (evt === "visite") {
+      try { await incGeo(day, country.code, country.name, geo.city, "Bots"); } catch (_) { /* idem */ }
+    }
+    return jsonResponse(200, { ok: false, reason: "bot" });
+  }
 
   // 1) Compteur global du jour (comportement historique).
   try {
@@ -276,10 +287,8 @@ export default async (request, context) => {
   //    (les autres évènements sont post-visite, même origine géographique).
   //    Table absente → on ignore silencieusement (ok:true renvoyé quand même).
   if (evt === "visite") {
-    const geo = (context && context.geo) || {};
-    const country = geo.country || {};
     try {
-      await incGeo(day, country.code, country.name, geo.city);
+      await incGeo(day, country.code, country.name, geo.city, "Visites");
     } catch (_) { /* jamais bloquant */ }
   }
 
