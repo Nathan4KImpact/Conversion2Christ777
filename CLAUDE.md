@@ -564,6 +564,41 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - **RGPD inchangé** : toujours aucune IP, aucun cookie, uniquement des
     compteurs agrégés par jour × pays × ville.
 
+- 2026-08-19 : **v25 — Confettis à la décision (prière du salut)** :
+  - **Pourquoi** : la prière du salut est le moment le plus important du tunnel.
+    Le hero de `nouveau-ne.html` l'annonçait déjà (« Le ciel est en fête pour
+    toi 🎉 ») sans que rien ne le rende visible. Les confettis marquent
+    l'instant.
+  - **`assets/js/confetti.js`** (nouveau, ~180 lignes, **zéro dépendance**) :
+    canvas temporaire créé à la volée puis **retiré du DOM** en fin
+    d'animation. Deux « canons » depuis les coins bas + seconde salve décalée
+    de 260 ms (la fête a du souffle, elle ne s'éteint pas d'un coup).
+    Particules avec gravité, traînée, rotation et **battement** (`scale` en
+    cosinus) qui simule un papier qui tourne sur lui-même. Palette de la
+    marque (or dominant, sarcelle, rouge, crème). ~18 % de confettis ronds
+    pour casser la régularité.
+  - **Accessibilité** : `prefers-reduced-motion` respecté — aucune animation
+    n'est créée si la personne a demandé à son système de les limiter. Le
+    message textuel porte déjà la joie, l'animation n'est qu'un bonus.
+    Canvas en `pointer-events:none` + `aria-hidden` : n'intercepte aucun clic,
+    invisible pour les lecteurs d'écran.
+  - **Performance** : `requestAnimationFrame`, particules mortes ignorées,
+    sortie d'écran = arrêt du calcul, filet de sécurité à 4,2 s (jamais
+    d'animation infinie), `devicePixelRatio` plafonné à 2.
+  - **Déclenchement déclaratif**, pour couvrir « partout ailleurs » :
+    - `<body data-confetti="auto">` → à l'ouverture de la page (utilisé sur
+      `nouveau-ne.html`, destination du CTA « J'ai prié »).
+    - `[data-confetti]` sur un élément → au clic. Utilisé sur le CTA WhatsApp
+      de `prier.html` : ce lien ouvre un **nouvel onglet**, la personne reste
+      donc sur la page et voit bien la célébration.
+    - `window.C2C_CONFETTI.celebrate()` depuis du code si besoin.
+  - **Une fois par session** (`sessionStorage`) sur le déclenchement auto :
+    rafraîchir ou revenir en arrière ne relance pas l'animation ; une nouvelle
+    visite, si.
+  - **Vérifié au navigateur** (Chromium 1280×860 et 390×844 DPR 2) : rendu
+    conforme, **0 canvas résiduel** après animation (pas de fuite DOM),
+    **0 canvas créé** en mode `prefers-reduced-motion`.
+
 - 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
   L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc
   confiance + page dédiée) et Sprint 0.5 « KPIs d'activation » (haut du tunnel).
