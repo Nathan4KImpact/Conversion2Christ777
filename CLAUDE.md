@@ -599,6 +599,45 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     conforme, **0 canvas résiduel** après animation (pas de fuite DOM),
     **0 canvas créé** en mode `prefers-reduced-motion`.
 
+- 2026-08-19 : **v26 — « Parler à Dieu » dès la landing + coche animée sur merci** :
+  - **Le problème (soulevé par le porteur)** : une personne devait traverser
+    tout le tunnel (landing → quiz → opt-in → merci → prier) avant qu'on lui
+    propose de s'adresser à Dieu. Or quelqu'un peut être touché **dès la
+    première section** — et repartir sans qu'on lui ait rien offert.
+  - **`assets/js/talk-to-god.js`** (nouveau, zéro dépendance) : bouton flottant
+    discret + modale, présents sur les pages d'entrée (`index`, `quiz`,
+    `temoignages`, `histoire`, `optin`, `merci`). **Auto-exclusion** des pages
+    où ce serait redondant (`prier`, `nouveau-ne`, `grandir`, `fondations`,
+    `admin`) via un test sur `location.pathname`.
+  - **Choix du mot** : « Parler à Dieu », jamais « Prier ». *Prier* suppose de
+    savoir faire, d'être « du côté des croyants » ; *parler* n'exige rien —
+    c'est une conversation, pas un rite. Le persona P5 (sceptique) et le P4
+    (musulman) peuvent l'aborder sans se sentir sommés d'adhérer.
+  - **Ce n'est PAS la prière du salut** : la modale propose un **premier
+    contact** sans engagement (« Dieu, je ne sais pas bien comment te
+    parler… »). La prière du salut reste sur `prier.html`, comme aboutissement,
+    accessible via « Aller plus loin ».
+  - **Entonnoir préservé** : le CTA « Je viens de lui parler » émet
+    l'évènement `priere` **avant** de rediriger vers `nouveau-ne.html`, pour
+    que l'ordre (prière → nouveau-né) reste cohérent même quand la personne
+    n'est jamais passée par `prier.html`. `track.js` ajouté à `merci.html`
+    (il y manquait, l'évènement n'aurait pas été émis depuis cette page).
+  - **Accessibilité** : `role="dialog"` + `aria-modal`, fermeture par Échap ou
+    clic sur le voile, **piège à focus** minimal (la tabulation reste dans la
+    boîte), focus rendu à l'élément d'origine à la fermeture, défilement de
+    l'arrière-plan bloqué, `prefers-reduced-motion` respecté.
+  - **Correctif de contraste** : `.btn-ghost` est conçu pour les fonds sombres
+    (hero) — sur le blanc de la modale son texte disparaissait. Redéfini
+    localement en sarcelle sur bordure claire.
+  - **Coche animée sur `merci.html`** (SVG + `stroke-dashoffset`) : anneau or
+    qui se dessine, puis coche sarcelle. **Volontairement différente des
+    confettis** — l'opt-in se *confirme*, la décision se *célèbre*. Utiliser le
+    même effet aux deux endroits diluerait le signal du moment le plus
+    important du tunnel.
+  - **Vérifié au navigateur** (Chromium) : FAB visible sur la landing et absent
+    des pages exclues, modale FR et EN, Échap, rendu mobile 390×844, coche
+    animée sur `merci`. Parité i18n 423 clés FR / 423 EN.
+
 - 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
   L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc
   confiance + page dédiée) et Sprint 0.5 « KPIs d'activation » (haut du tunnel).
