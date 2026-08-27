@@ -369,6 +369,17 @@ const I18N = {
     "book.done": "🙏 C'est noté ! Tu recevras une confirmation par email. À très vite.",
     "book.whatsapp": "Je préfère réserver via WhatsApp →",
 
+    /* --- « Parler à Dieu » (porte discrète, présente dès la landing) --- */
+    "ttg.fab": "Parler à Dieu",
+    "ttg.eyebrow": "Quand tu veux",
+    "ttg.title": "Tu peux lui parler maintenant",
+    "ttg.intro": "Pas besoin de mots justes. Pas besoin d'être prêt(e). Il écoute déjà. Prends un instant, et dis-lui simplement ce que tu portes.",
+    "ttg.prayer": "Dieu, je ne sais pas bien comment te parler.<br>Mais si tu es là, je veux te dire ce que je porte.<br>Voici ma vie, telle qu'elle est.<br>Si tu m'entends, montre-moi qui tu es.<br>Merci de m'écouter.",
+    "ttg.hint": "Prends le temps qu'il te faut. Personne ne te regarde.",
+    "ttg.done": "Je viens de lui parler",
+    "ttg.more": "Aller plus loin",
+    "ttg.later": "Plus tard",
+
     /* --- Prière / décision --- */
     "pray.eyebrow": "Le moment de la décision",
     "pray.title": "La prière qui change tout",
@@ -831,6 +842,16 @@ const I18N = {
     "book.sending": "Sending…",
     "book.done": "🙏 All set! You'll get an email confirmation. See you soon.",
     "book.whatsapp": "I'd rather book via WhatsApp →",
+
+    "ttg.fab": "Talk to God",
+    "ttg.eyebrow": "Whenever you want",
+    "ttg.title": "You can talk to Him right now",
+    "ttg.intro": "No need for the right words. No need to be ready. He is already listening. Take a moment, and simply tell Him what you're carrying.",
+    "ttg.prayer": "God, I don't really know how to talk to you.<br>But if you are there, I want to tell you what I carry.<br>Here is my life, just as it is.<br>If you hear me, show me who you are.<br>Thank you for listening.",
+    "ttg.hint": "Take all the time you need. No one is watching.",
+    "ttg.done": "I've just talked to Him",
+    "ttg.more": "Go further",
+    "ttg.later": "Later",
 
     "pray.eyebrow": "The moment of decision",
     "pray.title": "The prayer that changes everything",
