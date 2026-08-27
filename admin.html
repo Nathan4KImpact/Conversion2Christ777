@@ -123,9 +123,15 @@
           <h2 data-ai="geo.title">Origine des visiteurs — 30 derniers jours</h2>
           <span class="panel-hint" data-ai="geo.hint">Pays et ville détectés par Netlify à partir de l'IP (jamais stockée). Aucune donnée personnelle.</span>
         </div>
-        <div class="view-toggle" id="geo-view-toggle" role="group" aria-label="Mode d'affichage">
-          <button data-view="list" data-ai="geo.view.list">Liste</button>
-          <button data-view="map" data-ai="geo.view.map">Carte</button>
+        <div class="geo-toggles">
+          <div class="view-toggle" id="geo-audience-toggle" role="group" aria-label="Audience">
+            <button data-audience="humans" data-ai="geo.aud.humans">👤 Humains</button>
+            <button data-audience="bots" data-ai="geo.aud.bots">🤖 Robots</button>
+          </div>
+          <div class="view-toggle" id="geo-view-toggle" role="group" aria-label="Mode d'affichage">
+            <button data-view="list" data-ai="geo.view.list">Liste</button>
+            <button data-view="map" data-ai="geo.view.map">Carte</button>
+          </div>
         </div>
       </div>
       <div id="geo-body"></div>

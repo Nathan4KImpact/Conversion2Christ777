@@ -54,6 +54,9 @@ serveur** (variable d'environnement) ; le navigateur ne reçoit que ce qu'un
   (J1/J3/J5/J7).
 - **Origine des visiteurs (30 j)** : top pays + top villes, détectés par
   Netlify côté serveur à partir de l'IP (jamais enregistrée). Rien à consentir.
+  Sélecteur **👤 Humains / 🤖 Robots** : la même vue (liste ou carte) affiche
+  soit le trafic humain filtré, soit le trafic automatisé écarté — utile pour
+  repérer d'où viennent les crawlers (souvent des datacenters : US, IE…).
 - **Évolution** des nouvelles âmes sur 30 jours.
 - **À relancer en priorité** : leads sans RDV depuis ≥ 7 j, avec boutons
   WhatsApp / Email pré-remplis et « marquer Prière faite ».
@@ -251,6 +254,7 @@ token Airtable n'a pas le scope `schema.bases:write`. Deux options :
   | `Pays`        | Texte court (ex. `France`)   |
   | `Ville`       | Texte court                  |
   | `Visites`     | Nombre (0 décimale)          |
+  | `Bots`        | Nombre (0 décimale)          |
 
 ### Notes techniques
 

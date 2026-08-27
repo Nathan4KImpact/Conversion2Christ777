@@ -398,7 +398,13 @@
   transition: fill-opacity 120ms ease, transform 120ms ease;
 }
 .gm-dot:hover { fill-opacity: 0.9; }
+/* Mode robots : gris neutre, pour ne jamais confondre avec le trafic humain. */
+.gm-dot-bot { fill: #5b6478; }
 .geo-map-note { margin: 8px 0 0; }
+.geo-bots-note { margin: -8px 0 14px; font-style: italic; }
+
+/* Les deux sélecteurs du bloc géo (audience + mode d'affichage) */
+.geo-toggles { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
 /* ---------- Vue « Fiches » — grille de cartes leads ---------- */
 .leads-cards {

@@ -11,6 +11,7 @@
   var LS_LANG = "c2c_lang";
   var LS_LEADSVIEW = "c2c_admin_leadsview"; // "table" (défaut) | "cards"
   var LS_GEOVIEW = "c2c_admin_geoview";     // "list" (défaut) | "map"
+  var LS_GEOAUD = "c2c_admin_geoaud";       // "humans" (défaut) | "bots"
 
   /* ---------------- i18n ---------------- */
   var I18N = {
@@ -61,6 +62,10 @@
       "geo.missing": "La table « Geo » n'existe pas encore : clique sur « Activer le suivi » ci-dessus pour la créer, puis reviens ici.",
       "geo.view.list": "Liste",
       "geo.view.map": "Carte",
+      "geo.aud.humans": "👤 Humains",
+      "geo.aud.bots": "🤖 Robots",
+      "geo.bots.empty": "Aucun robot détecté sur les 30 derniers jours depuis une origine identifiable.",
+      "geo.bots.note": "Trafic automatisé écarté des statistiques (indexation, IA, aperçus de liens). Affiché ici à titre informatif.",
       "geo.map.unplaced": "{n} pays non placé(s) sur la carte (pas de coordonnées dans la table)",
       "leads.view.table": "Tableau",
       "leads.view.cards": "Fiches",
@@ -166,6 +171,10 @@
       "geo.missing": "The “Geo” table doesn't exist yet: click “Enable tracking” above to create it, then come back here.",
       "geo.view.list": "List",
       "geo.view.map": "Map",
+      "geo.aud.humans": "👤 Humans",
+      "geo.aud.bots": "🤖 Bots",
+      "geo.bots.empty": "No bots detected over the last 30 days from an identifiable origin.",
+      "geo.bots.note": "Automated traffic excluded from the statistics (indexing, AI, link previews). Shown here for information only.",
       "geo.map.unplaced": "{n} country/countries not shown on map (no coordinates)",
       "leads.view.table": "Table",
       "leads.view.cards": "Cards",
@@ -260,6 +269,7 @@
   var lastGeo = null; // conservé pour re-rendre au changement de vue sans requête
   var leadsView = localStorage.getItem(LS_LEADSVIEW) === "cards" ? "cards" : "table";
   var geoView = localStorage.getItem(LS_GEOVIEW) === "map" ? "map" : "list";
+  var geoAudience = localStorage.getItem(LS_GEOAUD) === "bots" ? "bots" : "humans";
 
   /* ---------------- helpers DOM ---------------- */
   function $(id) { return document.getElementById(id); }
@@ -549,43 +559,56 @@
     var host = $("geo-body");
     if (!host) return;
     syncViewToggle("geo-view-toggle", geoView);
-    var data = lastGeo;
-    if (!data || data.ok === false) {
-      var msg = (data && data.reason === "geo_table_missing") ? t("geo.missing") : t("geo.empty");
+    syncViewToggle("geo-audience-toggle", geoAudience, "audience");
+    var raw = lastGeo;
+    if (!raw || raw.ok === false) {
+      var msg = (raw && raw.reason === "geo_table_missing") ? t("geo.missing") : t("geo.empty");
       host.innerHTML = '<p class="cell-sub">' + esc(msg) + "</p>";
       return;
     }
+
+    // Les deux audiences ont exactement la même forme : on bascule la source
+    // et tout le rendu en aval (liste, carte, résumé) reste inchangé.
+    var isBots = geoAudience === "bots";
+    var data = isBots ? (raw.bots || {}) : raw;
+
     var countries = data.topCountries || [];
     var cities = data.topCities || [];
     if (!countries.length && !cities.length) {
-      host.innerHTML = '<p class="cell-sub">' + esc(t("geo.empty")) + "</p>";
+      host.innerHTML = '<p class="cell-sub">' + esc(t(isBots ? "geo.bots.empty" : "geo.empty")) + "</p>";
       return;
     }
 
     var summary = t("geo.summary", { v: data.totalVisits || 0, c: data.countries || 0, t: data.cities || 0 });
     var unresolved = data.unresolved ? ' · <span class="cell-sub">' +
       esc(t("geo.unresolved", { n: data.unresolved })) + "</span>" : "";
+    var note = isBots ? '<p class="cell-sub geo-bots-note">' + esc(t("geo.bots.note")) + "</p>" : "";
 
-    var body = geoView === "map" ? renderGeoMap(countries) : renderGeoList(countries, cities);
-    host.innerHTML = '<p class="geo-summary">' + esc(summary) + unresolved + "</p>" + body;
+    var body = geoView === "map"
+      ? renderGeoMap(countries, isBots)
+      : renderGeoList(countries, cities, isBots);
+    host.innerHTML = '<p class="geo-summary">' + esc(summary) + unresolved + "</p>" + note + body;
   }
 
-  function renderGeoList(countries, cities) {
+  function renderGeoList(countries, cities, isBots) {
     var maxC = Math.max.apply(null, countries.map(function (r) { return r.count; }).concat([1]));
     var maxV = Math.max.apply(null, cities.map(function (r) { return r.count; }).concat([1]));
+    // Palette distincte en mode robots : impossible de confondre les deux vues.
+    var colC = isBots ? "#5b6478" : "var(--teal)";
+    var colV = isBots ? "#8a93a6" : "var(--gold-deep)";
 
     function countryRow(r) {
       var pct = Math.round((r.count / maxC) * 100);
       var lbl = flagPill(r.code) + " " + esc(r.name || r.code);
       return '<div class="bar-row"><span class="bar-label" title="' + esc(r.name || r.code) + '">' + lbl + "</span>" +
-        '<span class="bar-track"><span class="bar-fill" style="width:' + pct + '%;background:var(--teal)"></span></span>' +
+        '<span class="bar-track"><span class="bar-fill" style="width:' + pct + "%;background:" + colC + '"></span></span>' +
         '<span class="bar-val">' + r.count + "</span></div>";
     }
     function cityRow(r) {
       var pct = Math.round((r.count / maxV) * 100);
       var lbl = flagPill(r.code) + " " + esc(r.city);
       return '<div class="bar-row"><span class="bar-label" title="' + esc(r.city + " — " + (r.country || r.code)) + '">' + lbl + "</span>" +
-        '<span class="bar-track"><span class="bar-fill" style="width:' + pct + '%;background:var(--gold-deep)"></span></span>' +
+        '<span class="bar-track"><span class="bar-fill" style="width:' + pct + "%;background:" + colV + '"></span></span>' +
         '<span class="bar-val">' + r.count + "</span></div>";
     }
 
@@ -601,7 +624,7 @@
      Natural Earth 110m simplifié (assets/js/admin-data.js), dots aux centroïdes
      des pays, rayon proportionnel à √(visites) — comparaison visuelle plus juste
      qu'une échelle linéaire. */
-  function renderGeoMap(countries) {
+  function renderGeoMap(countries, isBots) {
     var data = (window.C2C_ADMIN_DATA || {});
     var land = data.WORLD_LAND_PATH || "";
     var centroids = data.COUNTRY_CENTROIDS || {};
@@ -625,7 +648,8 @@
       var xy = project(c[0], c[1]);
       var rad = radius(r.count);
       var name = (r.name || r.code) + " — " + r.count;
-      return '<circle class="gm-dot" cx="' + xy[0] + '" cy="' + xy[1] + '" r="' + rad + '">' +
+      return '<circle class="gm-dot' + (isBots ? " gm-dot-bot" : "") + '" cx="' + xy[0] +
+        '" cy="' + xy[1] + '" r="' + rad + '">' +
         '<title>' + esc(name) + "</title></circle>";
     }).join("");
 
@@ -641,10 +665,11 @@
   }
 
   /* Positionne le bon bouton comme actif dans un toggle de vue. */
-  function syncViewToggle(hostId, current) {
+  function syncViewToggle(hostId, current, attr) {
     var host = $(hostId); if (!host) return;
-    host.querySelectorAll("button[data-view]").forEach(function (b) {
-      b.classList.toggle("active", b.getAttribute("data-view") === current);
+    var name = "data-" + (attr || "view");
+    host.querySelectorAll("button[" + name + "]").forEach(function (b) {
+      b.classList.toggle("active", b.getAttribute(name) === current);
     });
   }
 
@@ -884,6 +909,14 @@
       geoView = b.getAttribute("data-view") === "map" ? "map" : "list";
       localStorage.setItem(LS_GEOVIEW, geoView);
       renderGeo(); // re-rend depuis lastGeo, pas de requête réseau
+    });
+    // Toggle d'audience (origine géo : Humains / Robots)
+    $("geo-audience-toggle").addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-audience]");
+      if (!b) return;
+      geoAudience = b.getAttribute("data-audience") === "bots" ? "bots" : "humans";
+      localStorage.setItem(LS_GEOAUD, geoAudience);
+      renderGeo(); // les deux jeux sont déjà dans lastGeo : aucun appel réseau
     });
 
     document.querySelectorAll(".lang-switch button").forEach(function (b) {

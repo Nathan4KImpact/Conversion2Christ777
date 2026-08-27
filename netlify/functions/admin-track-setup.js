@@ -40,7 +40,8 @@ const GEO_FIELDS = [
   { name: "Pays code", type: "singleLineText", description: "Code ISO 3166-1 alpha-2 (ex. FR)." },
   { name: "Pays", type: "singleLineText", description: "Nom du pays (ex. France)." },
   { name: "Ville", type: "singleLineText", description: "Ville détectée à partir de l'IP par Netlify (jamais l'IP elle-même)." },
-  { name: "Visites", type: "number", options: { precision: 0 }, description: "Nombre de sessions ce jour, depuis cette origine." },
+  { name: "Visites", type: "number", options: { precision: 0 }, description: "Sessions humaines ce jour, depuis cette origine." },
+  { name: "Bots", type: "number", options: { precision: 0 }, description: "Robots filtrés ce jour, depuis cette origine. Comptés à part : jamais mélangés aux visites humaines." },
 ];
 
 exports.handler = async (event) => {
@@ -77,6 +78,10 @@ exports.handler = async (event) => {
   try {
     await lib.pingGeoTable();
     state.geo = "already";
+    // Idem Stats : compléter les colonnes arrivées après la création (« Bots »).
+    const addedGeo = await ensureFields(lib.GEO_TABLE, GEO_FIELDS);
+    if (addedGeo.length) state.geoFieldsAdded = addedGeo;
+    else if (addedGeo.failed) errors.push({ table: "Geo", detail: addedGeo.failed });
   } catch (err) {
     if (lib.isMissingTable(err)) {
       const r = await createTable(lib.GEO_TABLE, GEO_FIELDS, "Origine des visiteurs : compteurs agrégés par (jour × pays × ville). Alimenté par l'Edge Function /api/track à partir de context.geo (Netlify). Aucune IP, aucun identifiant, aucun cookie.");
@@ -93,7 +98,9 @@ exports.handler = async (event) => {
   const already = state.stats === "already" && state.geo === "already";
   return lib.json(200, {
     ok: allOk,
-    already: already && !(state.statsFieldsAdded && state.statsFieldsAdded.length),
+    already: already
+      && !(state.statsFieldsAdded && state.statsFieldsAdded.length)
+      && !(state.geoFieldsAdded && state.geoFieldsAdded.length),
     state: state,
     errors: errors.length ? errors : undefined,
     // le champ `detail` reste renseigné (utilisé par le front pour afficher un message brut)
