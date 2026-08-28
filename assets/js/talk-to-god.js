@@ -135,12 +135,16 @@
   });
 
   root.querySelector("#ttg-done").addEventListener("click", function () {
-    // On marque le passage par la prière AVANT la redirection, pour que
-    // l'entonnoir garde son ordre (prière → nouveau-né) même quand la
-    // personne n'est jamais passée par `prier.html`.
-    try {
-      if (window.C2C_TRACK) window.C2C_TRACK.send("priere");
-    } catch (_) {}
-    window.location.href = "nouveau-ne.html";
+    // Direction le quiz, pas `nouveau-ne.html` : ce premier échange n'est pas
+    // la prière du salut. Envoyer quelqu'un sur « Tu viens de naître de
+    // nouveau » après une simple conversation, ce serait décider à sa place.
+    // Le quiz poursuit le chemin sans rien présumer, et le segmente.
+    //
+    // Aucun évènement `priere` n'est émis ici, pour la même raison : ce
+    // compteur mesure les arrivées sur la prière du salut. L'alimenter depuis
+    // ce bouton gonflerait le bas de l'entonnoir avec des personnes qui n'en
+    // sont pas là — et casserait la lecture « chaque étape est un
+    // sous-ensemble de la précédente », d'où viennent les taux de passage.
+    window.location.href = "quiz.html";
   });
 })();

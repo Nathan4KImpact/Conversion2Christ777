@@ -617,11 +617,20 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     contact** sans engagement (« Dieu, je ne sais pas bien comment te
     parler… »). La prière du salut reste sur `prier.html`, comme aboutissement,
     accessible via « Aller plus loin ».
-  - **Entonnoir préservé** : le CTA « Je viens de lui parler » émet
-    l'évènement `priere` **avant** de rediriger vers `nouveau-ne.html`, pour
-    que l'ordre (prière → nouveau-né) reste cohérent même quand la personne
-    n'est jamais passée par `prier.html`. `track.js` ajouté à `merci.html`
-    (il y manquait, l'évènement n'aurait pas été émis depuis cette page).
+  - **Destination du CTA « Je viens de lui parler » → `quiz.html`** (choix du
+    porteur, et cohérent avec la nature du geste). Envoyer quelqu'un sur
+    `nouveau-ne.html` (« Tu viens de naître de nouveau ») après une simple
+    conversation reviendrait à **décider à sa place**. Le quiz poursuit le
+    chemin sans rien présumer — et le segmente au passage.
+  - **Aucun évènement `priere` émis depuis ce bouton** : ce compteur mesure
+    les arrivées sur la prière du salut. L'alimenter ici gonflerait le bas de
+    l'entonnoir avec des personnes qui n'en sont pas là, et casserait la
+    lecture « chaque étape est un sous-ensemble de la précédente » — d'où
+    viennent les taux de passage. `track.js` retiré de `merci.html` : il n'y
+    avait été ajouté que pour cet évènement, il y serait désormais du code mort.
+    ⚠️ **Conséquence assumée** : l'usage de « Parler à Dieu » n'est pas mesuré.
+    Le mesurer proprement demanderait un évènement dédié (`parler_dieu`) et sa
+    colonne dans la table `Stats` — faisable via `ensureFields()`, à décider.
   - **Accessibilité** : `role="dialog"` + `aria-modal`, fermeture par Échap ou
     clic sur le voile, **piège à focus** minimal (la tabulation reste dans la
     boîte), focus rendu à l'élément d'origine à la fermeture, défilement de
