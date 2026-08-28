@@ -377,8 +377,11 @@ const I18N = {
     "ttg.prayer": "Dieu, je ne sais pas bien comment te parler.<br>Mais si tu es là, je veux te dire ce que je porte.<br>Voici ma vie, telle qu'elle est.<br>Si tu m'entends, montre-moi qui tu es.<br>Merci de m'écouter.",
     "ttg.hint": "Prends le temps qu'il te faut. Personne ne te regarde.",
     "ttg.done": "Je viens de lui parler",
-    "ttg.more": "Aller plus loin",
+    "ttg.more": "Je veux prier pour étancher ma soif intérieure",
     "ttg.later": "Plus tard",
+    "ttg.band.title": "Tu n'as pas besoin d'attendre la fin de ta lecture",
+    "ttg.band.sub": "Si quelque chose s'éveille en toi maintenant, tu peux lui parler. Là, où tu es.",
+    "ttg.band.cta": "Parler à Dieu",
 
     /* --- Prière / décision --- */
     "pray.eyebrow": "Le moment de la décision",
@@ -850,8 +853,11 @@ const I18N = {
     "ttg.prayer": "God, I don't really know how to talk to you.<br>But if you are there, I want to tell you what I carry.<br>Here is my life, just as it is.<br>If you hear me, show me who you are.<br>Thank you for listening.",
     "ttg.hint": "Take all the time you need. No one is watching.",
     "ttg.done": "I've just talked to Him",
-    "ttg.more": "Go further",
+    "ttg.more": "I want to pray, to quench my inner thirst",
     "ttg.later": "Later",
+    "ttg.band.title": "You don't have to wait until you've read it all",
+    "ttg.band.sub": "If something is stirring in you right now, you can talk to Him. Right where you are.",
+    "ttg.band.cta": "Talk to God",
 
     "pray.eyebrow": "The moment of decision",
     "pray.title": "The prayer that changes everything",

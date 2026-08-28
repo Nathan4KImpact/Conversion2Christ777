@@ -615,13 +615,30 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     (musulman) peuvent l'aborder sans se sentir sommés d'adhérer.
   - **Ce n'est PAS la prière du salut** : la modale propose un **premier
     contact** sans engagement (« Dieu, je ne sais pas bien comment te
-    parler… »). La prière du salut reste sur `prier.html`, comme aboutissement,
-    accessible via « Aller plus loin ».
-  - **Entonnoir préservé** : le CTA « Je viens de lui parler » émet
-    l'évènement `priere` **avant** de rediriger vers `nouveau-ne.html`, pour
-    que l'ordre (prière → nouveau-né) reste cohérent même quand la personne
-    n'est jamais passée par `prier.html`. `track.js` ajouté à `merci.html`
-    (il y manquait, l'évènement n'aurait pas été émis depuis cette page).
+    parler… »). La prière du salut reste sur `prier.html`, comme aboutissement.
+  - **Effet de levier voulu par le porteur** : le second bouton de la modale
+    pointe vers `prier.html`. Comme la modale est présente sur toutes les pages
+    d'entrée, la prière du salut devient atteignable **en deux clics depuis
+    n'importe où**, au lieu d'être réservée au bout du tunnel. Libellé retenu :
+    **« Je veux prier pour étancher ma soif intérieure »** (EN : « I want to
+    pray, to quench my inner thirst ») — reprend le fil de la *soif* qui
+    traverse tout le site (quiz « Quelle est la source de ta soif ? », Jn 4:14).
+    Le mot « prier » est assumé **à ce stade seulement** : la personne a déjà
+    ouvert la modale, elle n'est plus au seuil.
+  - **Destination du CTA « Je viens de lui parler » → `quiz.html`** (choix du
+    porteur, et cohérent avec la nature du geste). Envoyer quelqu'un sur
+    `nouveau-ne.html` (« Tu viens de naître de nouveau ») après une simple
+    conversation reviendrait à **décider à sa place**. Le quiz poursuit le
+    chemin sans rien présumer — et le segmente au passage.
+  - **Aucun évènement `priere` émis depuis ce bouton** : ce compteur mesure
+    les arrivées sur la prière du salut. L'alimenter ici gonflerait le bas de
+    l'entonnoir avec des personnes qui n'en sont pas là, et casserait la
+    lecture « chaque étape est un sous-ensemble de la précédente » — d'où
+    viennent les taux de passage. `track.js` retiré de `merci.html` : il n'y
+    avait été ajouté que pour cet évènement, il y serait désormais du code mort.
+    ⚠️ **Conséquence assumée** : l'usage de « Parler à Dieu » n'est pas mesuré.
+    Le mesurer proprement demanderait un évènement dédié (`parler_dieu`) et sa
+    colonne dans la table `Stats` — faisable via `ensureFields()`, à décider.
   - **Accessibilité** : `role="dialog"` + `aria-modal`, fermeture par Échap ou
     clic sur le voile, **piège à focus** minimal (la tabulation reste dans la
     boîte), focus rendu à l'élément d'origine à la fermeture, défilement de
@@ -634,9 +651,23 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     confettis** — l'opt-in se *confirme*, la décision se *célèbre*. Utiliser le
     même effet aux deux endroits diluerait le signal du moment le plus
     important du tunnel.
-  - **Vérifié au navigateur** (Chromium) : FAB visible sur la landing et absent
-    des pages exclues, modale FR et EN, Échap, rendu mobile 390×844, coche
-    animée sur `merci`. Parité i18n 423 clés FR / 423 EN.
+  - **MAJ landing (collision avec le chat)** : le porteur a déjà un bouton
+    flottant Chatbase en bas à droite sur `index.html`. Deux boutons flottants
+    au même endroit = collision. Plutôt que de déplacer le nôtre en bas à
+    gauche (deux pastilles qui se disputent l'écran), la landing reçoit une
+    **invitation intégrée au fil de la page** — un bandeau placé juste après
+    « Salut · Guérison · Paix », c'est-à-dire **au moment où Christ vient
+    d'être présenté comme une Personne**, donc là où quelque chose peut
+    s'éveiller. Meilleur éditorialement qu'un bouton permanent : l'invitation
+    arrive quand elle a du sens.
+  - **Mécanisme** : `talk-to-god.js` détecte `[data-ttg-open]` dans la page.
+    S'il en trouve, il s'y lie et **ne crée pas** le bouton flottant ; sinon
+    il retombe sur le comportement par défaut. Ajouter une porte ailleurs se
+    résume donc à poser cet attribut sur n'importe quel élément.
+  - **Vérifié au navigateur** (Chromium) : landing → bandeau présent, bouton
+    flottant **absent** (place libre pour le chat) ; FAB conservé sur `quiz`,
+    `histoire`, `merci` ; absent des pages exclues ; modale FR et EN, Échap,
+    rendu mobile 390×844 ; coche animée sur `merci`. Parité i18n 426/426.
 
 - 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
   L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc

@@ -32,14 +32,23 @@
 
   /* ---------- Markup ---------- */
 
+  /* Certaines pages fournissent déjà leur propre déclencheur, intégré dans le
+     fil du contenu (`[data-ttg-open]`). C'est le cas de la landing, où un
+     bouton flottant entrerait en collision avec celui du chat. Dans ce cas on
+     n'ajoute pas le bouton flottant : la page a déjà sa porte. */
+  var inlineTriggers = document.querySelectorAll("[data-ttg-open]");
+  var useFab = inlineTriggers.length === 0;
+
   function build() {
     var wrap = document.createElement("div");
     wrap.className = "ttg";
     wrap.innerHTML =
-      '<button type="button" class="ttg-fab" id="ttg-open" aria-haspopup="dialog">' +
-        '<span class="ttg-fab-icon" aria-hidden="true">🕊️</span>' +
-        '<span class="ttg-fab-label" data-i18n="ttg.fab">Parler à Dieu</span>' +
-      "</button>" +
+      (useFab
+        ? '<button type="button" class="ttg-fab" id="ttg-open" aria-haspopup="dialog">' +
+            '<span class="ttg-fab-icon" aria-hidden="true">🕊️</span>' +
+            '<span class="ttg-fab-label" data-i18n="ttg.fab">Parler à Dieu</span>' +
+          "</button>"
+        : "") +
 
       '<div class="ttg-overlay" id="ttg-overlay" hidden>' +
         '<div class="ttg-modal" role="dialog" aria-modal="true" aria-labelledby="ttg-title">' +
@@ -54,7 +63,7 @@
 
           '<div class="ttg-actions">' +
             '<button type="button" class="btn btn-primary btn-block" id="ttg-done" data-i18n="ttg.done">Je viens de lui parler</button>' +
-            '<a class="btn btn-ghost btn-block mt-2" href="prier.html" data-i18n="ttg.more">Aller plus loin</a>' +
+            '<a class="btn btn-ghost btn-block mt-2" href="prier.html" data-i18n="ttg.more">Je veux prier pour étancher ma soif intérieure</a>' +
           "</div>" +
           '<button type="button" class="ttg-later" id="ttg-later" data-i18n="ttg.later">Plus tard</button>' +
         "</div>" +
@@ -93,7 +102,15 @@
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
-  openBtn.addEventListener("click", open);
+  if (openBtn) openBtn.addEventListener("click", open);
+  // Déclencheurs fournis par la page (bandeau, lien dans le texte…).
+  Array.prototype.forEach.call(inlineTriggers, function (el) {
+    el.setAttribute("aria-haspopup", "dialog");
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      open();
+    });
+  });
   root.querySelector("#ttg-close").addEventListener("click", close);
   root.querySelector("#ttg-later").addEventListener("click", close);
 
@@ -118,12 +135,16 @@
   });
 
   root.querySelector("#ttg-done").addEventListener("click", function () {
-    // On marque le passage par la prière AVANT la redirection, pour que
-    // l'entonnoir garde son ordre (prière → nouveau-né) même quand la
-    // personne n'est jamais passée par `prier.html`.
-    try {
-      if (window.C2C_TRACK) window.C2C_TRACK.send("priere");
-    } catch (_) {}
-    window.location.href = "nouveau-ne.html";
+    // Direction le quiz, pas `nouveau-ne.html` : ce premier échange n'est pas
+    // la prière du salut. Envoyer quelqu'un sur « Tu viens de naître de
+    // nouveau » après une simple conversation, ce serait décider à sa place.
+    // Le quiz poursuit le chemin sans rien présumer, et le segmente.
+    //
+    // Aucun évènement `priere` n'est émis ici, pour la même raison : ce
+    // compteur mesure les arrivées sur la prière du salut. L'alimenter depuis
+    // ce bouton gonflerait le bas de l'entonnoir avec des personnes qui n'en
+    // sont pas là — et casserait la lecture « chaque étape est un
+    // sous-ensemble de la précédente », d'où viennent les taux de passage.
+    window.location.href = "quiz.html";
   });
 })();
