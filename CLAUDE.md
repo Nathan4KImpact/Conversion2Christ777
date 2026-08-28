@@ -634,9 +634,23 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     confettis** — l'opt-in se *confirme*, la décision se *célèbre*. Utiliser le
     même effet aux deux endroits diluerait le signal du moment le plus
     important du tunnel.
-  - **Vérifié au navigateur** (Chromium) : FAB visible sur la landing et absent
-    des pages exclues, modale FR et EN, Échap, rendu mobile 390×844, coche
-    animée sur `merci`. Parité i18n 423 clés FR / 423 EN.
+  - **MAJ landing (collision avec le chat)** : le porteur a déjà un bouton
+    flottant Chatbase en bas à droite sur `index.html`. Deux boutons flottants
+    au même endroit = collision. Plutôt que de déplacer le nôtre en bas à
+    gauche (deux pastilles qui se disputent l'écran), la landing reçoit une
+    **invitation intégrée au fil de la page** — un bandeau placé juste après
+    « Salut · Guérison · Paix », c'est-à-dire **au moment où Christ vient
+    d'être présenté comme une Personne**, donc là où quelque chose peut
+    s'éveiller. Meilleur éditorialement qu'un bouton permanent : l'invitation
+    arrive quand elle a du sens.
+  - **Mécanisme** : `talk-to-god.js` détecte `[data-ttg-open]` dans la page.
+    S'il en trouve, il s'y lie et **ne crée pas** le bouton flottant ; sinon
+    il retombe sur le comportement par défaut. Ajouter une porte ailleurs se
+    résume donc à poser cet attribut sur n'importe quel élément.
+  - **Vérifié au navigateur** (Chromium) : landing → bandeau présent, bouton
+    flottant **absent** (place libre pour le chat) ; FAB conservé sur `quiz`,
+    `histoire`, `merci` ; absent des pages exclues ; modale FR et EN, Échap,
+    rendu mobile 390×844 ; coche animée sur `merci`. Parité i18n 426/426.
 
 - 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
   L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc

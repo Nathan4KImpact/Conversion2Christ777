@@ -379,6 +379,9 @@ const I18N = {
     "ttg.done": "Je viens de lui parler",
     "ttg.more": "Aller plus loin",
     "ttg.later": "Plus tard",
+    "ttg.band.title": "Tu n'as pas besoin d'attendre la fin de ta lecture",
+    "ttg.band.sub": "Si quelque chose s'éveille en toi maintenant, tu peux lui parler. Là, où tu es.",
+    "ttg.band.cta": "Parler à Dieu",
 
     /* --- Prière / décision --- */
     "pray.eyebrow": "Le moment de la décision",
@@ -852,6 +855,9 @@ const I18N = {
     "ttg.done": "I've just talked to Him",
     "ttg.more": "Go further",
     "ttg.later": "Later",
+    "ttg.band.title": "You don't have to wait until you've read it all",
+    "ttg.band.sub": "If something is stirring in you right now, you can talk to Him. Right where you are.",
+    "ttg.band.cta": "Talk to God",
 
     "pray.eyebrow": "The moment of decision",
     "pray.title": "The prayer that changes everything",

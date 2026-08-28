@@ -1162,3 +1162,49 @@ body.ttg-locked { overflow: hidden; }
   .check-seal path { animation: none; stroke-dashoffset: 0; }
   .ttg-overlay, .ttg-modal, .ttg-fab { transition: none; }
 }
+
+/* -------------------------------------------------------------------------
+   Bandeau « Parler à Dieu » — variante intégrée au fil de la page
+   Utilisée sur la landing, où le coin bas-droite est déjà pris par le chat.
+   Placée après « Salut · Guérison · Paix » : au moment où quelque chose peut
+   s'éveiller, pas à la fin du parcours.
+   ------------------------------------------------------------------------- */
+.ttg-band-wrap { padding: 0; margin: -18px 0 0; position: relative; z-index: 2; }
+
+.ttg-band {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 22px 26px;
+  background: var(--white);
+  border: 1px solid var(--cream-2);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius);
+  box-shadow: 0 14px 34px rgba(15, 36, 56, 0.13);
+}
+.ttg-band-icon { font-size: 1.9rem; line-height: 1; flex: 0 0 auto; }
+.ttg-band-text { flex: 1 1 auto; min-width: 0; }
+.ttg-band-title {
+  margin: 0 0 4px;
+  font-family: var(--font-sans);
+  font-size: 1.04rem;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.35;
+}
+.ttg-band-sub {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.ttg-band-cta { flex: 0 0 auto; white-space: nowrap; }
+
+@media (max-width: 720px) {
+  .ttg-band { flex-wrap: wrap; text-align: center; justify-content: center; gap: 14px; padding: 24px 20px; }
+  .ttg-band-text { flex-basis: 100%; }
+  .ttg-band-cta { width: 100%; }
+}

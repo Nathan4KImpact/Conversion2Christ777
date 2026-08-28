@@ -32,14 +32,23 @@
 
   /* ---------- Markup ---------- */
 
+  /* Certaines pages fournissent déjà leur propre déclencheur, intégré dans le
+     fil du contenu (`[data-ttg-open]`). C'est le cas de la landing, où un
+     bouton flottant entrerait en collision avec celui du chat. Dans ce cas on
+     n'ajoute pas le bouton flottant : la page a déjà sa porte. */
+  var inlineTriggers = document.querySelectorAll("[data-ttg-open]");
+  var useFab = inlineTriggers.length === 0;
+
   function build() {
     var wrap = document.createElement("div");
     wrap.className = "ttg";
     wrap.innerHTML =
-      '<button type="button" class="ttg-fab" id="ttg-open" aria-haspopup="dialog">' +
-        '<span class="ttg-fab-icon" aria-hidden="true">🕊️</span>' +
-        '<span class="ttg-fab-label" data-i18n="ttg.fab">Parler à Dieu</span>' +
-      "</button>" +
+      (useFab
+        ? '<button type="button" class="ttg-fab" id="ttg-open" aria-haspopup="dialog">' +
+            '<span class="ttg-fab-icon" aria-hidden="true">🕊️</span>' +
+            '<span class="ttg-fab-label" data-i18n="ttg.fab">Parler à Dieu</span>' +
+          "</button>"
+        : "") +
 
       '<div class="ttg-overlay" id="ttg-overlay" hidden>' +
         '<div class="ttg-modal" role="dialog" aria-modal="true" aria-labelledby="ttg-title">' +
@@ -93,7 +102,15 @@
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
-  openBtn.addEventListener("click", open);
+  if (openBtn) openBtn.addEventListener("click", open);
+  // Déclencheurs fournis par la page (bandeau, lien dans le texte…).
+  Array.prototype.forEach.call(inlineTriggers, function (el) {
+    el.setAttribute("aria-haspopup", "dialog");
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      open();
+    });
+  });
   root.querySelector("#ttg-close").addEventListener("click", close);
   root.querySelector("#ttg-later").addEventListener("click", close);
 
