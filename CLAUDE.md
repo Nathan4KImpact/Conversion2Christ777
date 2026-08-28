@@ -615,8 +615,16 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     (musulman) peuvent l'aborder sans se sentir sommés d'adhérer.
   - **Ce n'est PAS la prière du salut** : la modale propose un **premier
     contact** sans engagement (« Dieu, je ne sais pas bien comment te
-    parler… »). La prière du salut reste sur `prier.html`, comme aboutissement,
-    accessible via « Aller plus loin ».
+    parler… »). La prière du salut reste sur `prier.html`, comme aboutissement.
+  - **Effet de levier voulu par le porteur** : le second bouton de la modale
+    pointe vers `prier.html`. Comme la modale est présente sur toutes les pages
+    d'entrée, la prière du salut devient atteignable **en deux clics depuis
+    n'importe où**, au lieu d'être réservée au bout du tunnel. Libellé retenu :
+    **« Je veux prier pour étancher ma soif intérieure »** (EN : « I want to
+    pray, to quench my inner thirst ») — reprend le fil de la *soif* qui
+    traverse tout le site (quiz « Quelle est la source de ta soif ? », Jn 4:14).
+    Le mot « prier » est assumé **à ce stade seulement** : la personne a déjà
+    ouvert la modale, elle n'est plus au seuil.
   - **Destination du CTA « Je viens de lui parler » → `quiz.html`** (choix du
     porteur, et cohérent avec la nature du geste). Envoyer quelqu'un sur
     `nouveau-ne.html` (« Tu viens de naître de nouveau ») après une simple

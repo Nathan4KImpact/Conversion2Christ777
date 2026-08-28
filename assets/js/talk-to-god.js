@@ -63,7 +63,7 @@
 
           '<div class="ttg-actions">' +
             '<button type="button" class="btn btn-primary btn-block" id="ttg-done" data-i18n="ttg.done">Je viens de lui parler</button>' +
-            '<a class="btn btn-ghost btn-block mt-2" href="prier.html" data-i18n="ttg.more">Aller plus loin</a>' +
+            '<a class="btn btn-ghost btn-block mt-2" href="prier.html" data-i18n="ttg.more">Je veux prier pour étancher ma soif intérieure</a>' +
           "</div>" +
           '<button type="button" class="ttg-later" id="ttg-later" data-i18n="ttg.later">Plus tard</button>' +
         "</div>" +
