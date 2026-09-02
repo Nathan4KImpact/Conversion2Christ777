@@ -669,6 +669,29 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     `histoire`, `merci` ; absent des pages exclues ; modale FR et EN, Échap,
     rendu mobile 390×844 ; coche animée sur `merci`. Parité i18n 426/426.
 
+- 2026-08-20 : **v27 — Texte officiel de la prière du salut + renommage de branche** :
+  - **Le texte de la prière est désormais confirmé** par le porteur — cela clôt
+    le point resté ouvert depuis la v2 (« transcription de la vidéo `-Fn0ScYZ7PY`
+    impossible, un brouillon fidèle sert de repli »). Le brouillon est remplacé
+    par le texte officiel, fourni en FR et EN.
+  - **`pray.lead`** devient l'appel : « Tu peux devenir un enfant de Dieu
+    aujourd'hui. Ne veux-tu pas adresser cette prière à Dieu du fond du cœur ? »
+  - **`pray.prayer`** passe de 8 lignes courtes à **3 paragraphes** : (1) l'aveu
+    et le regret, (2) la réponse à l'appel, le pardon demandé, l'ouverture du
+    cœur et l'envoi (« porteur de vie et d'espoir pour cette génération »),
+    (3) la clôture au nom de Jésus-Christ.
+  - **Mise en page adaptée** : nouvelle classe `.prayer-box-long` — alignement
+    à gauche (un texte long centré se lit mal), interligne 1.78, taille réduite
+    sur mobile. L'ancien `center` convenait aux lignes courtes, plus au format
+    paragraphe.
+  - **Correctif d'encodage au passage** : l'ancien texte FR contenait
+    `crÃ©ation` (mojibake) — disparu avec le remplacement.
+  - **Vérifié au navigateur** : FR, EN et mobile 390×844, aucun débordement.
+  - **Branche renommée** : `claude/church-landing-conversion-funnel-llg2qq` →
+    **`tunnel-de-conversion-a-christ-nvej`**. ⚠️ L'ancienne branche distante
+    n'a pas pu être supprimée depuis la session (le proxy réseau bloque les
+    refspecs de suppression) — à retirer manuellement depuis GitHub.
+
 - 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
   L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc
   confiance + page dédiée) et Sprint 0.5 « KPIs d'activation » (haut du tunnel).
@@ -711,8 +734,8 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
 - 🔲 **Éditer les modules Gmail dans les scénarios Make** pour remplacer l'ancienne URL
   netlify.app par `nouvellesviesenjesus.fr` (facultatif — l'ancienne URL est
   toujours redirigée 301 par Netlify, cf. v19, donc pas d'urgence).
-- 🔲 **Confirmer le texte exact de la prière du salut** (transcription de la vidéo
-  `-Fn0ScYZ7PY`) — actuellement un brouillon fidèle sert de repli.
+- ✅ **Texte de la prière du salut confirmé** par le porteur et intégré (v27,
+  FR + EN). Le brouillon de repli n'est plus utilisé.
 - 🔲 *(Optionnel)* **Airtable Automation « anti-rétrogradation cosmétique »** :
   *Quand une fiche a `Étape tunnel`=Lead ET `RDV prière` non vide → repasser
   `Étape tunnel`=RDV pris*. (L'API ne permet pas de créer des automations → à faire
