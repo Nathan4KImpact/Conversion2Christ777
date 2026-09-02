@@ -692,6 +692,39 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     n'a pas pu être supprimée depuis la session (le proxy réseau bloque les
     refspecs de suppression) — à retirer manuellement depuis GitHub.
 
+- 2026-09-02 : **v28 — Rattrapage de l'opt-in pour les arrivées « en court-circuit »** :
+  - **Le problème (soulevé par le porteur)** : `prier.html` est atteignable sans
+    opt-in — lien du pied de page, modale « Parler à Dieu » (v26), lien direct
+    d'un flyer. Une personne peut donc prier la prière du salut **sans qu'on
+    ait la moindre coordonnée**. Double perte : personne ne peut prendre de ses
+    nouvelles, et sa décision reste **invisible du suivi** (aucune fiche
+    Airtable, donc pas de bascule « Prière faite »).
+  - **Détection** : le seul signal fiable d'un opt-in réalisé est la fiche
+    locale `c2c_lead` posée par `optin.html`. Le référent HTTP ne dirait rien
+    d'utile (lien WhatsApp, favori, onglet rouvert) et le tunnel n'impose
+    volontairement aucun ordre de passage.
+  - **Bloc « Une dernière chose »** au bas de la carte de prière, affiché
+    **uniquement** si aucune fiche locale n'existe. Volontairement en retrait
+    (filet de séparation, bouton fantôme `.detour-note`) : la décision reste le
+    sujet de la page, l'invitation ne doit jamais concurrencer « J'ai prié ».
+  - **Copie non culpabilisante** : « C'est très bien — Dieu n'a besoin d'aucun
+    formulaire pour t'entendre. Mais nous, nous n'avons aucun moyen de prendre
+    de tes nouvelles. » Le besoin est présenté comme le nôtre, pas comme un
+    manquement de la personne. Formulation conditionnelle (« **Si** tu viens de
+    prier… ») : rien n'est présumé de quelqu'un qui n'a pas encore prié.
+  - **Boucle `prier` → `optin` → `nouveau-ne`** (destination fixée par le
+    porteur) : `optin.html` accepte un paramètre `?next=`, résolu par une
+    **liste blanche stricte** (`{ "nouveau-ne": "nouveau-ne.html" }`) — un
+    paramètre d'URL alimentant directement `location.href` serait une
+    redirection ouverte. Renvoyer la personne sur `prier.html` aurait perdu le
+    passage par `nouveau-ne.html`, seule page qui poste l'évènement `convert`
+    à Make (et qui a besoin de l'email pour le faire).
+  - **Vérifié au navigateur** (Chromium) : les deux évènements partent bien
+    dans l'ordre (`lead` → `convert`), `c2c_convert_sent` posé, confettis joués
+    à l'arrivée, bloc masqué au retour sur la prière, `?next=` hostile ignoré
+    (atterrissage sur `merci.html`), parcours d'opt-in normal inchangé.
+    Rendu FR, EN et mobile 390×844 sans débordement. Parité i18n 430/430.
+
 - 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
   L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc
   confiance + page dédiée) et Sprint 0.5 « KPIs d'activation » (haut du tunnel).

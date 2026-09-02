@@ -63,6 +63,17 @@
 
           <a class="btn btn-primary btn-lg btn-block mt-2" href="nouveau-ne.html" data-i18n="pray.cta">J'ai prié — accompagnez-moi</a>
           <a class="btn btn-whatsapp btn-block mt-2" href="https://wa.me/33758372268?text=Bonjour%2C%20je%20viens%20de%20prier%20la%20pri%C3%A8re%20du%20salut.%20J%27aimerais%20%C3%AAtre%20accompagn%C3%A9(e)." target="_blank" rel="noopener" data-confetti data-i18n="pray.cta2">Parler à quelqu'un / être rappelé(e)</a>
+
+          <!-- Arrivée « en court-circuit » : la page est atteignable depuis le
+               footer, la modale « Parler à Dieu » ou un lien direct, donc sans
+               opt-in. Sans coordonnées, personne ne peut prendre de nouvelles
+               de cette personne — et sa décision reste invisible du suivi.
+               Le bloc n'apparaît que dans ce cas (voir le script en fin de page). -->
+          <div class="detour-note" id="pray-detour" hidden>
+            <h3 data-i18n="pray.detour.title">Une dernière chose</h3>
+            <p data-i18n="pray.detour.text">Tu es arrivé(e) directement sur cette page…</p>
+            <a class="btn btn-ghost btn-block" href="optin.html?next=nouveau-ne" data-i18n="pray.detour.cta">Laisser mon contact →</a>
+          </div>
         </div>
       </div>
     </main>
@@ -73,5 +84,23 @@
   <script src="assets/js/video.js"></script>
   <script src="assets/js/confetti.js"></script>
   <script src="assets/js/main.js"></script>
+  <script>
+    // Détection du court-circuit : le seul signal fiable d'un opt-in réalisé est
+    // la fiche locale posée par `optin.html`. Le référent HTTP ne dirait rien
+    // (lien WhatsApp, favori, onglet rouvert…), et le tunnel n'impose aucun
+    // ordre de passage — c'est voulu.
+    //
+    // Le contact laissé ici repart vers `nouveau-ne.html` : c'est cette page
+    // qui poste l'évènement `convert` à Make, et elle a besoin de l'email pour
+    // le faire. Renvoyer la personne sur la prière aurait perdu ce passage —
+    // sa décision serait restée invisible du suivi.
+    (function () {
+      var lead = {};
+      try { lead = JSON.parse(localStorage.getItem("c2c_lead") || "{}"); } catch (_) {}
+      if (lead && lead.email) return;
+      var invite = document.getElementById("pray-detour");
+      if (invite) invite.hidden = false;
+    })();
+  </script>
 </body>
 </html>
