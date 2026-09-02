@@ -99,7 +99,16 @@
       try { localStorage.setItem("c2c_lead", JSON.stringify(lead)); } catch (_) {}
       if (window.C2C_TRACK) window.C2C_TRACK.send("optin");
 
-      function go() { window.location.href = "merci.html"; }
+      // Destination de retour. Liste blanche stricte : un paramètre d'URL qui
+      // alimenterait directement `location.href` serait une redirection ouverte.
+      var NEXT = { "nouveau-ne": "nouveau-ne.html" };
+      var next = "merci.html";
+      try {
+        var want = new URLSearchParams(location.search).get("next");
+        if (want && NEXT[want]) next = NEXT[want];
+      } catch (_) {}
+
+      function go() { window.location.href = next; }
 
       if (cfg.WEBHOOK_URL) {
         // Envoi non bloquant : on redirige quoi qu'il arrive (UX fluide).

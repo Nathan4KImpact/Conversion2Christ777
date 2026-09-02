@@ -393,6 +393,9 @@ const I18N = {
     "pray.after.text": "Si tu as dit cette prière du fond du cœur, le ciel est en fête pour toi. Tu es né(e) de nouveau. Ce n'est pas une fin, c'est un commencement — et nous voulons marcher ce chemin avec toi.",
     "pray.cta": "J'ai prié — accompagnez-moi",
     "pray.cta2": "Parler à quelqu'un / être rappelé(e)",
+    "pray.detour.title": "Une dernière chose",
+    "pray.detour.text": "Tu es arrivé(e) directement sur cette page, sans nous laisser tes coordonnées. C'est très bien — Dieu n'a besoin d'aucun formulaire pour t'entendre. Mais nous, nous n'avons aucun moyen de prendre de tes nouvelles. Si tu viens de prier et que tu veux que quelqu'un marche avec toi, laisse-nous simplement ton prénom et ton email.",
+    "pray.detour.cta": "Laisser mon contact →",
 
     /* --- Étape 7 : Kit du nouveau-né en Christ (nouveau-ne.html) --- */
     "nn.title": "Bienvenue dans ta nouvelle vie — Nouvelles Vies en Jésus",
@@ -868,6 +871,9 @@ const I18N = {
     "pray.after.text": "If you said this prayer from the bottom of your heart, heaven is celebrating for you. You are born again. This isn't an end, it's a beginning — and we want to walk this road with you.",
     "pray.cta": "I prayed — walk with me",
     "pray.cta2": "Talk to someone / be called back",
+    "pray.detour.title": "One last thing",
+    "pray.detour.text": "You came straight to this page, without leaving us your details. That's perfectly fine — God needs no form to hear you. But we have no way of checking in on you. If you've just prayed and you'd like someone to walk with you, simply leave us your first name and email.",
+    "pray.detour.cta": "Leave my details →",
 
     "nn.title": "Welcome to your new life — New Lives in Jesus",
     "nn.hero.eyebrow": "You've just been born again",

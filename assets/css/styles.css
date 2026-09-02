@@ -1219,3 +1219,43 @@ body.ttg-locked { overflow: hidden; }
   .ttg-band-text { flex-basis: 100%; }
   .ttg-band-cta { width: 100%; }
 }
+
+/* -------------------------------------------------------------------------
+   Arrivée « en court-circuit » sur la prière du salut (prier.html)
+   Volontairement en retrait : séparé par un filet, en fond crème, avec un
+   bouton fantôme. La décision reste le sujet de la page — cette invitation
+   ne doit jamais concurrencer « J'ai prié ».
+   ------------------------------------------------------------------------- */
+.detour-note {
+  margin-top: 30px;
+  padding-top: 26px;
+  border-top: 1px solid color-mix(in srgb, var(--navy) 12%, transparent);
+  text-align: left;
+}
+.detour-note h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+.detour-note p {
+  margin: 0 0 18px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+/* `.btn-ghost` est dessiné pour les fonds sombres du hero : sur la carte
+   blanche son texte disparaîtrait. Même correctif que dans la modale. */
+.detour-note .btn-ghost {
+  color: var(--teal, var(--navy));
+  border-color: color-mix(in srgb, var(--navy) 22%, transparent);
+  background: transparent;
+}
+.detour-note .btn-ghost:hover,
+.detour-note .btn-ghost:focus-visible {
+  background: color-mix(in srgb, var(--navy) 6%, transparent);
+  border-color: color-mix(in srgb, var(--navy) 40%, transparent);
+  transform: none;
+}
