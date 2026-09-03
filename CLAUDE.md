@@ -851,12 +851,6 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   produit un effet visible et indésirable sur de vraies personnes. Deux voies :
   ré-importer les blueprints (`integrations/make-blueprint*.json`) ou éditer
   chaque module Gmail à la main.
-- ⚠️ **Vérifier que la branche `convert` existe dans le scénario Make en
-  ligne** (ajoutée au blueprint en v11). Sans elle, le rattrapage d'opt-in de
-  la v28 crée bien la fiche mais **ne la fait pas basculer en « Prière faite »**
-  — la décision reste invisible du suivi, ce qui était précisément le but de
-  la v28. Test : parcourir `prier` → « Laisser mon contact » → `nouveau-ne`,
-  puis regarder l'étape de la fiche dans Airtable.
 - 🔲 **Supprimer l'ancienne branche distante** `claude/church-landing-conversion-funnel-llg2qq`
   (Repo ▸ Branches ▸ 🗑️). Le proxy réseau de la session bloque les refspecs de
   suppression. Elle ne contient rien qui ne soit déjà sur `main`.
@@ -875,6 +869,10 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
 - ✅ Domaine `nouvellesviesenjesus.fr` en ligne, HTTPS Let's Encrypt actif.
 - ✅ **Texte de la prière du salut confirmé** par le porteur et intégré (v27,
   FR + EN). Le brouillon de repli n'est plus utilisé.
+- ✅ **Bas du tunnel vérifié par le porteur (2026-09-03)** : la branche
+  `convert` du scénario Make tourne bien en ligne — « Prière faite » remonte
+  dans Airtable après le parcours `prier` → opt-in → `nouveau-ne`. La v28 est
+  donc complète de bout en bout.
 
 **Prochains sprints candidats** — *découpage détaillé, révisé le 2026-09-03*.
 
