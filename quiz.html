@@ -70,15 +70,30 @@
           <p class="mt-2"><a id="result-more" href="temoignages.html" style="color:var(--muted);font-size:0.92rem" data-i18n="quiz.result.moreLink">Plus de témoignages comme celui-ci →</a></p>
         </div>
 
+        <!-- Porte « Parler à Dieu » intégrée au fil de la page plutôt qu'en
+             bouton flottant : la carte du quiz est courte, le pied de page
+             occupe donc le bas de l'écran — un bouton fixé là le recouvrirait.
+             Sa présence suffit à désactiver le flottant (voir talk-to-god.js). -->
+        <div class="ttg-band mt-2">
+          <span class="ttg-band-icon" aria-hidden="true">🕊️</span>
+          <div class="ttg-band-text">
+            <p class="ttg-band-title" data-i18n="ttg.band.title.quiz">Tu n'as pas besoin d'attendre le résultat</p>
+            <p class="ttg-band-sub" data-i18n="ttg.band.sub">Si quelque chose s'éveille en toi maintenant, tu peux lui parler. Là, où tu es.</p>
+          </div>
+          <button type="button" class="btn btn-primary ttg-band-cta" data-ttg-open data-i18n="ttg.band.cta">Parler à Dieu</button>
+        </div>
+
       </div>
     </main>
   </div>
 
+  <script src="assets/js/config.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/track.js"></script>
   <script src="assets/js/video.js"></script>
   <script src="assets/js/quiz.js"></script>
   <script src="assets/js/talk-to-god.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/footer.js"></script>
 </body>
 </html>

@@ -103,6 +103,23 @@
   }
 
   if (openBtn) openBtn.addEventListener("click", open);
+
+  /* Le bouton flottant est fixé en bas à droite — exactement là où le pied de
+     page pose sa colonne Contact. Il la recouvrait. On l'efface donc dès que
+     le pied de page entre à l'écran : la personne y trouve alors les mêmes
+     portes (RDV, WhatsApp, email), le bouton n'a plus rien à y ajouter.
+     `footer.js` injecte le pied de page à la fin, d'où l'observation différée. */
+  if (openBtn && "IntersectionObserver" in window) {
+    var watch = function () {
+      var foot = document.querySelector("footer.site-footer");
+      if (!foot) return;
+      new IntersectionObserver(function (entries) {
+        openBtn.classList.toggle("is-hidden", entries[0].isIntersecting);
+      }, { rootMargin: "0px 0px -40px 0px" }).observe(foot);
+    };
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", watch);
+    else setTimeout(watch, 0);
+  }
   // Déclencheurs fournis par la page (bandeau, lien dans le texte…).
   Array.prototype.forEach.call(inlineTriggers, function (el) {
     el.setAttribute("aria-haspopup", "dialog");

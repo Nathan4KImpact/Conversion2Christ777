@@ -725,6 +725,52 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
     (atterrissage sur `merci.html`), parcours d'opt-in normal inchangé.
     Rendu FR, EN et mobile 390×844 sans débordement. Parité i18n 430/430.
 
+- 2026-09-03 : **v29 — Pied de page unique, adapté à l'étape du visiteur** :
+  - **Le constat (porteur)** : quatre pages n'avaient aucun pied de page
+    (`quiz`, `optin`, `merci`, `prier`), six en avaient un réduit à deux liens,
+    et seule la landing portait le pied de page complet. Le **vide au bas du
+    quiz** a déclenché la demande.
+  - **La règle retenue** (arbitrage du porteur) : pas le même pied de page
+    partout, mais **« ne garder que ce qui est pertinent relativement à la
+    progression du visiteur dans le tunnel »**. On propose la marche suivante,
+    **jamais celles d'après** — parler de « Fondations de la foi » à quelqu'un
+    qui découvre la landing, c'est montrer une porte qui ne veut encore rien
+    dire pour lui. **Y compris sur `index`** : les étapes de discipulat
+    (nouveau-né, grandir, fondations) y ont été **retirées**.
+  - **`footer.js` génère désormais le pied de page** au lieu de le voir copié
+    dans dix fichiers. Il contient la seule navigation du site (l'en-tête n'a
+    pas de menu), les contacts réels et la modale de RDV : dupliqué, il aurait
+    dérivé. La table `PAGES` **est le tunnel** — une ligne par page, `links`
+    se lit « d'où je suis, où puis-je aller maintenant ».
+  - **Deux densités** : `full` (marque + Explorer + Contact + bas de page) sur
+    les pages de parcours ; `min` (bas de page seul) sur `optin` et `prier`,
+    les deux endroits où l'on demande un engagement — y poser huit liens de
+    sortie reviendrait à ouvrir huit portes au moment précis où l'on demande
+    d'entrer. `merci` reçoit le `full` **sans le bouton RDV** : la page porte
+    déjà son formulaire de réservation.
+  - **Modale de RDV injectée** avec le pied de page (elle n'existait que dans
+    `index.html`) — sinon il aurait fallu la dupliquer sur sept pages.
+  - **Collision révélée et corrigée** : le bouton flottant « Parler à Dieu »
+    (fixé en bas à droite) **recouvrait la colonne Contact** du nouveau pied de
+    page. Il s'efface maintenant dès que le pied de page entre à l'écran
+    (`IntersectionObserver`) : la personne y trouve les mêmes portes, le bouton
+    n'a plus rien à y ajouter.
+  - **Quiz : porte intégrée au fil de la page**. Sa carte est courte, donc le
+    pied de page occupe le bas de l'écran en permanence — le bouton flottant y
+    aurait été masqué en continu, et la page aurait perdu sa porte « Parler à
+    Dieu » (v26). Elle reçoit donc un **bandeau `[data-ttg-open]`**, comme la
+    landing ; sa seule présence désactive le flottant (mécanisme v26).
+    Nouvelle clé `ttg.band.title.quiz` (« Tu n'as pas besoin d'attendre le
+    résultat »).
+  - **Réserve connue** : des liens injectés en JS sont moins bien vus des
+    robots que du HTML statique. Sans conséquence ici — ce sont des liens
+    internes déjà atteignables depuis l'accueil, et le site est un tunnel, pas
+    un projet de référencement.
+  - **Vérifié au navigateur** (Chromium) : les 10 pages rendent la bonne
+    densité et la bonne liste de liens, `admin.html` reste intouchée, aucune
+    erreur JS, aucun débordement horizontal, aucune clé i18n non traduite.
+    Parité i18n 430/430.
+
 - 2026-08-11 : **Sprint 0 — Portée finale livrée (récapitulatif)** :
   L'itération initiale visait deux objectifs : Sprint 0.3 « Mon histoire » (bloc
   confiance + page dédiée) et Sprint 0.5 « KPIs d'activation » (haut du tunnel).

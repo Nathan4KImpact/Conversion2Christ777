@@ -1259,3 +1259,21 @@ body.ttg-locked { overflow: hidden; }
   border-color: color-mix(in srgb, var(--navy) 40%, transparent);
   transform: none;
 }
+
+/* Pied de page « min » (opt-in, prière du salut) : le bas de page seul.
+   Sans la grille au-dessus, son filet supérieur flotterait dans le vide. */
+.site-footer-min { padding: 26px 0 24px; }
+.site-footer-min .footer-bottom { margin-top: 0; padding-top: 0; border-top: 0; }
+
+/* Le bouton flottant s'efface à l'arrivée du pied de page : celui-ci porte
+   déjà les mêmes portes (RDV, WhatsApp, email), et le bouton recouvrait sa
+   colonne Contact. Escamotage, pas disparition : il revient au défilement. */
+.ttg-fab.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ttg-fab.is-hidden { transform: none; }
+}
