@@ -808,72 +808,208 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   de passe self-service, Kanban leads glisser-déposer, filtre de période sur
   géo, choroplèthe pays au lieu de dots.
 
+- 2026-09-03 : **Après le Sprint 0 — livré hors découpage (récapitulatif)** :
+  Entre la clôture du Sprint 0 (11 août) et aujourd'hui, huit versions ont été
+  livrées **sans passer par le découpage en sprints** — chacune née d'une
+  observation du porteur sur le produit en fonctionnement, pas d'un plan.
+  C'est le mode de travail réel du projet ; ce tableau le rend visible pour
+  que le découpage qui suit reparte d'une base juste.
+
+  | Ver. | Livré | Origine |
+  |---|---|---|
+  | v22 | Emails de nurturing : désamorçage du risque d'étiquetage + design J7 | Capture Gmail réelle du porteur |
+  | v23 | Filtrage des robots d'indexation dans les stats d'activation | Doute du porteur sur ses chiffres |
+  | v24 | Origine des visiteurs : bascule Humains / Robots | Suite logique de v23 |
+  | v25 | Confettis au moment de la décision (prière du salut) | Demande du porteur |
+  | v26 | « Parler à Dieu » dès la landing + coche animée sur `merci` | Demande du porteur |
+  | v27 | Texte officiel de la prière du salut (FR + EN) + renommage de branche | Texte fourni par le porteur |
+  | v28 | Rattrapage de l'opt-in pour les arrivées « en court-circuit » | Observation du porteur |
+  | v29 | Pied de page unique, adapté à l'étape du visiteur | Vide au bas du quiz |
+
+  **Trois thèmes de fond s'en dégagent**, et ils structurent le découpage
+  actualisé ci-dessous :
+  1. **Fiabilité de la donnée** (v23, v24) — des chiffres faux valent moins
+     que pas de chiffres du tout.
+  2. **Multiplier les portes vers la décision** (v25, v26, v28) — ne pas
+     obliger quelqu'un à traverser tout le tunnel avant de pouvoir s'adresser
+     à Dieu, et ne pas le perdre s'il arrive par un raccourci.
+  3. **Dette de mesure assumée** (v26, v28) — plusieurs de ces portes ne sont
+     pas encore comptées. On sait qu'elles existent, pas si elles servent.
+
 ### Reste à faire / décisions en attente
 
 **Sprint 0 — clos ✅** (voir tableau récapitulatif ci-dessus).
 
-**Actions restantes côté porteur (opérationnel, pas de code)** :
-- ✅ Compte admin créé et connecté sur `/admin.html`.
-- ✅ Suivi d'activation (table `Stats`) et origine des visiteurs (table `Geo`)
-  actifs — le porteur voit les compteurs se remplir.
-- ✅ Domaine `nouvellesviesenjesus.fr` en ligne, HTTPS Let's Encrypt actif.
-- 🔲 **Éditer les modules Gmail dans les scénarios Make** pour remplacer l'ancienne URL
-  netlify.app par `nouvellesviesenjesus.fr` (facultatif — l'ancienne URL est
-  toujours redirigée 301 par Netlify, cf. v19, donc pas d'urgence).
-- ✅ **Texte de la prière du salut confirmé** par le porteur et intégré (v27,
-  FR + EN). Le brouillon de repli n'est plus utilisé.
+**Actions restantes côté porteur (opérationnel, pas de code)** — *actualisé le
+2026-09-03, par ordre d'importance réelle* :
+
+- ⚠️ **PRIORITÉ — Appliquer les templates d'emails v22 aux scénarios Make en
+  ligne.** Le repo est corrigé depuis le 14 août ; **les scénarios en
+  production ne le sont pas**. Concrètement, une personne « Blessée » qui
+  s'inscrit aujourd'hui reçoit encore l'email J3 avec la vidéo identitaire —
+  exactement ce que la v22 devait supprimer. C'est le seul point ouvert qui
+  produit un effet visible et indésirable sur de vraies personnes. Deux voies :
+  ré-importer les blueprints (`integrations/make-blueprint*.json`) ou éditer
+  chaque module Gmail à la main.
+- ⚠️ **Vérifier que la branche `convert` existe dans le scénario Make en
+  ligne** (ajoutée au blueprint en v11). Sans elle, le rattrapage d'opt-in de
+  la v28 crée bien la fiche mais **ne la fait pas basculer en « Prière faite »**
+  — la décision reste invisible du suivi, ce qui était précisément le but de
+  la v28. Test : parcourir `prier` → « Laisser mon contact » → `nouveau-ne`,
+  puis regarder l'étape de la fiche dans Airtable.
+- 🔲 **Supprimer l'ancienne branche distante** `claude/church-landing-conversion-funnel-llg2qq`
+  (Repo ▸ Branches ▸ 🗑️). Le proxy réseau de la session bloque les refspecs de
+  suppression. Elle ne contient rien qui ne soit déjà sur `main`.
+- 🔲 *(Facultatif)* Éditer les modules Gmail pour remplacer l'ancienne URL
+  netlify.app par `nouvellesviesenjesus.fr` — sans urgence, le 301 de la v19
+  fait le travail. À faire au passage, pendant l'édition des templates v22.
 - 🔲 *(Optionnel)* **Airtable Automation « anti-rétrogradation cosmétique »** :
   *Quand une fiche a `Étape tunnel`=Lead ET `RDV prière` non vide → repasser
   `Étape tunnel`=RDV pris*. (L'API ne permet pas de créer des automations → à faire
   à la main dans Airtable ▸ Automatisations.)
-- 🔲 Nettoyer à la main les champs Airtable par défaut résiduels (limite API).
+- 🔲 *(Cosmétique)* Nettoyer à la main les champs Airtable par défaut résiduels
+  (limite API).
+- ✅ Compte admin créé et connecté sur `/admin.html`.
+- ✅ Suivi d'activation (table `Stats`) et origine des visiteurs (table `Geo`)
+  actifs — le porteur voit les compteurs se remplir.
+- ✅ Domaine `nouvellesviesenjesus.fr` en ligne, HTTPS Let's Encrypt actif.
+- ✅ **Texte de la prière du salut confirmé** par le porteur et intégré (v27,
+  FR + EN). Le brouillon de repli n'est plus utilisé.
 
-**Prochains sprints candidats** :
-- **Sprint 1 — Étapes 5-8 du parcours discipulat** : onboarding nouveau converti,
-  intégration en cellule, rétention, contenus de formation. Les pages
-  `nouveau-ne.html`, `grandir.html`, `fondations.html` existent déjà (v10-v11) —
-  reste à affiner les contenus, câbler l'attribution d'un mentor, mesurer la
-  rétention à 30/60/90 jours.
-- **Sprint 2 — Dashboard v3** : filtre de période sur le bloc géo (7 j / 30 j /
-  tout), Kanban leads (glisser-déposer entre colonnes d'étape), notifications
-  temps réel des nouvelles âmes (email ou WhatsApp au responsable), export
-  segmenté par persona.
-- **Sprint 3 — Admin polish** : reset mot de passe self-service, attribution
-  d'un référent depuis le tableau, blocage anti-force-brute persistant (Netlify
-  Blobs), journal d'audit.
-- **Sprint 4 — Contenus** : autres angles de campagne (Noël, Pâques, rentrée),
-  contenus longs (blog, podcast), traductions supplémentaires (arabe, espagnol,
-  portugais pour les personas P4 et le lusophone d'Afrique).
-- **Sprint 5 — Espace du converti (authentification)** *(décidé le 2026-09-03)* :
-  **le vrai sujet ouvert par la v29.** Le pied de page adapté à l'étape ne
-  propose plus les pages de discipulat à quelqu'un qui découvre le site — ce
-  qui est juste éditorialement, mais laisse une question : **comment une
-  personne qui a déjà fait le chemin retrouve-t-elle « Grandir dans la foi »
-  en revenant sur l'accueil ?**
-  - **Réponse retenue par le porteur** : *ne pas* la traiter par le maillage
-    (remettre les liens sur la landing servirait les deux publics à moitié),
-    mais par une **authentification** donnant accès direct aux étapes
-    d'après-prière. Le converti se reconnaît, le visiteur neuf ne voit rien
-    qui ne le concerne pas encore.
-  - **Conséquence sur le `noindex`** : les pages `nouveau-ne`, `grandir`,
-    `fondations` restent volontairement hors index — elles s'adressent à
-    quelqu'un qui a déjà décidé. Arriver dessus depuis une recherche Google,
-    sans être passé par la prière du salut, n'aurait pas de sens.
-  - Point d'appui existant : la table Airtable `Admins` + les Netlify
-    Functions (JWT HS256 + scrypt, zéro dépendance npm) de la v14 — le même
-    socle peut servir un espace « converti », avec un niveau de droit distinct.
-  - À arbitrer au lancement du sprint : lien magique par email (pas de mot de
-    passe à retenir, cohérent avec un public non technique) *vs* compte
-    classique ; durée de session ; que faire de `c2c_lead` en localStorage,
-    qui joue déjà ce rôle de reconnaissance de façon fragile (un autre
-    appareil, un nettoyage du navigateur, et la personne est « oubliée »).
+**Prochains sprints candidats** — *découpage actualisé le 2026-09-03*.
 
-**Différé volontairement (2026-09-03)** : `sitemap.xml` + `robots.txt`. Vérifié
-ce jour — le site n'en a aucun ; c'est l'écart de référencement le plus réel,
-bien plus que la question du pied de page (les liens retirés de la landing
-pointaient tous vers des pages en `noindex`, donc sans effet SEO). Les cinq
-pages indexables — `index`, `quiz`, `temoignages`, `histoire`, `prier` — sont
-toutes à un clic les unes des autres via le pied de page généré.
+> **Ce qui a bougé, et pourquoi.** Les huit versions livrées hors découpage
+> (tableau ci-dessus) ont produit des tâches nouvelles, surtout de la **dette
+> de mesure**. Le Sprint 1 a donc été enrichi de ce qui le concerne
+> directement — la fiabilité du bas de tunnel — et le reste a débordé sur les
+> suivants plutôt que de le faire gonfler. **L'authentification passe de 5 à
+> 3** : c'est une décision prise, pas un candidat. Admin polish 3 → 4,
+> Contenus 4 → 6, et un **Sprint 5 « Référencement »** apparaît, seul endroit
+> où le `sitemap.xml` avait un sens.
+
+---
+
+**Sprint 1 — Bas de tunnel : fiabiliser, puis approfondir le discipulat**
+
+*Pourquoi cet ordre* : affiner les contenus de discipulat pendant que les
+emails automatiques partent avec les anciens templates reviendrait à soigner
+la vitrine en laissant l'arrière-boutique en l'état. La fiabilité d'abord.
+
+1. **Fiabilité (prérequis, côté porteur — cf. checklist ci-dessus)**
+   - Appliquer les templates d'emails v22 aux scénarios Make en ligne.
+   - Vérifier la branche `convert` du scénario en ligne (sinon la v28 est
+     incomplète : la fiche est créée, l'étape ne bascule pas).
+2. **Discipulat (prévu de longue date, v10-v11)**
+   - Affiner les contenus de `nouveau-ne.html`, `grandir.html`,
+     `fondations.html` — les pages existent, les textes méritent une passe.
+   - **Câbler l'attribution d'un mentor** : le champ `Référent` existe déjà
+     dans la table `Ames` (v5) mais n'est jamais renseigné automatiquement.
+   - **Mesurer la rétention à 30 / 60 / 90 jours** — aujourd'hui le suivi
+     s'arrête à « Prière faite », on ne sait rien de ce qui suit.
+
+*Débordé vers le Sprint 2* : la mesure fine des nouvelles portes. Elle a sa
+place naturelle avec le dashboard, et l'ajouter ici doublait la taille du
+sprint.
+
+---
+
+**Sprint 2 — Dashboard v3 & rattrapage de la dette de mesure**
+
+*Prévu à l'origine* :
+- Filtre de période sur le bloc géo (7 j / 30 j / tout).
+- **Kanban leads** — glisser-déposer entre colonnes d'étape.
+- Notifications temps réel des nouvelles âmes (email ou WhatsApp au responsable).
+- Export segmenté par persona.
+
+*Ajouté depuis (dette assumée en v26 et v28)* :
+- **Évènement `parler_dieu`** + colonne dans la table `Stats` + indicateur au
+  dashboard. La modale « Parler à Dieu » est présente sur six pages depuis la
+  v26 et **son usage n'est pas mesuré du tout** : on ne sait pas si cette
+  porte sert. Volontairement tenue hors de l'entonnoir principal — l'y verser
+  casserait la lecture « chaque étape est un sous-ensemble de la précédente »,
+  d'où viennent les taux de passage. Il lui faut donc son propre compteur.
+  Faisable via `ensureFields()` (v23), sans migration manuelle.
+- **Mesurer le rattrapage d'opt-in de la v28** : combien d'arrivées « en
+  court-circuit » laissent finalement leurs coordonnées. Sans ce chiffre,
+  impossible de savoir si le bloc mérite d'être renforcé ou allégé.
+
+*Si le sprint déborde* : les notifications temps réel partent au Sprint 4,
+elles relèvent plus de l'outillage du responsable que de la mesure.
+
+---
+
+**Sprint 3 — Espace du converti (authentification)** *(décidé le 2026-09-03 —
+promu depuis le Sprint 5)*
+
+**Le vrai sujet ouvert par la v29.** Le pied de page adapté à l'étape ne
+propose plus les pages de discipulat à quelqu'un qui découvre le site — ce
+qui est juste éditorialement, mais laisse une question : **comment une
+personne qui a déjà fait le chemin retrouve-t-elle « Grandir dans la foi »
+en revenant sur l'accueil ?**
+
+- **Réponse retenue par le porteur** : *ne pas* la traiter par le maillage
+  (remettre les liens sur la landing servirait les deux publics à moitié),
+  mais par une **authentification** donnant accès direct aux étapes
+  d'après-prière. Le converti se reconnaît, le visiteur neuf ne voit rien
+  qui ne le concerne pas encore.
+- **Conséquence sur le `noindex`** : les pages `nouveau-ne`, `grandir`,
+  `fondations` restent volontairement hors index — elles s'adressent à
+  quelqu'un qui a déjà décidé. Arriver dessus depuis une recherche Google,
+  sans être passé par la prière du salut, n'aurait pas de sens.
+- Point d'appui existant : la table Airtable `Admins` + les Netlify
+  Functions (JWT HS256 + scrypt, zéro dépendance npm) de la v14 — le même
+  socle peut servir un espace « converti », avec un niveau de droit distinct.
+- À arbitrer au lancement du sprint : lien magique par email (pas de mot de
+  passe à retenir, cohérent avec un public non technique) *vs* compte
+  classique ; durée de session ; que faire de `c2c_lead` en localStorage,
+  qui joue déjà ce rôle de reconnaissance de façon fragile (un autre
+  appareil, un nettoyage du navigateur, et la personne est « oubliée »).
+- **Dépend du Sprint 1** : l'espace du converti n'a de sens que si le suivi
+  sait qui a prié — donc si la branche `convert` fonctionne réellement.
+
+---
+
+**Sprint 4 — Outillage du responsable (ex-« Admin polish », ex-Sprint 3)**
+- Reset de mot de passe self-service.
+- Attribution d'un référent depuis le tableau (complète le câblage du Sprint 1).
+- Blocage anti-force-brute persistant (Netlify Blobs).
+- Journal d'audit.
+- *(Débordement possible du Sprint 2)* Notifications temps réel des nouvelles âmes.
+
+---
+
+**Sprint 5 — Référencement & maillage** *(nouveau)*
+- **`sitemap.xml` + `robots.txt`** — le site n'en a aucun. Vérifié le
+  2026-09-03 : c'est l'écart de référencement le plus réel du projet.
+  Cinq pages indexables à déclarer : `index`, `quiz`, `temoignages`,
+  `histoire`, `prier`.
+- *(À arbitrer)* Repasser le pied de page en HTML statique. Les liens injectés
+  en JS sont moins bien vus des robots ; le gain est modéré (Googlebot exécute
+  le JS) et le coût réel — dix copies à maintenir, ce que la v29 évitait
+  précisément. À ne faire que si le référencement devient un objectif.
+- *(Rappel)* Retirer le `noindex` des pages de discipulat **n'est pas** au
+  programme : décision du Sprint 3.
+
+---
+
+**Sprint 6 — Contenus & campagnes (ex-Sprint 4)**
+- Autres angles de campagne (Noël, Pâques, rentrée).
+- Contenus longs (blog, podcast).
+- Traductions supplémentaires (arabe, espagnol, portugais — personas P4 et
+  lusophone d'Afrique).
+- *(Nouveau)* Les vidéos identitaires écartées des emails en v22 (Janick,
+  Sarah, Al-Azzaz) restent disponibles sur `temoignages.html` en découverte
+  volontaire. Si un jour une segmentation plus fine que les 5 personas existe,
+  elles pourront redevenir poussables — mais jamais par défaut.
+
+**Constat de référencement (2026-09-03)**, à garder sous la main pour le
+Sprint 5 : le site n'a **ni `sitemap.xml` ni `robots.txt`** — c'est l'écart le
+plus réel, bien plus que la question du pied de page. Les liens de discipulat
+retirés de la landing en v29 pointaient **tous vers des pages en `noindex`** :
+leur retrait n'a donc eu **aucun effet SEO**, et les remettre n'en aurait
+aucun non plus. Les cinq pages indexables — `index`, `quiz`, `temoignages`,
+`histoire`, `prier` — sont toutes à un clic les unes des autres via le pied de
+page généré.
 
 ---
 
