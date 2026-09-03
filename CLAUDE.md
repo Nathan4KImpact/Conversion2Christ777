@@ -907,6 +907,16 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
 - `1.2` **Footer standard dans les 5 emails** — M. Vérifié le 2026-09-03 :
   **aucun lien de désabonnement** aujourd'hui dans J0/J1/J3/J5/J7. Exposition
   RGPD + risque de classement en spam.
+- `1.5` **Expéditeur `contact@nouvellesviesenjesus.fr`** — M. Procédure
+  complète : **`integrations/EMAIL.md`**. Boîte OVH MX Plan + DKIM + SPF +
+  DMARC, puis alias « Envoyer en tant que » dans Gmail relayé par
+  `ssl0.ovh.net:465`, puis champ `From` des 5 modules Make. Le champ existe
+  bien dans le module (`google-email:ActionSendEmail`, `from`, marqué
+  *advanced* donc masqué) et **les blueprints du repo le portent désormais**.
+  ⚠️ Ordre impératif : DNS d'abord, `From` en dernier — un `From` qui
+  revendique un domaine sans SPF/DKIM/DMARC dégrade la délivrabilité au lieu
+  de l'améliorer. À traiter **dans la même passe** que 1.1 et 1.2 : les trois
+  chantiers touchent les mêmes 5 modules Gmail.
 - `1.3` **Évènement `parler_dieu`** + colonne `Stats` + indicateur — S. Hors
   entonnoir principal (l'y verser casserait les taux de passage).
 - `1.4` **Mesurer le rattrapage d'opt-in v28** — S.
