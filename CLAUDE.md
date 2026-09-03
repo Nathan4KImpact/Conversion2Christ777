@@ -837,6 +837,36 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
 - **Sprint 4 — Contenus** : autres angles de campagne (Noël, Pâques, rentrée),
   contenus longs (blog, podcast), traductions supplémentaires (arabe, espagnol,
   portugais pour les personas P4 et le lusophone d'Afrique).
+- **Sprint 5 — Espace du converti (authentification)** *(décidé le 2026-09-03)* :
+  **le vrai sujet ouvert par la v29.** Le pied de page adapté à l'étape ne
+  propose plus les pages de discipulat à quelqu'un qui découvre le site — ce
+  qui est juste éditorialement, mais laisse une question : **comment une
+  personne qui a déjà fait le chemin retrouve-t-elle « Grandir dans la foi »
+  en revenant sur l'accueil ?**
+  - **Réponse retenue par le porteur** : *ne pas* la traiter par le maillage
+    (remettre les liens sur la landing servirait les deux publics à moitié),
+    mais par une **authentification** donnant accès direct aux étapes
+    d'après-prière. Le converti se reconnaît, le visiteur neuf ne voit rien
+    qui ne le concerne pas encore.
+  - **Conséquence sur le `noindex`** : les pages `nouveau-ne`, `grandir`,
+    `fondations` restent volontairement hors index — elles s'adressent à
+    quelqu'un qui a déjà décidé. Arriver dessus depuis une recherche Google,
+    sans être passé par la prière du salut, n'aurait pas de sens.
+  - Point d'appui existant : la table Airtable `Admins` + les Netlify
+    Functions (JWT HS256 + scrypt, zéro dépendance npm) de la v14 — le même
+    socle peut servir un espace « converti », avec un niveau de droit distinct.
+  - À arbitrer au lancement du sprint : lien magique par email (pas de mot de
+    passe à retenir, cohérent avec un public non technique) *vs* compte
+    classique ; durée de session ; que faire de `c2c_lead` en localStorage,
+    qui joue déjà ce rôle de reconnaissance de façon fragile (un autre
+    appareil, un nettoyage du navigateur, et la personne est « oubliée »).
+
+**Différé volontairement (2026-09-03)** : `sitemap.xml` + `robots.txt`. Vérifié
+ce jour — le site n'en a aucun ; c'est l'écart de référencement le plus réel,
+bien plus que la question du pied de page (les liens retirés de la landing
+pointaient tous vers des pages en `noindex`, donc sans effet SEO). Les cinq
+pages indexables — `index`, `quiz`, `temoignages`, `histoire`, `prier` — sont
+toutes à un clic les unes des autres via le pied de page généré.
 
 ---
 
