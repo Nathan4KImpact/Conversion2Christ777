@@ -751,17 +751,24 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - **Modale de RDV injectée** avec le pied de page (elle n'existait que dans
     `index.html`) — sinon il aurait fallu la dupliquer sur sept pages.
   - **Collision révélée et corrigée** : le bouton flottant « Parler à Dieu »
-    (fixé en bas à droite) **recouvrait la colonne Contact** du nouveau pied de
-    page. Il s'efface maintenant dès que le pied de page entre à l'écran
-    (`IntersectionObserver`) : la personne y trouve les mêmes portes, le bouton
-    n'a plus rien à y ajouter.
-  - **Quiz : porte intégrée au fil de la page**. Sa carte est courte, donc le
-    pied de page occupe le bas de l'écran en permanence — le bouton flottant y
-    aurait été masqué en continu, et la page aurait perdu sa porte « Parler à
-    Dieu » (v26). Elle reçoit donc un **bandeau `[data-ttg-open]`**, comme la
-    landing ; sa seule présence désactive le flottant (mécanisme v26).
-    Nouvelle clé `ttg.band.title.quiz` (« Tu n'as pas besoin d'attendre le
-    résultat »).
+    (fixé en bas à droite) recouvrait la colonne Contact du nouveau pied de
+    page. Il s'efface maintenant — mais **seulement quand le visiteur a défilé
+    jusqu'à voir le pied de page entier** (règle posée par le porteur), et non
+    dès qu'il en aperçoit le haut.
+  - **D'où l'observation de `.footer-bottom`, pas du `<footer>` entier** :
+    sur une page courte comme le quiz, le haut du pied de page est déjà à
+    l'écran au chargement. Observer le bloc complet masquait le bouton
+    d'emblée — la page perdait sa porte « Parler à Dieu » (v26) sans que rien
+    ne le signale. Une première version le faisait ; corrigée après retour du
+    porteur (capture à l'appui).
+  - **Bandeau intégré au quiz : essayé, puis retiré.** Il avait été ajouté pour
+    contourner la disparition du bouton flottant ; le porteur l'a jugé
+    « touffu » — la carte du quiz est courte, un bandeau pleine largeur juste
+    en dessous la concurrence visuellement. La bonne réponse était de corriger
+    la règle de masquage, pas d'ajouter un élément. Clé `ttg.band.title.quiz`
+    créée puis supprimée. **Le bandeau intégré reste en place sur la landing**
+    (v26), où il répond à un autre problème : la collision avec le bouton
+    Chatbase.
   - **Réserve connue** : des liens injectés en JS sont moins bien vus des
     robots que du HTML statique. Sans conséquence ici — ce sont des liens
     internes déjà atteignables depuis l'accueil, et le site est un tunnel, pas

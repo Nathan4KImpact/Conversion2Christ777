@@ -104,18 +104,24 @@
 
   if (openBtn) openBtn.addEventListener("click", open);
 
-  /* Le bouton flottant est fixé en bas à droite — exactement là où le pied de
-     page pose sa colonne Contact. Il la recouvrait. On l'efface donc dès que
-     le pied de page entre à l'écran : la personne y trouve alors les mêmes
-     portes (RDV, WhatsApp, email), le bouton n'a plus rien à y ajouter.
-     `footer.js` injecte le pied de page à la fin, d'où l'observation différée. */
+  /* Le bouton flottant est fixé en bas à droite — là où le pied de page pose
+     sa colonne Contact. On l'efface donc, mais seulement quand le visiteur a
+     défilé jusqu'à voir le pied de page ENTIER : à ce moment il y trouve les
+     mêmes portes (RDV, WhatsApp, email), le bouton n'a plus rien à ajouter.
+
+     D'où l'observation de la dernière ligne (`.footer-bottom`) et non du
+     pied de page entier : sur une page courte comme le quiz, le haut du pied
+     de page est déjà à l'écran au chargement — observer le bloc complet
+     masquerait le bouton d'emblée, et la page perdrait sa porte.
+
+     `footer.js` injecte le pied de page en fin de chargement, d'où le différé. */
   if (openBtn && "IntersectionObserver" in window) {
     var watch = function () {
-      var foot = document.querySelector("footer.site-footer");
-      if (!foot) return;
+      var end = document.querySelector("footer.site-footer .footer-bottom");
+      if (!end) return;
       new IntersectionObserver(function (entries) {
         openBtn.classList.toggle("is-hidden", entries[0].isIntersecting);
-      }, { rootMargin: "0px 0px -40px 0px" }).observe(foot);
+      }, { rootMargin: "0px 0px -20px 0px" }).observe(end);
     };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", watch);
     else setTimeout(watch, 0);
