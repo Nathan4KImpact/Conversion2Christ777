@@ -380,6 +380,7 @@ const I18N = {
     "ttg.more": "Je veux prier pour étancher ma soif intérieure",
     "ttg.later": "Plus tard",
     "ttg.band.title": "Tu n'as pas besoin d'attendre la fin de ta lecture",
+    "ttg.band.title.quiz": "Tu n'as pas besoin d'attendre le résultat",
     "ttg.band.sub": "Si quelque chose s'éveille en toi maintenant, tu peux lui parler. Là, où tu es.",
     "ttg.band.cta": "Parler à Dieu",
 
@@ -859,6 +860,7 @@ const I18N = {
     "ttg.more": "I want to pray, to quench my inner thirst",
     "ttg.later": "Later",
     "ttg.band.title": "You don't have to wait until you've read it all",
+    "ttg.band.title.quiz": "You don't have to wait for the result",
     "ttg.band.sub": "If something is stirring in you right now, you can talk to Him. Right where you are.",
     "ttg.band.cta": "Talk to God",
 
