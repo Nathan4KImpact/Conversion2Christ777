@@ -751,17 +751,24 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
   - **Modale de RDV injectée** avec le pied de page (elle n'existait que dans
     `index.html`) — sinon il aurait fallu la dupliquer sur sept pages.
   - **Collision révélée et corrigée** : le bouton flottant « Parler à Dieu »
-    (fixé en bas à droite) **recouvrait la colonne Contact** du nouveau pied de
-    page. Il s'efface maintenant dès que le pied de page entre à l'écran
-    (`IntersectionObserver`) : la personne y trouve les mêmes portes, le bouton
-    n'a plus rien à y ajouter.
-  - **Quiz : porte intégrée au fil de la page**. Sa carte est courte, donc le
-    pied de page occupe le bas de l'écran en permanence — le bouton flottant y
-    aurait été masqué en continu, et la page aurait perdu sa porte « Parler à
-    Dieu » (v26). Elle reçoit donc un **bandeau `[data-ttg-open]`**, comme la
-    landing ; sa seule présence désactive le flottant (mécanisme v26).
-    Nouvelle clé `ttg.band.title.quiz` (« Tu n'as pas besoin d'attendre le
-    résultat »).
+    (fixé en bas à droite) recouvrait la colonne Contact du nouveau pied de
+    page. Il s'efface maintenant — mais **seulement quand le visiteur a défilé
+    jusqu'à voir le pied de page entier** (règle posée par le porteur), et non
+    dès qu'il en aperçoit le haut.
+  - **D'où l'observation de `.footer-bottom`, pas du `<footer>` entier** :
+    sur une page courte comme le quiz, le haut du pied de page est déjà à
+    l'écran au chargement. Observer le bloc complet masquait le bouton
+    d'emblée — la page perdait sa porte « Parler à Dieu » (v26) sans que rien
+    ne le signale. Une première version le faisait ; corrigée après retour du
+    porteur (capture à l'appui).
+  - **Bandeau intégré au quiz : essayé, puis retiré.** Il avait été ajouté pour
+    contourner la disparition du bouton flottant ; le porteur l'a jugé
+    « touffu » — la carte du quiz est courte, un bandeau pleine largeur juste
+    en dessous la concurrence visuellement. La bonne réponse était de corriger
+    la règle de masquage, pas d'ajouter un élément. Clé `ttg.band.title.quiz`
+    créée puis supprimée. **Le bandeau intégré reste en place sur la landing**
+    (v26), où il répond à un autre problème : la collision avec le bouton
+    Chatbase.
   - **Réserve connue** : des liens injectés en JS sont moins bien vus des
     robots que du HTML statique. Sans conséquence ici — ce sont des liens
     internes déjà atteignables depuis l'accueil, et le site est un tunnel, pas
@@ -837,6 +844,36 @@ Modèle « value ladder » adapté à l'évangélisation / au discipulat.
 - **Sprint 4 — Contenus** : autres angles de campagne (Noël, Pâques, rentrée),
   contenus longs (blog, podcast), traductions supplémentaires (arabe, espagnol,
   portugais pour les personas P4 et le lusophone d'Afrique).
+- **Sprint 5 — Espace du converti (authentification)** *(décidé le 2026-09-03)* :
+  **le vrai sujet ouvert par la v29.** Le pied de page adapté à l'étape ne
+  propose plus les pages de discipulat à quelqu'un qui découvre le site — ce
+  qui est juste éditorialement, mais laisse une question : **comment une
+  personne qui a déjà fait le chemin retrouve-t-elle « Grandir dans la foi »
+  en revenant sur l'accueil ?**
+  - **Réponse retenue par le porteur** : *ne pas* la traiter par le maillage
+    (remettre les liens sur la landing servirait les deux publics à moitié),
+    mais par une **authentification** donnant accès direct aux étapes
+    d'après-prière. Le converti se reconnaît, le visiteur neuf ne voit rien
+    qui ne le concerne pas encore.
+  - **Conséquence sur le `noindex`** : les pages `nouveau-ne`, `grandir`,
+    `fondations` restent volontairement hors index — elles s'adressent à
+    quelqu'un qui a déjà décidé. Arriver dessus depuis une recherche Google,
+    sans être passé par la prière du salut, n'aurait pas de sens.
+  - Point d'appui existant : la table Airtable `Admins` + les Netlify
+    Functions (JWT HS256 + scrypt, zéro dépendance npm) de la v14 — le même
+    socle peut servir un espace « converti », avec un niveau de droit distinct.
+  - À arbitrer au lancement du sprint : lien magique par email (pas de mot de
+    passe à retenir, cohérent avec un public non technique) *vs* compte
+    classique ; durée de session ; que faire de `c2c_lead` en localStorage,
+    qui joue déjà ce rôle de reconnaissance de façon fragile (un autre
+    appareil, un nettoyage du navigateur, et la personne est « oubliée »).
+
+**Différé volontairement (2026-09-03)** : `sitemap.xml` + `robots.txt`. Vérifié
+ce jour — le site n'en a aucun ; c'est l'écart de référencement le plus réel,
+bien plus que la question du pied de page (les liens retirés de la landing
+pointaient tous vers des pages en `noindex`, donc sans effet SEO). Les cinq
+pages indexables — `index`, `quiz`, `temoignages`, `histoire`, `prier` — sont
+toutes à un clic les unes des autres via le pied de page généré.
 
 ---
 
